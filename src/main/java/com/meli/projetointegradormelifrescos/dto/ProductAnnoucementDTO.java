@@ -1,37 +1,34 @@
 package com.meli.projetointegradormelifrescos.dto;
 
+import com.meli.projetointegradormelifrescos.enums.ProductCategory;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDTO {
+public class ProductAnnoucementDTO {
 
-    private Long productId;
-    @NotNull(message = "O nome do produto não pode estar vazio")
+    private Long id;
+    @NotBlank(message = "O nome do produto não pode ser vazio! Infome um nome válido.")
     private String name;
-    @NotNull(message = "O volume do produto não pode estar vazio")
+    @NotBlank(message = "A quantidade de produtos não pode ser vazio! Infome uma quantidade válida.")
     private Double volume;
-    @NotNull(message = "A preço não pode estar vazio")
-    @DecimalMin("0.00")
+    @NotBlank(message = "O preço do produto não pode ser vazio! Infome um preço válido.")
     private BigDecimal price;
-    @NotNull(message = "A categoria não pode estar vazia")
+    @NotBlank(message = "A categoria não pode estar vazia. Informe uma categoria válida.")
     private ProductCategory category;
-    @NotNull(message = "A avaliaçao do produto nao pode estar vazia")
-    private Double AverageRating;
+    @NotBlank(message = "A data de expiração não pode estar vazia.")
+    private Date expirationDate;
 
 }
 
 
-- id: Long
-        - name:  String
-        - price: BigDecimal
-        - description: String
-        - sellerId: Long
-        - category: String
-        - expirationDate: date

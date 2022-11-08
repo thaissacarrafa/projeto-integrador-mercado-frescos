@@ -1,2 +1,5 @@
-package com.meli.projetointegradormelifrescos.dto;public class SectorDTO {
+package com.meli.projetointegradormelifrescos.dto;
+
+public class SectorDTO {
+
 }
