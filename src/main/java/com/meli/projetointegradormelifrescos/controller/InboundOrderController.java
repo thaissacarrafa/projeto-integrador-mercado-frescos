@@ -4,14 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.meli.projetointegradormelifrescos.dto.InboundOrderReqDTO;
+import com.meli.projetointegradormelifrescos.dto.InboundOrderResDTO;
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
-import com.meli.projetointegradormelifrescos.service.InboundOrderService;
+import com.meli.projetointegradormelifrescos.service.IInboundOrder;
 
 @RestController
 @RequestMapping("/api/v1/fresh-products/inboundorder/")
 public class InboundOrderController {
     @Autowired
-    private InboundOrderService service;
+    private IInboundOrder service;
 
     @GetMapping("{id}")
     public ResponseEntity<InboundOrder> getById(@PathVariable long id) {
@@ -23,7 +25,7 @@ public class InboundOrderController {
     }
 
     @PostMapping
-    ResponseEntity<InboundOrder> insert(@RequestBody InboundOrder inboundOrder) {
-        return ResponseEntity.ok(service.save(inboundOrder));
+    ResponseEntity<InboundOrderResDTO> insert(@RequestBody InboundOrderReqDTO inboundOrderReqDTO) {
+        return ResponseEntity.ok(service.save(inboundOrderReqDTO));
     }
 }
