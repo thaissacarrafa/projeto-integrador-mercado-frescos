@@ -1,7 +1,6 @@
 package com.meli.projetointegradormelifrescos.dto;
 
 import com.meli.projetointegradormelifrescos.enums.ProductCategory;
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

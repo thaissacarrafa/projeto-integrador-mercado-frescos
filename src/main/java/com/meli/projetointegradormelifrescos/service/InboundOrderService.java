@@ -8,12 +8,12 @@ import com.meli.projetointegradormelifrescos.repository.InboundOrderRepo;
 
 @Service
 public class InboundOrderService implements IInboundOrder {
-    @Autowired
+
     private InboundOrderRepo repo;
 
     @Override
     public InboundOrder readOrder(long id) {
-        return repo.readOrder(id);
+        return repo.getById(id);
     }
 
     @Override
