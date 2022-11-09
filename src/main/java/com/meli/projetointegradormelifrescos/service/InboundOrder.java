@@ -1,10 +1,8 @@
 package com.meli.projetointegradormelifrescos.service;
 
-import com.meli.projetointegradormelifrescos.model.InboundOrder;
+public interface InboundOrder {
 
-public interface IInboundOrder {
-
-    InboundOrder readOrder(long id);
-    InboundOrder save(InboundOrder inboundOrder);
+    com.meli.projetointegradormelifrescos.model.InboundOrder readOrder(long id);
+    com.meli.projetointegradormelifrescos.model.InboundOrder save(com.meli.projetointegradormelifrescos.model.InboundOrder inboundOrder);
     
 }

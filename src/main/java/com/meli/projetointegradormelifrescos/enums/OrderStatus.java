@@ -1,2 +1,6 @@
-package com.meli.projetointegradormelifrescos.enums;public class OrderStatus {
+package com.meli.projetointegradormelifrescos.enums;
+
+public enum OrderStatus {
+    OPENED,
+    FINISHED;
 }

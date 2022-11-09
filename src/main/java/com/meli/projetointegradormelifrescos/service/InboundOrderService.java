@@ -1,23 +1,21 @@
 package com.meli.projetointegradormelifrescos.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.meli.projetointegradormelifrescos.model.InboundOrder;
 import com.meli.projetointegradormelifrescos.repository.InboundOrderRepo;
 
 @Service
-public class InboundOrderService implements IInboundOrder {
+public class InboundOrderService implements InboundOrder {
 
     private InboundOrderRepo repo;
 
     @Override
-    public InboundOrder readOrder(long id) {
+    public com.meli.projetointegradormelifrescos.model.InboundOrder readOrder(long id) {
         return repo.getById(id);
     }
 
     @Override
-    public InboundOrder save(InboundOrder inboundOrder) {
+    public com.meli.projetointegradormelifrescos.model.InboundOrder save(com.meli.projetointegradormelifrescos.model.InboundOrder inboundOrder) {
         return repo.save(inboundOrder);
     }
 }

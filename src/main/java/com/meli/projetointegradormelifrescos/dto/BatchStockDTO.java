@@ -14,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BatchStockDTO {
+    private Long productId;
     private Long batchNumber;
     @NotBlank(message = "A temperatura atual não pode estar vazia")
     private Float currentTemperature;
@@ -28,7 +29,7 @@ public class BatchStockDTO {
     @NotBlank(message = "A data de validade não pode estar vazia")
     private LocalDate dueDate;
     private BigDecimal price;
-    private Float volume;
-    private int productQuantity;
 }
+
+
 
