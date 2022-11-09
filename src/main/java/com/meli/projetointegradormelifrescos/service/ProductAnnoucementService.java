@@ -15,7 +15,9 @@ public class ProductAnnoucementService {
         @Autowired
         private ProductAnnoucementRepo productRepository;
 
-// método responsável por consultar todos os produtos
+    /***
+     *   @param message  método responsável por consultar todos os produtos
+      */
         public List<ProductAnnoucement> listAllProducts() {
             List<ProductAnnoucement> productList = productRepository.findAll();
             if(productList.isEmpty()) {
@@ -24,8 +26,11 @@ public class ProductAnnoucementService {
             return productList;
         }
 
-  // método responsável por filtrar produtos por categoria
-
+    /***
+     *
+     * @param message     método responsável por consultar todos os produtos
+     * @return
+     */
     public List<ProductAnnoucement> listByCategory(String category){
 
         List<ProductAnnoucement> products = productRepository.findAll().stream()
