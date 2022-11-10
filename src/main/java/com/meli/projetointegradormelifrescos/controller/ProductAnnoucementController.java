@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -29,9 +30,14 @@ public class ProductAnnoucementController {
         return ResponseEntity.ok(ProductAnnoucementDTO.convertListProducts(all));
     }
 
+    /***
+     *Veja uma lista de produtos por categoria.Se a lista não existir,
+     * ela deve retornar um "404 Not Found".
+     * @return
+     */
     @GetMapping("/list")
     @ApiOperation(value = "Retorna uma lista de produtos de determinada categoria.")
-    public ResponseEntity<List<ProductAnnoucementDTO>> getByCategory(@RequestParam String category){
+    public ResponseEntity<List<ProductAnnoucementDTO>> getByCategory(@RequestParam (required = false) String category){
 
         return new ResponseEntity(productService.listByCategory(category), HttpStatus.OK);
     }

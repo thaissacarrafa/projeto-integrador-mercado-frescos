@@ -1,6 +1,6 @@
 package com.meli.projetointegradormelifrescos.dto;
 
-import com.meli.projetointegradormelifrescos.enums.ProductCategory;
+import com.meli.projetointegradormelifrescos.enums.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ public class SectorDTO {
     @NotBlank(message = "A temperatura deste setor não pode ser vazio para melhor acondicionamento dos produtos! Infome uma temperatura válida.")
     private float temperature;
     @NotBlank(message = "A categoria não pode estar vazia. Informe uma categoria válida.")
-    private ProductCategory category;
+    private Category category;
     @NotBlank(message = "A capacidade não pode estar vazia! Informe quantos produtos cabem neste setor.")
     private String capacity;
 
