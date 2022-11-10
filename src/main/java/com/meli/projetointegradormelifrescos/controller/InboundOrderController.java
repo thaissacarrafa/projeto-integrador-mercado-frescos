@@ -8,8 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.meli.projetointegradormelifrescos.dto.Input.BatchStockReqDTO;
+import com.meli.projetointegradormelifrescos.dto.Input.InboundOrderReqDTO;
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
-import com.meli.projetointegradormelifrescos.service.InboundOrderService;
+import com.meli.projetointegradormelifrescos.service.IInboundOrder;
+
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -19,16 +23,12 @@ import javax.validation.Valid;
 @CrossOrigin(origins = "*")
 public class InboundOrderController {
     @Autowired
-    private InboundOrderService service;
+    private IInboundOrder service;
 
     @GetMapping("{id}")
     @ApiOperation(value = "Retorna uma lista de lotes de acordo com determinado ID")
     public ResponseEntity<InboundOrder> getById(@PathVariable long id) {
-        InboundOrder order = service.readOrder(id);
-        if(order != null) {
-            return ResponseEntity.ok(order);
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(service.readOrder(id));
     }
 
     /***
@@ -38,12 +38,16 @@ public class InboundOrderController {
      * @return
      */
     @PostMapping
+    public ResponseEntity<List<BatchStockReqDTO>> insertOrder(@RequestBody InboundOrderReqDTO orderReqDTO) {
+        List<BatchStockReqDTO> batches = service.save(orderReqDTO);
+
+        return new ResponseEntity<List<BatchStockReqDTO>>(batches, HttpStatus.CREATED);
+    }
+
     @ApiOperation(value = "Cadastra um lote de produtos.")
     ResponseEntity<InboundOrder> insertInboundOrder(@RequestBody @Valid InboundOrder inboundOrder) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(inboundOrder));
     }
-
-
 
     }
 
