@@ -1,12 +1,14 @@
 package com.meli.projetointegradormelifrescos.service;
 
-import com.meli.projetointegradormelifrescos.dto.InboundOrderReqDTO;
-import com.meli.projetointegradormelifrescos.dto.InboundOrderResDTO;
+import java.util.List;
+
+import com.meli.projetointegradormelifrescos.dto.Input.BatchStockReqDTO;
+import com.meli.projetointegradormelifrescos.dto.Input.InboundOrderReqDTO;
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
 
 public interface IInboundOrder {
 
     InboundOrder readOrder(long id);
-    InboundOrderResDTO save(InboundOrderReqDTO inboundOrderDTO);
+    List<BatchStockReqDTO> save(InboundOrderReqDTO inboundOrderDTO);
     
 }

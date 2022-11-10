@@ -1,13 +1,16 @@
 package com.meli.projetointegradormelifrescos.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.meli.projetointegradormelifrescos.dto.InboundOrderReqDTO;
-import com.meli.projetointegradormelifrescos.dto.InboundOrderResDTO;
+import com.meli.projetointegradormelifrescos.dto.Input.BatchStockReqDTO;
+import com.meli.projetointegradormelifrescos.dto.Input.InboundOrderReqDTO;
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
 import com.meli.projetointegradormelifrescos.service.IInboundOrder;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/fresh-products/inboundorder/")
@@ -17,15 +20,13 @@ public class InboundOrderController {
 
     @GetMapping("{id}")
     public ResponseEntity<InboundOrder> getById(@PathVariable long id) {
-        InboundOrder order = service.readOrder(id);
-        if(order != null) {
-            return ResponseEntity.ok(order);
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(service.readOrder(id));
     }
 
     @PostMapping
-    ResponseEntity<InboundOrderResDTO> insert(@RequestBody InboundOrderReqDTO inboundOrderReqDTO) {
-        return ResponseEntity.ok(service.save(inboundOrderReqDTO));
+    public ResponseEntity<List<BatchStockReqDTO>> insertOrder(@RequestBody InboundOrderReqDTO orderReqDTO) {
+        List<BatchStockReqDTO> batches = service.save(orderReqDTO);
+
+        return new ResponseEntity<List<BatchStockReqDTO>>(batches, HttpStatus.CREATED);
     }
 }
