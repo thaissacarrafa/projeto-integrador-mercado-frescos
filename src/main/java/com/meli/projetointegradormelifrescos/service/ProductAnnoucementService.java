@@ -34,7 +34,7 @@ public class ProductAnnoucementService {
     public List<ProductAnnoucement> listByCategory(String category){
 
         List<ProductAnnoucement> products = productRepository.findAll().stream()
-        .filter(product -> Objects.equals(product.getCategory().getProductCategory(),category.toUpperCase()))
+        .filter(product -> Objects.equals(product.getCategory(),category.toUpperCase()))
 
                 .collect(Collectors.toList());
 

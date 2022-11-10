@@ -1,6 +1,6 @@
 package com.meli.projetointegradormelifrescos.model;
 
-import com.meli.projetointegradormelifrescos.enums.ProductCategory;
+import com.meli.projetointegradormelifrescos.enums.Category;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +19,7 @@ public class ProductAnnoucement implements Serializable {
     private String name;
     private BigDecimal price;
     private String description;
-    private ProductCategory category;
+    private String category;
     private String seller;
 
     public Long getId() {
@@ -54,11 +54,11 @@ public class ProductAnnoucement implements Serializable {
         this.description = description;
     }
 
-    public ProductCategory getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(ProductCategory category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 

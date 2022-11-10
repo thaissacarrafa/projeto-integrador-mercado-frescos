@@ -1,17 +1,17 @@
 package com.meli.projetointegradormelifrescos.enums;
 
-public enum ProductCategory {
+public enum Category {
     FRESCO("FS"),
     REFRIGERADO("RF"),
     CONGELADO("FF");
 
     private String value;
 
-    ProductCategory(String value) {
+    Category(String value) {
         this.value = value;
     }
 
-    public String getProductCategory() {
+    public String getCategory() {
         return value;
     }
 
