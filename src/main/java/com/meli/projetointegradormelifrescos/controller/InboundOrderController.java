@@ -7,8 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.meli.projetointegradormelifrescos.dto.Input.BatchStockReqDTO;
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
 import com.meli.projetointegradormelifrescos.service.IInboundOrderService;
+import com.meli.projetointegradormelifrescos.service.IInboundOrder;
+
+import java.util.List;
+
 
 import javax.validation.Valid;
 
@@ -17,13 +22,12 @@ public class InboundOrderController {
     @Autowired
     private IInboundOrderService service;
 
+    private IInboundOrder service;
+
+
     @GetMapping("/inboundorder/")
     public ResponseEntity<InboundOrder> getById(@PathVariable long id) {
-        InboundOrder order = service.readOrder(id);
-        if(order != null) {
-            return ResponseEntity.ok(order);
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(service.readOrder(id));
     }
 
     /***
@@ -31,12 +35,26 @@ public class InboundOrderController {
      * Cadastre um lote com o estoque de produtos que o compõe. Devolva o lote criado com o código de status "201 CREATED".
      * @param dto
      * @return
+<<<<<<< HEAD
     ***/
 
     @PostMapping("/inboundorder")
     public ResponseEntity<InboundOrderDTO> createInboundOrder(@RequestBody @Valid InboundOrderDTO inboundOrderDTO) {
         InboundOrder inboundOrder = service.createInboundOrder(inboundOrderDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(service.convertToDto(inboundOrder));
+
+    }
+
+    @PostMapping
+    public ResponseEntity<List<BatchStockReqDTO>> insertOrder(@RequestBody InboundOrderReqDTO orderReqDTO) {
+        List<BatchStockReqDTO> batches = service.save(orderReqDTO);
+
+        return new ResponseEntity<List<BatchStockReqDTO>>(batches, HttpStatus.CREATED);
+    }
+
+    ResponseEntity<InboundOrder> insertInboundOrder(@RequestBody @Valid InboundOrder inboundOrder) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(inboundOrder));
+
     }
 
     }
