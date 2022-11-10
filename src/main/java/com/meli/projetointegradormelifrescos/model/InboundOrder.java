@@ -3,14 +3,14 @@ package com.meli.projetointegradormelifrescos.model;
 import java.time.*;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.*;
+import com.meli.projetointegradormelifrescos.dto.BatchStockDTO;
+
 import java.util.*;
 import lombok.*;
 
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class InboundOrder {
 
     @Id

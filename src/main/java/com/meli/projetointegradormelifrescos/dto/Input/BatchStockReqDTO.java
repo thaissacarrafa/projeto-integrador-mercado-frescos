@@ -1,4 +1,4 @@
-package com.meli.projetointegradormelifrescos.dto;
+package com.meli.projetointegradormelifrescos.dto.Input;
 
 import lombok.*;
 
