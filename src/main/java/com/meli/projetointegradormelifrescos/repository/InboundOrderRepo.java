@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
 
-public interface InboundOrderRepo extends JpaRepository<InboundOrder, Long> {
-    InboundOrder getById(long id);
+import java.util.Optional;
+
+public interface InboundOrderRepo extends JpaRepository<InboundOrder,Integer> {
+
 }
