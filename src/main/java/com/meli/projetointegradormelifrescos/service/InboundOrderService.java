@@ -1,28 +1,44 @@
 package com.meli.projetointegradormelifrescos.service;
 
 
+import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
+
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.meli.projetointegradormelifrescos.dto.Input.BatchStockReqDTO;
 import com.meli.projetointegradormelifrescos.dto.Input.InboundOrderReqDTO;
+
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
 import com.meli.projetointegradormelifrescos.repository.InboundOrderRepo;
 
-@Service
-public class InboundOrderService implements InboundOrder {
+
+public class InboundOrderService implements IInboundOrderService {
 
     @Autowired
     private InboundOrderRepo repo;
-
     @Override
-    public com.meli.projetointegradormelifrescos.model.InboundOrder readOrder(long id) {
-        return repo.getById(id);
+    public InboundOrder createInboundOrder(InboundOrderDTO inboundOrder) {
+
+
+        return null;
     }
 
     @Override
+    public InboundOrderDTO convertToDto(InboundOrder inboundOrder) {
+
+
+
+        return null;
+    }
+
+    @Override
+
+    public InboundOrder readOrder(long id) {
+        return null;
+    }
 
     public List<BatchStockReqDTO> save(InboundOrderReqDTO inboundOrderReqDTO) {
         InboundOrder order = new InboundOrder();
