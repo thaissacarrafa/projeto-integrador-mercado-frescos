@@ -93,7 +93,7 @@ mvn spring-boot:run
 Após executar o comando acima, basta apenas abrir o seguinte endereço e visualizar a execução do projeto:
 
 ```
-http://localhost:1001
+http://localhost:8080
 ```
 
 ### Funcionalidades  🖥
