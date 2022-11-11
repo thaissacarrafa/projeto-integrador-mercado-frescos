@@ -1,7 +1,5 @@
 package com.meli.projetointegradormelifrescos.dto;
 
-import com.meli.projetointegradormelifrescos.enums.Category;
-import com.meli.projetointegradormelifrescos.model.ProductAnnoucement;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;

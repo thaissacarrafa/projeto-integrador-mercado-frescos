@@ -1,7 +1,6 @@
-package com.meli.projetointegradormelifrescos.service;
+package com.meli.projetointegradormelifrescos.service.Impl;
 
 import com.meli.desafio_quality.exception.NotFoundException;
-import com.meli.projetointegradormelifrescos.model.ProductAnnoucement;
 import com.meli.projetointegradormelifrescos.repository.ProductAnnoucementRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
