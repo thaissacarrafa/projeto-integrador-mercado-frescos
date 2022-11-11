@@ -23,4 +23,9 @@ public class Announcement {
     @JsonIgnoreProperties("announcement")
     @JsonBackReference
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "saller_id", referencedColumnName = "id")
+    @JsonIgnoreProperties({"batches", "storage"})
+    private Section section;
 }

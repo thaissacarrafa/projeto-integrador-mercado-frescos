@@ -24,4 +24,9 @@ public class InboundOrder {
     @JsonIgnoreProperties("inboundOrder")
     @JsonManagedReference
     private List<Batch> batches;
+
+    @ManyToOne
+    @JoinColumn(name = "section_id", referencedColumnName = "id")
+    @JsonIgnoreProperties({"batches", "storage"})
+    private Section section;
 }

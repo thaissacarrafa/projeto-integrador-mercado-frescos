@@ -17,9 +17,9 @@ public class Seller {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "seller")
-    @JsonIgnoreProperties("seller")
-    private List<Announcement> announcements;
+  //  @OneToMany(mappedBy = "seller")
+   // @JsonIgnoreProperties("seller")
+   // private List<Announcement> announcements;
 
     @OneToMany(mappedBy = "seller")
     @JsonIgnoreProperties("seller")

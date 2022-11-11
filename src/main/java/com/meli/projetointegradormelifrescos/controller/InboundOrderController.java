@@ -1,7 +1,9 @@
 package com.meli.projetointegradormelifrescos.controller;
 
 
-import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
+import com.meli.projetointegradormelifrescos.dto.BatchStockDTO;
+import com.meli.projetointegradormelifrescos.dto.Input.InboundOrderReqDTO;
+import com.meli.projetointegradormelifrescos.model.Batch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,29 +24,30 @@ public class InboundOrderController {
     @Autowired
     private IInboundOrderService service;
 
-    private IInboundOrder service;
+   // private IInboundOrder service;
 
 
-    @GetMapping("/inboundorder/")
+   /* @GetMapping("/inboundorder/")
     public ResponseEntity<InboundOrder> getById(@PathVariable long id) {
         return ResponseEntity.ok(service.readOrder(id));
-    }
+    }*/
 
     /***
      *
      * Cadastre um lote com o estoque de produtos que o compõe. Devolva o lote criado com o código de status "201 CREATED".
      * @param dto
      * @return
-<<<<<<< HEAD
     ***/
 
     @PostMapping("/inboundorder")
-    public ResponseEntity<InboundOrderDTO> createInboundOrder(@RequestBody @Valid InboundOrderDTO inboundOrderDTO) {
-        InboundOrder inboundOrder = service.createInboundOrder(inboundOrderDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.convertToDto(inboundOrder));
+    public ResponseEntity<List<Batch>> createInboundOrder(@RequestBody @Valid InboundOrderReqDTO inboundOrderDTO) {
+       // InboundOrder inboundOrder = service.createInboundOrder(inboundOrderDTO);
+        System.out.println("cheguei");
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(inboundOrderDTO));
 
     }
 
+    /*
     @PostMapping
     public ResponseEntity<List<BatchStockReqDTO>> insertOrder(@RequestBody InboundOrderReqDTO orderReqDTO) {
         List<BatchStockReqDTO> batches = service.save(orderReqDTO);
@@ -52,10 +55,10 @@ public class InboundOrderController {
         return new ResponseEntity<List<BatchStockReqDTO>>(batches, HttpStatus.CREATED);
     }
 
-    ResponseEntity<InboundOrder> insertInboundOrder(@RequestBody @Valid InboundOrder inboundOrder) {
+   ResponseEntity<InboundOrder> insertInboundOrder(@RequestBody @Valid InboundOrder inboundOrder) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(inboundOrder));
 
-    }
+    }*/
 
     }
 
