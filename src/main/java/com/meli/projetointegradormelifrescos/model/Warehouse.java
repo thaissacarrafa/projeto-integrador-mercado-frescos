@@ -6,8 +6,11 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.*;
 
 
-@Data
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Warehouse {
 
     @Id
@@ -19,7 +22,6 @@ public class Warehouse {
 
     @OneToMany(mappedBy = "warehouse")
     @JsonIgnoreProperties("warehouse")
-    @JsonBackReference
     private List<Section> sections;
 
     //@OneToOne(mappedBy = "manager_id") ??

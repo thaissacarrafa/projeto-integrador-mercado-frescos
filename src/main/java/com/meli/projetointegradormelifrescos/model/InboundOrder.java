@@ -10,7 +10,10 @@ import lombok.*;
 
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class InboundOrder {
 
     @Id
@@ -22,7 +25,6 @@ public class InboundOrder {
 
     @OneToMany(mappedBy = "inboundOrder")
     @JsonIgnoreProperties("inboundOrder")
-    @JsonManagedReference
     private List<Batch> batches;
 
     @ManyToOne

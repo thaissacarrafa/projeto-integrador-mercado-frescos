@@ -5,8 +5,11 @@ import java.util.*;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.*;
 
-@Data
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Section {
     
     @Id
@@ -25,23 +28,19 @@ public class Section {
     @ManyToOne
     @JoinColumn(name = "category_id")
     @JsonIgnoreProperties("section")
-    @JsonBackReference
     private Category category;
 
     @ManyToOne
     @JoinColumn(name = "warehouse_id")
     @JsonIgnoreProperties("section")
-    @JsonBackReference
     private Warehouse warehouse;
 
     @ManyToOne
     @JoinColumn(name = "seller_id")
     @JsonIgnoreProperties("section")
-    @JsonBackReference
     private Seller seller;
     
     @OneToMany(mappedBy = "section")
     @JsonIgnoreProperties("section")
-    @JsonBackReference
     private List<InboundOrder> inboundOrders;
 }

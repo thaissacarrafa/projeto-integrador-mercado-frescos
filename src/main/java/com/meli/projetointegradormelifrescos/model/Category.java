@@ -5,8 +5,12 @@ import java.util.*;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.*;
 
+
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +24,11 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     @JsonIgnoreProperties("category")
-    @JsonManagedReference
     @ToString.Exclude
     private List<Announcement> announcements;
 
     @OneToMany(mappedBy = "category")
     @JsonIgnoreProperties("category")
-    @JsonManagedReference
     @ToString.Exclude
     private List<Section> sections;
 }

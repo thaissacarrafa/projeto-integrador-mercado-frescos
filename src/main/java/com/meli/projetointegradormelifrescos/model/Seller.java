@@ -6,8 +6,11 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.*;
 
 
-@Data
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Seller {
 
     @Id
@@ -23,6 +26,5 @@ public class Seller {
 
     @OneToMany(mappedBy = "seller")
     @JsonIgnoreProperties("seller")
-    @JsonManagedReference
     private List<Section> sections;
 }

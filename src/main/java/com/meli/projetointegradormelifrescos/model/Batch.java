@@ -8,7 +8,10 @@ import com.fasterxml.jackson.annotation.*;
 
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Batch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,13 +40,11 @@ public class Batch {
 
     @ManyToOne
     @JoinColumn(name = "announcement_id")
-    @JsonIgnoreProperties("batchs")
-    @JsonBackReference
+    @JsonIgnoreProperties("batches")
     private InboundOrder inboundOrder;
 
     @ManyToOne
     @JoinColumn(name = "section_id")
-    @JsonIgnoreProperties("batchs")
-    @JsonBackReference
+    @JsonIgnoreProperties("batches")
     private Section section;
 }

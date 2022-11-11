@@ -6,7 +6,10 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Announcement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +24,6 @@ public class Announcement {
     @ManyToOne
     @JoinColumn(name = "category_id")
     @JsonIgnoreProperties("announcement")
-    @JsonBackReference
     private Category category;
 
     @ManyToOne

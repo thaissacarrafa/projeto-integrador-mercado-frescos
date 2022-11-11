@@ -1,5 +1,6 @@
 package com.meli.projetointegradormelifrescos.dto.Input;
 
+import com.meli.projetointegradormelifrescos.dto.BatchStockDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,12 +17,12 @@ import java.util.List;
 @AllArgsConstructor
 public class InboundOrderReqDTO {
     private Long orderNumber;
-    @NotBlank(message = "A data do pedido não pode estar vazia.")
+
     private LocalDate orderDate;
 
     private Long sectionCode;
 
     private Long warehouseCode;
 
-    private List<Batch> batches;
+    private List<BatchStockDTO> batches;
 }
