@@ -1,7 +1,8 @@
 package com.meli.projetointegradormelifrescos.service.Impl;
 
 import com.meli.desafio_quality.exception.NotFoundException;
-import com.meli.projetointegradormelifrescos.repository.ProductAnnoucementRepo;
+import com.meli.projetointegradormelifrescos.model.Announcement;
+import com.meli.projetointegradormelifrescos.repository.AnnoucementRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,15 +11,15 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductAnnoucementService {
+public class AnnoucementService {
         @Autowired
-        private ProductAnnoucementRepo productRepository;
+        private AnnoucementRepo productRepository;
 
     /***
      *   @param message  método responsável por consultar todos os produtos
       */
-        public List<ProductAnnoucement> listAllProducts() {
-            List<ProductAnnoucement> productList = productRepository.findAll();
+        public List<Announcement> listAllProducts() {
+            List<Announcement> productList = productRepository.findAll();
             if(productList.isEmpty()) {
                 throw new NotFoundException("Product list is empty");
             }
@@ -30,9 +31,9 @@ public class ProductAnnoucementService {
      * @param message     método responsável por consultar todos os produtos
      * @return
      */
-    public List<ProductAnnoucement> listByCategory(String category){
+    public List<Announcement> listByCategory(String category){
 
-        List<ProductAnnoucement> products = productRepository.findAll().stream()
+        List<Announcement> products = productRepository.findAll().stream()
         .filter(product -> Objects.equals(product.getCategory(),category.toUpperCase()))
 
                 .collect(Collectors.toList());
