@@ -1,30 +1,26 @@
 package com.meli.projetointegradormelifrescos.controller;
 
 
-import com.meli.projetointegradormelifrescos.dto.BatchStockDTO;
+//import com.meli.projetointegradormelifrescos.dto.BatchStockDTO;
 import com.meli.projetointegradormelifrescos.dto.Input.InboundOrderReqDTO;
-import com.meli.projetointegradormelifrescos.model.Batch;
-import com.meli.projetointegradormelifrescos.service.InboundOrderService;
+
+import com.meli.projetointegradormelifrescos.service.IInboundOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.meli.projetointegradormelifrescos.dto.Input.BatchStockReqDTO;
-import com.meli.projetointegradormelifrescos.model.InboundOrder;
-
-import com.meli.projetointegradormelifrescos.service.IInboundOrder;
-
-import java.util.List;
-
-
 import javax.validation.Valid;
+
+//import com.meli.projetointegradormelifrescos.dto.Input.BatchStockReqDTO;
+//import com.meli.projetointegradormelifrescos.model.InboundOrder;
+
+//import com.meli.projetointegradormelifrescos.service.IInboundOrder;
+
 
 @RestController
 @RequestMapping("/api/v1/fresh-products/")
 public class InboundOrderController {
     @Autowired
-    private InboundOrderService service;
+    private IInboundOrderService service;
 
    // private IInboundOrder service;
 
@@ -38,14 +34,13 @@ public class InboundOrderController {
      *
      * Cadastre um lote com o estoque de produtos que o compõe. Devolva o lote criado com o código de status "201 CREATED".
      * @param dto
-     * @return
-    ***/
+     ***/
 
-    @PostMapping("inboundorder")
-    public ResponseEntity<List<Batch>> createInboundOrder(@RequestBody @Valid InboundOrderReqDTO inboundOrderDTO) {
+    @PostMapping("inboundorder" )
+    public void createInboundOrder(@Valid @RequestBody InboundOrderReqDTO inboundOrderDTO) {
        // InboundOrder inboundOrder = service.createInboundOrder(inboundOrderDTO);
         System.out.println("cheguei");
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(inboundOrderDTO));
+     //   return ResponseEntity.status(HttpStatus.CREATED).body(service.save(inboundOrderDTO));
 
     }
 

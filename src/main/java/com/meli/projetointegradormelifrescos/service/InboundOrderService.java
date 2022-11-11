@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.meli.projetointegradormelifrescos.dto.BatchStockDTO;
 import com.meli.projetointegradormelifrescos.model.Batch;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.meli.projetointegradormelifrescos.dto.Input.BatchStockReqDTO;
@@ -13,7 +15,10 @@ import com.meli.projetointegradormelifrescos.dto.Input.InboundOrderReqDTO;
 
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
 import com.meli.projetointegradormelifrescos.repository.InboundOrderRepo;
+import org.springframework.stereotype.Service;
 
+@Service
+@Data
 public class InboundOrderService implements IInboundOrderService {
 
     @Autowired
