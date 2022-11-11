@@ -13,14 +13,21 @@ public class Announcement {
     private Long id;
 
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
     private BigDecimal price;
 
+    @Column(nullable = false)
+    private String category;
+
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "seller")
     @JsonIgnoreProperties("announcement")
     @JsonBackReference
-    private Category category;
+    private Seller seller;
+
 }

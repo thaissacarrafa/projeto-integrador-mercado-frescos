@@ -8,11 +8,16 @@ import com.fasterxml.jackson.annotation.*;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Warehouse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private String code;
 
     @Column(nullable = false)
     private String name;
@@ -22,5 +27,12 @@ public class Warehouse {
     @JsonBackReference
     private List<Section> sections;
 
-    //@OneToOne(mappedBy = "manager_id") ??
+
+    @OneToMany(mappedBy = "warehouse")
+    @JsonIgnoreProperties("warehouse")
+    private List<Manager> managers;
+
+    @OneToMany(mappedBy = "warehouse")
+    @JsonIgnoreProperties("warehouse")
+    private List<InboundOrder> inboundOrders;
 }
