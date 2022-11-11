@@ -1,5 +1,6 @@
 package com.meli.projetointegradormelifrescos.dto;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,16 +17,16 @@ import javax.validation.constraints.NotBlank;
 public class BatchStockDTO {
     private Long batchNumber;
     private Long productId;
-    @NotBlank(message = "A temperatura atual não pode estar vazia")
+    @NotNull
     private Float currentTemperature;
-    @NotBlank(message = "A quantidade não pode estar vazia")
+    @NotNull
     private int productQuantity;
-    @NotBlank(message = "A data de fabricação não pode estar vazia")
+    @NotNull
     private LocalDateTime manufacturingDate;
-    @NotBlank(message = "A hora de fabricação não pode estar vazia")
+    @NotNull
     private LocalDateTime manufacturingTime;
     private Float volume;
-    @NotBlank(message = "A data de validade não pode estar vazia")
+    @NotNull
     private LocalDate dueDate;
     private BigDecimal price;
 }

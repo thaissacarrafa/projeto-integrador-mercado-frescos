@@ -1,5 +1,7 @@
 package com.meli.projetointegradormelifrescos.dto;
 
+import com.meli.projetointegradormelifrescos.model.Announcement;
+import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -9,29 +11,30 @@ import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
-public class ProductAnnoucementDTO {
+public class AnnoucementDTO {
 
     private Long id;
     @NotBlank(message = "O nome do produto não pode ser vazio! Infome um nome válido.")
     private String name;
-    @NotBlank(message = "O preço do produto não pode ser vazio! Infome um preço válido.")
+    @NotNull
     private BigDecimal price;
-    @NotBlank(message = "A categoria não pode estar vazia. Informe uma categoria válida.")
-    private String category;
     @NotBlank(message = "A descrição não pode estar vazia!")
     private String description;
 
-    public ProductAnnoucementDTO(ProductAnnoucement productAnnoucement) {
-        this.id = productAnnoucement.getId();
-        this.name = productAnnoucement.getName();
-        this.price = productAnnoucement.getPrice();
-        this.category = productAnnoucement.getCategory();
-        this.description = productAnnoucement.getDescription();
+    @NotBlank(message = "A descrição não pode estar vazia!")
+    private String category;
+
+    public AnnoucementDTO(Announcement annoucement) {
+        this.id = annoucement.getId();
+        this.name = annoucement.getName();
+        this.price = annoucement.getPrice();
+        this.category = annoucement.getCategory();
+        this.description = annoucement.getDescription();
     }
 
 // método responsável por converter a lista de Produtos
-    public static List<ProductAnnoucementDTO> convertListProducts(List<ProductAnnoucement> products){
-        return products.stream().map(ProductAnnoucementDTO::new).collect(Collectors.toList());
+    public static List<AnnoucementDTO> convertListProducts(List<Announcement> products){
+        return products.stream().map(AnnoucementDTO::new).collect(Collectors.toList());
     }
 
 }
