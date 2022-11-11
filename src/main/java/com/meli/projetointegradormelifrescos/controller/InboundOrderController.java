@@ -4,6 +4,7 @@ package com.meli.projetointegradormelifrescos.controller;
 import com.meli.projetointegradormelifrescos.dto.BatchStockDTO;
 import com.meli.projetointegradormelifrescos.dto.Input.InboundOrderReqDTO;
 import com.meli.projetointegradormelifrescos.model.Batch;
+import com.meli.projetointegradormelifrescos.service.InboundOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.meli.projetointegradormelifrescos.dto.Input.BatchStockReqDTO;
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
-import com.meli.projetointegradormelifrescos.service.IInboundOrderService;
+
 import com.meli.projetointegradormelifrescos.service.IInboundOrder;
 
 import java.util.List;
@@ -19,10 +20,11 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-
+@RestController
+@RequestMapping("/api/v1/fresh-products/")
 public class InboundOrderController {
     @Autowired
-    private IInboundOrderService service;
+    private InboundOrderService service;
 
    // private IInboundOrder service;
 
@@ -39,7 +41,7 @@ public class InboundOrderController {
      * @return
     ***/
 
-    @PostMapping("/inboundorder")
+    @PostMapping("inboundorder")
     public ResponseEntity<List<Batch>> createInboundOrder(@RequestBody @Valid InboundOrderReqDTO inboundOrderDTO) {
        // InboundOrder inboundOrder = service.createInboundOrder(inboundOrderDTO);
         System.out.println("cheguei");

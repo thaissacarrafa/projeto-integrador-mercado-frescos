@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 public interface IInboundOrderService {
-    public List<Batch> save(InboundOrderReqDTO inboundOrder);
+    List<Batch> save(InboundOrderReqDTO inboundOrder);
     //InboundOrder createInboundOrder(InboundOrderReqDTO inboundOrder);
 
     // InboundOrderDTO convertToDto(InboundOrder inboundOrder);
