@@ -29,6 +29,7 @@ public class BatchStockDTO {
     @NotNull
     private LocalDate dueDate;
     private BigDecimal price;
+    private boolean alert; // requisito 06 Thaíssa
 }
 
 

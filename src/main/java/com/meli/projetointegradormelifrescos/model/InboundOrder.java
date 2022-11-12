@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.*;
 import com.meli.projetointegradormelifrescos.dto.BatchStockDTO;
 
 import java.util.*;
+
+import com.sun.istack.NotNull;
 import lombok.*;
 
 
@@ -41,7 +43,4 @@ public class InboundOrder {
     @JsonIgnoreProperties("inboundOrders")
     private Warehouse warehouse;
 }
-
-
-
 

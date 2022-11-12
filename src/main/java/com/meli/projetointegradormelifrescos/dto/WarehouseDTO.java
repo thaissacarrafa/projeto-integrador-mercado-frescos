@@ -16,6 +16,6 @@ import java.util.List;
 public class WarehouseDTO {
     @NotBlank
     private String warehouseCode;
-    public List<@Valid Manager> managerList;
+    public  Manager managerList;
 
 }

@@ -17,7 +17,7 @@ public class Warehouse {
     private Long id;
 
     @Column(nullable = false)
-    private String code;
+    private Long code;
 
     @Column(nullable = false)
     private String name;
@@ -27,10 +27,10 @@ public class Warehouse {
     @JsonBackReference
     private List<Section> sections;
 
-
-    @OneToMany(mappedBy = "warehouse")
-    @JsonIgnoreProperties("warehouse")
-    private List<Manager> managers;
+    @OneToOne
+    @JoinColumn(name = "manager_id")
+    @JsonIgnoreProperties("manager")
+    private Manager managers;
 
     @OneToMany(mappedBy = "warehouse")
     @JsonIgnoreProperties("warehouse")

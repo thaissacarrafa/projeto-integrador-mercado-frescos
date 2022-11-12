@@ -1,5 +1,6 @@
 package com.meli.projetointegradormelifrescos.model;
 
+import com.meli.projetointegradormelifrescos.enums.Category;
 import lombok.*;
 import java.math.*;
 import javax.persistence.*;
@@ -22,7 +23,7 @@ public class Announcement {
     private BigDecimal price;
 
     @Column(nullable = false)
-    private String category;
+    private Category category;
 
     @ManyToOne
     @JoinColumn(name = "seller")

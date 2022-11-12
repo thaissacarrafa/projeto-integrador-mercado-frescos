@@ -48,6 +48,9 @@ public class BatchStock {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
+    @Column(name = "alert", nullable = false)
+    private boolean alert; // requisito 06 Thaíssa
+
     @ManyToOne
     @JoinColumn(name = "inbound_order_id", nullable = false)
     @JsonIgnoreProperties("inboundOrders")

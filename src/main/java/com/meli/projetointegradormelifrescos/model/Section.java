@@ -22,7 +22,7 @@ public class Section {
     @Column(nullable = false)
     private Float maxCapacity;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     @ManyToOne

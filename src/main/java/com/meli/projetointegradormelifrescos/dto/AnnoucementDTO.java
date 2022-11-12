@@ -1,5 +1,6 @@
 package com.meli.projetointegradormelifrescos.dto;
 
+import com.meli.projetointegradormelifrescos.enums.Category;
 import com.meli.projetointegradormelifrescos.model.Announcement;
 import com.sun.istack.NotNull;
 import lombok.*;
@@ -22,7 +23,7 @@ public class AnnoucementDTO {
     private String description;
 
     @NotBlank(message = "A descrição não pode estar vazia!")
-    private String category;
+    private Category category;
 
     public AnnoucementDTO(Announcement annoucement) {
         this.id = annoucement.getId();

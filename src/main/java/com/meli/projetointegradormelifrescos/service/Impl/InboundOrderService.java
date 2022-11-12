@@ -1,25 +1,21 @@
-package com.meli.projetointegradormelifrescos.service.Impl;
 
+package com.meli.projetointegradormelifrescos.service.Impl;
 
 import com.meli.desafio_quality.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.config.exception.BadRequestException;
 import com.meli.projetointegradormelifrescos.dto.BatchStockDTO;
 import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
 
-
+import java.util.List;
 import java.util.Optional;
-
 import com.meli.projetointegradormelifrescos.mapper.IBatchStockMapper;
 import com.meli.projetointegradormelifrescos.mapper.IInboundOrderMapper;
 import com.meli.projetointegradormelifrescos.model.*;
-import com.meli.projetointegradormelifrescos.repository.BatchStockRepo;
-import com.meli.projetointegradormelifrescos.repository.SectionRepo;
-import com.meli.projetointegradormelifrescos.repository.WarehouseRepo;
+import com.meli.projetointegradormelifrescos.repository.*;
 import com.meli.projetointegradormelifrescos.service.IInboundOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import com.meli.projetointegradormelifrescos.repository.InboundOrderRepo;
 import org.springframework.stereotype.Service;
 
 
@@ -35,6 +31,9 @@ public class InboundOrderService implements IInboundOrderService {
     private SectionRepo sectionRepo;
     @Autowired
     private BatchStockRepo batchStockRepo;
+    @Autowired
+    private ManagerRepo managerRepo;
+
 
     @Override
     public InboundOrderDTO createInboundOrder(InboundOrderDTO inboundOrderDTO) {
@@ -49,7 +48,6 @@ public class InboundOrderService implements IInboundOrderService {
         Section section = findSectionByCode(warehouse, inboundOrderDTO.getSectionCode());
 
         // E que o setor corresponde ao tipo de produto
-
         inboundOrderDTO.getBatchStock().stream().forEach(batch -> {
             sectorIsEqualsBatch(batch, section);
         });
@@ -58,16 +56,17 @@ public class InboundOrderService implements IInboundOrderService {
         ifTheSectionHasCapacity(section, inboundOrderDTO);
 
 
-
-        InboundOrder inboundOrder = IInboundOrderMapper.MAPPER.mappingInboundOrderDTOToInboundOrder(inboundOrderDTO);
-        inboundOrder.setWarehouse(warehouse);
-        inboundOrder.setManager(manager);
-        inboundOrder.setSection(section);
-        inboundOrderRepo.save(inboundOrder);
-        inboundOrderDTO.getBatchStock().forEach(b -> saveBatchStock(b, inboundOrder));
-        return inboundOrderDTO;
+//        InboundOrder inboundOrder = IInboundOrderMapper.MAPPER.mappingInboundOrderDTOToInboundOrder(inboundOrderDTO);
+//        inboundOrder.setWarehouse(warehouse);
+//        inboundOrder.setManager(manager);
+//        inboundOrder.setSection(section);
+//        inboundOrderRepo.save(inboundOrder);
+//        inboundOrderDTO.getBatchStock().forEach(b -> saveBatchStock(b, inboundOrder));
+       return inboundOrderDTO;
 
     }
+
+
         private void saveBatchStock(BatchStockDTO dto, InboundOrder inboundOrder) {
             BatchStock batchStock = IBatchStockMapper.MAPPER.mappingBatchStockDTOToBatchStock(dto);
             batchStock.setInboundOrder(inboundOrder);
@@ -75,10 +74,13 @@ public class InboundOrderService implements IInboundOrderService {
             batchStockRepo.save(batchStock);
         }
 
+
+
     /***
      *
      *  método responsável por validar se a warehouse é válida, identificando
      *  se ele é ou nao vazio
+     * @author Thaíssa Carrafa
      * @return
      */
     private Warehouse validWarehouse(Long warehouseCode) {
@@ -95,28 +97,29 @@ public class InboundOrderService implements IInboundOrderService {
      quem sabe usando stream pra mapear a lista de representantes do armazem e verificar se é igual o informado.
      @param warehouse
      @param warehouse, id
+     @author Thaíssa Carrafa
      ***/
     private Manager findManagerFromWarehouse(Warehouse warehouse, Long managerid) {
-        Optional<Manager> manager = warehouse.getManagers()
-                .stream()
-                .filter(m -> m.getId().equals(managerid)).findFirst();
-        if (manager.isEmpty()) {
-            throw new BadRequestException("Invalid warehouse Id");
+
+        if (!warehouse.getManagers().getId().equals(managerid)) {
+            throw new BadRequestException("Invalid Manager Id");
         }
-        return manager.get();
+
+        return managerRepo.findManagerById(managerid);
     }
 
 
     /***
      * metodo que valida se o setor é o correto
      * @return
+     * @author Thaíssa Carrafa
      */
     private Section findSectionByCode(Warehouse warehouse, Long id) {
         Optional<Section> section = warehouse.getSections()
                 .stream()
                 .filter(s -> s.getId().equals(id)).findFirst();
         if (section.isEmpty()) {
-            throw new BadRequestException("Invalid warehouse Id");
+            throw new BadRequestException("Invalid section");
         }
         return section.get();
     }
@@ -124,6 +127,7 @@ public class InboundOrderService implements IInboundOrderService {
 
     /***
      * que o setor corresponde aos tipos de produto - presumindo que todo o lote vem com o mesmo tipo de categoria
+     * @author Thaíssa Carrafa
      */
      private void sectorIsEqualsBatch(BatchStockDTO batch, Section section) {
             Float maximumTemperature = section.getCategory().getMaximumTemperature();
@@ -133,19 +137,19 @@ public class InboundOrderService implements IInboundOrderService {
             if (batchCurrentTemperature > maximumTemperature || batchCurrentTemperature < minimumTemperature) {
                 throw new BadRequestException("Batch doesn't belong to the section.");
             }
-        }
+     }
 
     /***
      * que o setor tem espaço pra colocar o lote
+     * @author Thaíssa Carrafa
      */
 
     private void ifTheSectionHasCapacity(Section section, InboundOrderDTO inbound) {
         Float maxCapacity = section.getMaxCapacity();
-        int currentCapacity = section.getBatchStocks().size();
+        int currentCapacity = section.getBatchStocks().size(); // ele analisa o tamanho de produtos do json
         Float availableCapacity = maxCapacity - currentCapacity;
         int neededCapacity = inbound.getBatchStock().size();
-        boolean dontHaveCapacity = availableCapacity < neededCapacity;
-        if (dontHaveCapacity) {
+        if (availableCapacity < neededCapacity) {
             throw new BadRequestException("Section don't have enought space.");
         }
     }

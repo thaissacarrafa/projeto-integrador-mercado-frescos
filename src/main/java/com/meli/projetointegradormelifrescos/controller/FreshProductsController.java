@@ -22,13 +22,13 @@ public class FreshProductsController {
                 return ResponseEntity.ok(service.getAllProductsAnnoucement());
         }
 
-        @GetMapping("/list")
+     /*   @GetMapping("/list")
         public ResponseEntity<List<AnnoucementDTO>> getAllProductsByCategory(@RequestParam(required = false) Optional<String> category){
-                Optional<Category> categoryBy = Optional.empty();
+                String categoryBy = Optional.empty();
                 if(category.isPresent()){
                         categoryBy = Optional.of(Category.valueOf(category.get()));
                 }
                 return ResponseEntity.ok(service.getAllProductsByCategory(categoryBy));
-        }
+        } */
 
 }
