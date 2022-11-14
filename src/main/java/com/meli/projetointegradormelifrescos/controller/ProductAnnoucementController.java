@@ -1,16 +1,5 @@
 package com.meli.projetointegradormelifrescos.controller;
 
-import com.meli.projetointegradormelifrescos.dto.ProductAnnoucementDTO;
-import com.meli.projetointegradormelifrescos.model.ProductAnnoucement;
-import com.meli.projetointegradormelifrescos.service.ProductAnnoucementService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
-
 
 public class ProductAnnoucementController {
 /*

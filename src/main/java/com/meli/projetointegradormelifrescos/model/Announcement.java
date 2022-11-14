@@ -1,5 +1,6 @@
 package com.meli.projetointegradormelifrescos.model;
 
+import com.meli.projetointegradormelifrescos.enums.Category;
 import lombok.*;
 import java.math.*;
 import javax.persistence.*;
@@ -13,19 +14,21 @@ public class Announcement {
     private Long id;
 
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
     private BigDecimal price;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    @JsonIgnoreProperties("announcement")
-    @JsonBackReference
+    @Column(nullable = false)
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "saller_id", referencedColumnName = "id")
-    @JsonIgnoreProperties({"batches", "storage"})
-    private Section section;
+    @JoinColumn(name = "seller")
+    @JsonIgnoreProperties("announcement")
+    @JsonBackReference
+    private Seller seller;
+
 }

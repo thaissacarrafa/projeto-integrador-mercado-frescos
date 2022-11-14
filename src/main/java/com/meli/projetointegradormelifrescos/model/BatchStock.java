@@ -1,5 +1,6 @@
 package com.meli.projetointegradormelifrescos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,6 +24,12 @@ public class BatchStock {
     @Column(name = "current_temperature", nullable = false)
     private Float currentTemperature;
 
+    @Column(name = "min_temperature", nullable = false)
+    private Float minTemperature;
+
+    @Column(name = "max_temperature", nullable = false)
+    private Float MaxTemperature;
+
     @Column(name = "initial_quantity", nullable = false)
     private Integer initialQuantity;
 
@@ -40,6 +47,19 @@ public class BatchStock {
 
     @Column(name = "price", nullable = false)
     private BigDecimal price;
+
+    @Column(name = "alert", nullable = false)
+    private boolean alert; // requisito 06 Thaíssa
+
+    @ManyToOne
+    @JoinColumn(name = "inbound_order_id", nullable = false)
+    @JsonIgnoreProperties("inboundOrders")
+    private InboundOrder inboundOrder;
+
+    @ManyToOne
+    @JoinColumn(name = "section_id", nullable = false)
+    @JsonIgnoreProperties("batchStocks")
+    private Section section;
 
 }
 

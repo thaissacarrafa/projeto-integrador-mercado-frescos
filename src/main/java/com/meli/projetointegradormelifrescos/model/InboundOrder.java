@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.*;
 import com.meli.projetointegradormelifrescos.dto.BatchStockDTO;
 
 import java.util.*;
+
+import com.sun.istack.NotNull;
 import lombok.*;
 
 
@@ -23,10 +25,22 @@ public class InboundOrder {
     @OneToMany(mappedBy = "inboundOrder")
     @JsonIgnoreProperties("inboundOrder")
     @JsonManagedReference
-    private List<Batch> batches;
+    private List<BatchStock> batchStocks;
 
     @ManyToOne
-    @JoinColumn(name = "section_id", referencedColumnName = "id")
-    @JsonIgnoreProperties({"batches", "storage"})
-    private Section section;
+    @JoinColumn(name = "section_id", nullable = false)
+    @JsonIgnoreProperties("inboundOrders")
+    public Section section;
+
+
+    @OneToOne
+    @JoinColumn(name = "manager_id", nullable = false)
+    private Manager manager;
+
+
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id", nullable = false)
+    @JsonIgnoreProperties("inboundOrders")
+    private Warehouse warehouse;
 }
+

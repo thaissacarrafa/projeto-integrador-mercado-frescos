@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.*;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Seller {
 
     @Id
@@ -17,12 +19,9 @@ public class Seller {
     @Column(nullable = false)
     private String name;
 
-  //  @OneToMany(mappedBy = "seller")
-   // @JsonIgnoreProperties("seller")
-   // private List<Announcement> announcements;
 
     @OneToMany(mappedBy = "seller")
     @JsonIgnoreProperties("seller")
     @JsonManagedReference
-    private List<Section> sections;
+    private List<Announcement> announcements;
 }

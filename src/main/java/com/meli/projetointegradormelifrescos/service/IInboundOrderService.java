@@ -1,21 +1,9 @@
 package com.meli.projetointegradormelifrescos.service;
 
-
-import com.meli.projetointegradormelifrescos.dto.BatchStockDTO;
-import com.meli.projetointegradormelifrescos.dto.Input.InboundOrderReqDTO;
-import com.meli.projetointegradormelifrescos.model.Batch;
-import com.meli.projetointegradormelifrescos.model.InboundOrder;
-import org.springframework.stereotype.Service;
-
-
-import java.util.List;
-
+import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
 
 public interface IInboundOrderService {
-    List<Batch> save(InboundOrderReqDTO inboundOrder);
-    //InboundOrder createInboundOrder(InboundOrderReqDTO inboundOrder);
 
-    // InboundOrderDTO convertToDto(InboundOrder inboundOrder);
+    InboundOrderDTO createInboundOrder(InboundOrderDTO inboundOrder);
 
-    //InboundOrder readOrder(long id);
 }
