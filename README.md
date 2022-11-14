@@ -27,7 +27,6 @@ sofrerá alterações.
 
 Este projeto utilizará as seguintes tecnologias:
 
-
 <table>
   <tr>
     <td align="center">
