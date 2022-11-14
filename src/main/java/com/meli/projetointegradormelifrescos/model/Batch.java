@@ -27,12 +27,6 @@ public class Batch {
     @Column(name = "current_temperature", nullable = false)
     private Float currentTemperature;
 
-    @Column(name = "min_temperature", nullable = false)
-    private Float minTemperature;
-
-    @Column(name = "max_temperature", nullable = false)
-    private Float maxTemperature;
-
     @Column(name = "initial_quantity", nullable = false)
     private Integer initialQuantity;
 
@@ -50,9 +44,6 @@ public class Batch {
 
     @Column(name = "price", nullable = false)
     private BigDecimal price;
-
-    @Column(name = "alert", nullable = false)
-    private boolean alert; // requisito 06 Thaíssa
 
     @ManyToOne
     @JoinColumn(name = "inbound_order_id", nullable = false)

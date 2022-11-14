@@ -39,8 +39,6 @@ public class BatchDTO {
 
     private BigDecimal price;
 
-    private boolean alert; // requisito 06 Thaíssa
-
     public BatchDTO(Batch batch) {
         this.batchNumber = batch.getBatchNumber();
         this.productId = batch.getProductId();
