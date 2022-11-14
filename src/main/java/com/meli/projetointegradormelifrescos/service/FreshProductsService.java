@@ -1,8 +1,8 @@
-package com.meli.projetointegradormelifrescos.service.Impl;
+package com.meli.projetointegradormelifrescos.service;
 
 import com.meli.projetointegradormelifrescos.dto.AnnoucementDTO;
 import com.meli.projetointegradormelifrescos.enums.Category;
-import com.meli.projetointegradormelifrescos.service.IFreshProductsService;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;

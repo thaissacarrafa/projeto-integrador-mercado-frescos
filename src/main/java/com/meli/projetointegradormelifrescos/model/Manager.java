@@ -19,4 +19,5 @@ public class Manager {
     @JoinColumn(name = "warehouse_id")
     @JsonIgnoreProperties("manager")
     private Warehouse warehouse;
+
 }

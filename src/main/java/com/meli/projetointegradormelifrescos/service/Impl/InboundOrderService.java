@@ -1,19 +1,19 @@
 
 package com.meli.projetointegradormelifrescos.service.Impl;
 
-import com.meli.desafio_quality.exception.NotFoundException;
+import com.meli.projetointegradormelifrescos.config.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.config.exception.BadRequestException;
-import com.meli.projetointegradormelifrescos.dto.BatchStockDTO;
-import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
+import com.meli.projetointegradormelifrescos.dto.BatchDTO;
+import com.meli.projetointegradormelifrescos.dto.Output.InboundOrderDTO;
 
-import java.util.List;
 import java.util.Optional;
-import com.meli.projetointegradormelifrescos.mapper.IBatchStockMapper;
-import com.meli.projetointegradormelifrescos.mapper.IInboundOrderMapper;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
 import com.meli.projetointegradormelifrescos.model.*;
 import com.meli.projetointegradormelifrescos.repository.*;
 import com.meli.projetointegradormelifrescos.service.IInboundOrderService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -24,26 +24,30 @@ import org.springframework.stereotype.Service;
 @Service
 public class InboundOrderService implements IInboundOrderService {
 
+    @AutoConfigureOrder
+    private InboundOrder inboundOrder;
+
     @Autowired
     private InboundOrderRepo inboundOrderRepo;
 
-    @AutoConfigureOrder
-    private InboundOrder inboundOrder;
     @Autowired
     private WarehouseRepo warehouseRepo;
 
-    @Autowired
-    private SectionRepo sectionRepo;
-    @Autowired
-    private BatchStockRepo batchStockRepo;
+    // @Autowired
+    // private SectionRepo sectionRepo;
+
+    // @Autowired
+    // private BatchRepo batchStockRepo;
+
     @Autowired
     private ManagerRepo managerRepo;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    // @Autowired
+    // private ModelMapper modelMapper;
 
 
     @Override
+    @Transactional
     public InboundOrderDTO createInboundOrder(InboundOrderDTO inboundOrderDTO) {
 
         // se o armazém é válido
@@ -63,25 +67,25 @@ public class InboundOrderService implements IInboundOrderService {
         // e que a section tem espaco
         ifTheSectionHasCapacity(section, inboundOrderDTO);
 
+        InboundOrder inboundOrderEntity = new InboundOrder();
 
-        InboundOrderDTO convertEntityToDTO = modelMapper.map(inboundOrder, InboundOrderDTO.class);
+        inboundOrderEntity.setOrderDate(inboundOrderDTO.getOrderDate());
+        inboundOrderEntity.setBatches(inboundOrderDTO.getBatchStock().stream().map(BatchDTO::toEntity).collect(Collectors.toList()));
+        inboundOrderEntity.setSection(inboundOrderDTO.getSectionCode());
+        inboundOrderEntity.setManager(inboundOrderDTO.getManagerId());
+        inboundOrderEntity.setWarehouse(inboundOrderDTO.getWarehouseCode());
 
-//        InboundOrder inboundOrder = IInboundOrderMapper.MAPPER.mappingInboundOrderDTOToInboundOrder(inboundOrderDTO);
-        inboundOrder.setWarehouse(warehouse);
-        inboundOrder.setManager(manager);
-        inboundOrder.setSection(section);
-        inboundOrderRepo.save(inboundOrder);
-        inboundOrderDTO.getBatchStock().forEach(b -> saveBatchStock(b, inboundOrder));
-       return inboundOrderDTO;
+        inboundOrderRepo.save(inboundOrderEntity);
 
+        return inboundOrderDTO;
     }
     
-        private void saveBatchStock(BatchStockDTO dto, InboundOrder inboundOrder) {
-            BatchStock batchStock = IBatchStockMapper.MAPPER.mappingBatchStockDTOToBatchStock(dto);
-            batchStock.setInboundOrder(inboundOrder);
-            batchStock.setSection(inboundOrder.getSection());
-            batchStockRepo.save(batchStock);
-        }
+        // private void saveBatchStock(BatchDTO dto, InboundOrder inboundOrder) {
+        //     Batch batchStock = IBatchStockMapper.MAPPER.mappingBatchStockDTOToBatchStock(dto);
+        //     batchStock.setInboundOrder(inboundOrder);
+        //     batchStock.setSection(inboundOrder.getSection());
+        //     batchStockRepo.save(batchStock);
+        // }
 
     /***
      *
@@ -136,7 +140,7 @@ public class InboundOrderService implements IInboundOrderService {
      * que o setor corresponde aos tipos de produto - presumindo que todo o lote vem com o mesmo tipo de categoria
      * @author Thaíssa Carrafa
      */
-     private void sectorIsEqualsBatch(BatchStockDTO batch, Section section) {
+     private void sectorIsEqualsBatch(BatchDTO batch, Section section) {
             Float maximumTemperature = section.getCategory().getMaximumTemperature();
             Float minimumTemperature = section.getCategory().getMinimumTemperature();
             Float batchCurrentTemperature = batch.getCurrentTemperature();
@@ -153,7 +157,7 @@ public class InboundOrderService implements IInboundOrderService {
 
     private void ifTheSectionHasCapacity(Section section, InboundOrderDTO inbound) {
         Float maxCapacity = section.getMaxCapacity();
-        int currentCapacity = section.getBatchStocks().size(); // ele analisa o tamanho de produtos do json
+        int currentCapacity = section.getBatches().size(); // ele analisa o tamanho de produtos do json
         Float availableCapacity = maxCapacity - currentCapacity;
         int neededCapacity = inbound.getBatchStock().size();
         if (availableCapacity < neededCapacity) {

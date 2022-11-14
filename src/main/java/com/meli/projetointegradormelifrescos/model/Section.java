@@ -39,5 +39,5 @@ public class Section {
     @OneToMany
     @JsonIgnoreProperties("section")
     @JsonBackReference
-    private List<BatchStock> batchStocks;
+    private List<Batch> batches;
 }

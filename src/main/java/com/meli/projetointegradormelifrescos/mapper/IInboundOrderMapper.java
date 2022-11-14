@@ -1,6 +1,6 @@
 package com.meli.projetointegradormelifrescos.mapper;
 
-import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
+import com.meli.projetointegradormelifrescos.dto.Output.InboundOrderDTO;
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

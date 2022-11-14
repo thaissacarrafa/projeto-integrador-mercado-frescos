@@ -1,7 +1,7 @@
 package com.meli.projetointegradormelifrescos.controller;
 
 
-import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
+import com.meli.projetointegradormelifrescos.dto.Output.InboundOrderDTO;
 import com.meli.projetointegradormelifrescos.service.IInboundOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
