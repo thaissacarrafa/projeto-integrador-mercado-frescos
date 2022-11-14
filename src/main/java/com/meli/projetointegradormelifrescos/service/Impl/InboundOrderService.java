@@ -13,9 +13,11 @@ import com.meli.projetointegradormelifrescos.mapper.IInboundOrderMapper;
 import com.meli.projetointegradormelifrescos.model.*;
 import com.meli.projetointegradormelifrescos.repository.*;
 import com.meli.projetointegradormelifrescos.service.IInboundOrderService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
 
 
@@ -24,6 +26,9 @@ public class InboundOrderService implements IInboundOrderService {
 
     @Autowired
     private InboundOrderRepo inboundOrderRepo;
+
+    @AutoConfigureOrder
+    private InboundOrder inboundOrder;
     @Autowired
     private WarehouseRepo warehouseRepo;
 
@@ -33,6 +38,9 @@ public class InboundOrderService implements IInboundOrderService {
     private BatchStockRepo batchStockRepo;
     @Autowired
     private ManagerRepo managerRepo;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
 
     @Override
@@ -56,25 +64,24 @@ public class InboundOrderService implements IInboundOrderService {
         ifTheSectionHasCapacity(section, inboundOrderDTO);
 
 
+        InboundOrderDTO convertEntityToDTO = modelMapper.map(inboundOrder, InboundOrderDTO.class);
+
 //        InboundOrder inboundOrder = IInboundOrderMapper.MAPPER.mappingInboundOrderDTOToInboundOrder(inboundOrderDTO);
-//        inboundOrder.setWarehouse(warehouse);
-//        inboundOrder.setManager(manager);
-//        inboundOrder.setSection(section);
-//        inboundOrderRepo.save(inboundOrder);
-//        inboundOrderDTO.getBatchStock().forEach(b -> saveBatchStock(b, inboundOrder));
+        inboundOrder.setWarehouse(warehouse);
+        inboundOrder.setManager(manager);
+        inboundOrder.setSection(section);
+        inboundOrderRepo.save(inboundOrder);
+        inboundOrderDTO.getBatchStock().forEach(b -> saveBatchStock(b, inboundOrder));
        return inboundOrderDTO;
 
     }
-
-
+    
         private void saveBatchStock(BatchStockDTO dto, InboundOrder inboundOrder) {
             BatchStock batchStock = IBatchStockMapper.MAPPER.mappingBatchStockDTOToBatchStock(dto);
             batchStock.setInboundOrder(inboundOrder);
             batchStock.setSection(inboundOrder.getSection());
             batchStockRepo.save(batchStock);
         }
-
-
 
     /***
      *

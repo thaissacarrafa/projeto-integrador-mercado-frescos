@@ -26,4 +26,5 @@ public class InboundOrderDTO {
 
     @NotNull
     private Long managerId;
+
 }

@@ -23,5 +23,5 @@ public class InboundOrderReqDTO {
 
     private Long warehouseCode;
 
-    private List<BatchStockReqDTO> batches;
+    private List<Batch> batches;
 }
