@@ -32,15 +32,15 @@ public class InboundOrderService implements IInboundOrderService {
 
     @Autowired
     private WarehouseRepo warehouseRepo;
-
-    @Autowired
-    private BatchService batchService;
+//
+//    @Autowired
+//    private BatchService batchService;
 
     // @Autowired
     // private SectionRepo sectionRepo;
 
-    // @Autowired
-    // private BatchRepo batchStockRepo;
+     @Autowired
+     private BatchRepo batchRepo;
 
     @Autowired
     private ManagerRepo managerRepo;
@@ -80,7 +80,7 @@ public class InboundOrderService implements IInboundOrderService {
 
         inboundOrderRepo.save(inboundOrderEntity);
 
-        inboundOrderDTO.getBatchStock().forEach(b -> saveBatchStock(b, inboundOrder));
+        inboundOrderDTO.getBatchStock().forEach(b -> saveBatchStock(b, inboundOrderEntity));
 
         return inboundOrderDTO;
     }
@@ -89,7 +89,6 @@ public class InboundOrderService implements IInboundOrderService {
         Batch batchStock = new Batch();
          batchStock.setBatchNumber(dto.getBatchNumber());
          batchStock.setProductId(dto.getProductId());
-         batchStock.setProductQuantity(dto.getProductQuantity());
          batchStock.setCurrentTemperature(dto.getCurrentTemperature());
          batchStock.setManufacturingTime(dto.getManufacturingTime());
          batchStock.setManufacturingDate(dto.getManufacturingDate());
@@ -97,9 +96,11 @@ public class InboundOrderService implements IInboundOrderService {
          batchStock.setDueDate(dto.getDueDate());
          batchStock.setPrice(dto.getPrice());
          batchStock.setInboundOrder(inboundOrder);
-         batchStock.setInitialQuantity(dto.getInitialQuantity());
-         batchStock.setMaxTemperature(dto.getMaxTemperature());
+         batchStock.setInitialQuantity(dto.getProductQuantity());
          batchStock.setMinTemperature(dto.getMinTemperature());
+         batchStock.setMaxTemperature(dto.getMaxTemperature());
+         batchStock.setProductQuantity(dto.getProductQuantity());
+         batchStock.setSection(inboundOrder.getSection());
          batchRepo.save(batchStock);
      }
     
@@ -171,7 +172,7 @@ public class InboundOrderService implements IInboundOrderService {
             if (batchCurrentTemperature > maximumTemperature || batchCurrentTemperature < minimumTemperature) {
                 throw new BadRequestException("Batch doesn't belong to the section.");
             }
-     }
+    }
 
     /***
      * que o setor tem espaço pra colocar o lote

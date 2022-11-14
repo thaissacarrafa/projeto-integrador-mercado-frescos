@@ -18,8 +18,11 @@ public class Batch {
     @Column(name = "id")
     private Long batchNumber;
 
-    @Column(name = "product_sku", nullable = false)
+    @Column(name = "product_id", nullable = false)
     private Long productId;
+
+    @Column(name = "product_quantity", nullable = false)
+    private int productQuantity;
 
     @Column(name = "current_temperature", nullable = false)
     private Float currentTemperature;

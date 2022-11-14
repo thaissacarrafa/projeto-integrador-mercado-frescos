@@ -24,6 +24,12 @@ public class BatchDTO {
     private Float currentTemperature;
 
     @NotNull
+    private Float minTemperature;
+
+    @NotNull
+    private Float maxTemperature;
+
+    @NotNull
     private int productQuantity;
 
     @NotNull
@@ -48,6 +54,8 @@ public class BatchDTO {
         this.currentTemperature = batch.getCurrentTemperature();
         this.manufacturingDate = batch.getManufacturingDate();
         this.manufacturingTime = batch.getManufacturingTime();
+        this.maxTemperature = batch.getMaxTemperature();
+        this.minTemperature = batch.getMinTemperature();
         this.volume = batch.getVolume();
         this.dueDate = batch.getDueDate();
         this.price = batch.getPrice();
@@ -63,6 +71,8 @@ public class BatchDTO {
         batch.setManufacturingDate(batchDTO.getManufacturingDate());
         batch.setManufacturingTime(batchDTO.getManufacturingTime());
         batch.setVolume(batchDTO.getVolume());
+        batch.setMaxTemperature(batchDTO.getMaxTemperature());
+        batch.setMinTemperature(batchDTO.getMinTemperature());
         batch.setDueDate(batchDTO.getDueDate());
         batch.setPrice(batchDTO.getPrice());
 
