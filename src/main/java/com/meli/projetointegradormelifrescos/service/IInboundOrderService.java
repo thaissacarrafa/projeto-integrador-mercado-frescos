@@ -1,9 +1,12 @@
 package com.meli.projetointegradormelifrescos.service;
 
-import com.meli.projetointegradormelifrescos.dto.Output.InboundOrderDTO;
+import com.meli.projetointegradormelifrescos.dto.BatchDTO;
+import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
+
+import java.util.List;
 
 public interface IInboundOrderService {
 
-    InboundOrderDTO createInboundOrder(InboundOrderDTO inboundOrder);
+    List<BatchDTO> createInboundOrder(InboundOrderDTO inboundOrder);
 
 }

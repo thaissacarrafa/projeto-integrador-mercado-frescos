@@ -4,12 +4,11 @@ package com.meli.projetointegradormelifrescos.service.Impl;
 import com.meli.projetointegradormelifrescos.config.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.config.exception.BadRequestException;
 import com.meli.projetointegradormelifrescos.dto.BatchDTO;
-import com.meli.projetointegradormelifrescos.dto.Output.InboundOrderDTO;
+import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
 
 import com.meli.projetointegradormelifrescos.model.*;
 import com.meli.projetointegradormelifrescos.repository.*;
@@ -32,12 +31,7 @@ public class InboundOrderService implements IInboundOrderService {
 
     @Autowired
     private WarehouseRepo warehouseRepo;
-//
-//    @Autowired
-//    private BatchService batchService;
 
-    // @Autowired
-    // private SectionRepo sectionRepo;
 
      @Autowired
      private BatchRepo batchRepo;
@@ -45,13 +39,11 @@ public class InboundOrderService implements IInboundOrderService {
     @Autowired
     private ManagerRepo managerRepo;
 
-    // @Autowired
-    // private ModelMapper modelMapper;
 
 
     @Override
     // @Transactional
-    public InboundOrderDTO createInboundOrder(InboundOrderDTO inboundOrderDTO) {
+    public List<BatchDTO> createInboundOrder(InboundOrderDTO inboundOrderDTO) {
 
         // se o armazém é válido
         Warehouse warehouse = validWarehouse(inboundOrderDTO.getWarehouseCode());
@@ -76,16 +68,15 @@ public class InboundOrderService implements IInboundOrderService {
         inboundOrderEntity.setBatches(inboundOrderDTO.getBatchStock().stream().map(BatchDTO::toEntity).collect(Collectors.toList()));
         inboundOrderEntity.setSection(section);
         inboundOrderEntity.setManager(manager);
+        inboundOrderEntity.setOrderNumber(inboundOrderDTO.getOrderNumber());
         inboundOrderEntity.setWarehouse(warehouse);
 
         inboundOrderRepo.save(inboundOrderEntity);
-
         inboundOrderDTO.getBatchStock().forEach(b -> saveBatchStock(b, inboundOrderEntity));
-
-        return inboundOrderDTO;
+        return inboundOrderDTO.getBatchStock();
     }
 
-    private void saveBatchStock(BatchDTO dto, InboundOrder inboundOrder) {
+    private Batch saveBatchStock(BatchDTO dto, InboundOrder inboundOrder) {
         Batch batchStock = new Batch();
          batchStock.setBatchNumber(dto.getBatchNumber());
          batchStock.setProductId(dto.getProductId());
@@ -97,25 +88,18 @@ public class InboundOrderService implements IInboundOrderService {
          batchStock.setPrice(dto.getPrice());
          batchStock.setInboundOrder(inboundOrder);
          batchStock.setInitialQuantity(dto.getProductQuantity());
-         batchStock.setMinTemperature(dto.getMinTemperature());
-         batchStock.setMaxTemperature(dto.getMaxTemperature());
          batchStock.setProductQuantity(dto.getProductQuantity());
          batchStock.setSection(inboundOrder.getSection());
          batchRepo.save(batchStock);
+         return batchStock;
      }
-    
-        // private void saveBatchStock(BatchDTO dto, InboundOrder inboundOrder) {
-        //     Batch batchStock = IBatchStockMapper.MAPPER.mappingBatchStockDTOToBatchStock(dto);
-        //     batchStock.setInboundOrder(inboundOrder);
-        //     batchStock.setSection(inboundOrder.getSection());
-        //     batchStockRepo.save(batchStock);
-        // }
+
 
     /***
      *
      *  método responsável por validar se a warehouse é válida, identificando
      *  se ele é ou nao vazio
-     * @author Thaíssa Carrafa
+     * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      * @return
      */
     private Warehouse validWarehouse(Long warehouseCode) {
@@ -132,7 +116,7 @@ public class InboundOrderService implements IInboundOrderService {
      quem sabe usando stream pra mapear a lista de representantes do armazem e verificar se é igual o informado.
      @param warehouse
      @param warehouse, id
-     @author Thaíssa Carrafa
+     @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      ***/
     private Manager findManagerFromWarehouse(Warehouse warehouse, Long managerid) {
 
@@ -147,7 +131,7 @@ public class InboundOrderService implements IInboundOrderService {
     /***
      * metodo que valida se o setor é o correto
      * @return
-     * @author Thaíssa Carrafa
+     * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
     private Section findSectionByCode(Warehouse warehouse, Long id) {
         Optional<Section> section = warehouse.getSections()
@@ -162,7 +146,7 @@ public class InboundOrderService implements IInboundOrderService {
 
     /***
      * que o setor corresponde aos tipos de produto - presumindo que todo o lote vem com o mesmo tipo de categoria
-     * @author Thaíssa Carrafa
+     * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
      private void sectorIsEqualsBatch(BatchDTO batch, Section section) {
             Float maximumTemperature = section.getCategory().getMaximumTemperature();
@@ -176,7 +160,7 @@ public class InboundOrderService implements IInboundOrderService {
 
     /***
      * que o setor tem espaço pra colocar o lote
-     * @author Thaíssa Carrafa
+     * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
 
     private void ifTheSectionHasCapacity(Section section, InboundOrderDTO inbound) {

@@ -20,6 +20,9 @@ public class InboundOrder {
     @Column(nullable = false)
     private LocalDate orderDate;
 
+    @Column(nullable = false)
+    private Long orderNumber;
+
     @OneToMany(mappedBy = "inboundOrder")
     @JsonIgnoreProperties("inboundOrder")
     @JsonManagedReference
