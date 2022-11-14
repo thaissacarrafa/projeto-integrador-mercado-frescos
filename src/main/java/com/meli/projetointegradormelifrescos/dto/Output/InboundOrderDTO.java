@@ -35,9 +35,9 @@ public class InboundOrderDTO {
     public InboundOrderDTO(InboundOrder inboundOrder) {
         this.orderNumber = inboundOrder.getId();
         this.orderDate = inboundOrder.getOrderDate();
-        this.sectionCode = inboundOrder.getSection();
-        this.warehouseCode = inboundOrder.getWarehouse();
-        this.managerId = inboundOrder.getManager();
+        this.sectionCode = inboundOrder.getSection().getId();
+        this.warehouseCode = inboundOrder.getWarehouse().getId();
+        this.managerId = inboundOrder.getManager().getId();
         this.batchStock = inboundOrder.getBatches().stream().map(BatchDTO::new).collect(Collectors.toList());
     }
 

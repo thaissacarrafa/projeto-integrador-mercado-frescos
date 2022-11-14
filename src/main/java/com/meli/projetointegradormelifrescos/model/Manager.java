@@ -20,4 +20,14 @@ public class Manager {
     @JsonIgnoreProperties("manager")
     private Warehouse warehouse;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "section_id")
+    @JsonIgnoreProperties("manager")
+    private Section section;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "inbound_order_id")
+    @JsonIgnoreProperties("manager")
+    private InboundOrder inboundOrder;
+
 }

@@ -33,6 +33,9 @@ public class InboundOrderService implements IInboundOrderService {
     @Autowired
     private WarehouseRepo warehouseRepo;
 
+    @Autowired
+    private BatchService batchService;
+
     // @Autowired
     // private SectionRepo sectionRepo;
 
@@ -47,7 +50,7 @@ public class InboundOrderService implements IInboundOrderService {
 
 
     @Override
-    @Transactional
+    // @Transactional
     public InboundOrderDTO createInboundOrder(InboundOrderDTO inboundOrderDTO) {
 
         // se o armazém é válido
@@ -71,14 +74,34 @@ public class InboundOrderService implements IInboundOrderService {
 
         inboundOrderEntity.setOrderDate(inboundOrderDTO.getOrderDate());
         inboundOrderEntity.setBatches(inboundOrderDTO.getBatchStock().stream().map(BatchDTO::toEntity).collect(Collectors.toList()));
-        inboundOrderEntity.setSection(inboundOrderDTO.getSectionCode());
-        inboundOrderEntity.setManager(inboundOrderDTO.getManagerId());
-        inboundOrderEntity.setWarehouse(inboundOrderDTO.getWarehouseCode());
+        inboundOrderEntity.setSection(section);
+        inboundOrderEntity.setManager(manager);
+        inboundOrderEntity.setWarehouse(warehouse);
 
         inboundOrderRepo.save(inboundOrderEntity);
 
+        inboundOrderDTO.getBatchStock().forEach(b -> saveBatchStock(b, inboundOrder));
+
         return inboundOrderDTO;
     }
+
+    private void saveBatchStock(BatchDTO dto, InboundOrder inboundOrder) {
+        Batch batchStock = new Batch();
+         batchStock.setBatchNumber(dto.getBatchNumber());
+         batchStock.setProductId(dto.getProductId());
+         batchStock.setProductQuantity(dto.getProductQuantity());
+         batchStock.setCurrentTemperature(dto.getCurrentTemperature());
+         batchStock.setManufacturingTime(dto.getManufacturingTime());
+         batchStock.setManufacturingDate(dto.getManufacturingDate());
+         batchStock.setVolume(dto.getVolume());
+         batchStock.setDueDate(dto.getDueDate());
+         batchStock.setPrice(dto.getPrice());
+         batchStock.setInboundOrder(inboundOrder);
+         batchStock.setInitialQuantity(dto.getInitialQuantity());
+         batchStock.setMaxTemperature(dto.getMaxTemperature());
+         batchStock.setMinTemperature(dto.getMinTemperature());
+         batchRepo.save(batchStock);
+     }
     
         // private void saveBatchStock(BatchDTO dto, InboundOrder inboundOrder) {
         //     Batch batchStock = IBatchStockMapper.MAPPER.mappingBatchStockDTOToBatchStock(dto);

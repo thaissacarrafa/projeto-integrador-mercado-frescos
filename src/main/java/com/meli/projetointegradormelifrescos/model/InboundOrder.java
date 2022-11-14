@@ -28,17 +28,17 @@ public class InboundOrder {
     @ManyToOne
     @JoinColumn(name = "section_id", nullable = false)
     @JsonIgnoreProperties("inboundOrders")
-    public Long section;
+    public Section section;
 
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "manager_id", nullable = false)
-    private Long manager;
+    private Manager manager;
 
 
     @ManyToOne
     @JoinColumn(name = "warehouse_id", nullable = false)
     @JsonIgnoreProperties("inboundOrders")
-    private Long warehouse;
+    private Warehouse warehouse;
 }
 
