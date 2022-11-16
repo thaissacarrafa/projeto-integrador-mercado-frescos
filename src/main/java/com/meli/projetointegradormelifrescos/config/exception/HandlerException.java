@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class HandlerException {
 
-    @ExceptionHandler(com.meli.desafio_quality.exception.NotFoundException.class)
+    @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ExceptionDetails> handlerNotFoundException(
-            com.meli.desafio_quality.exception.NotFoundException e
+            NotFoundException e
     ) {
         ExceptionDetails exceptionDetails = ExceptionDetails
                 .builder()
