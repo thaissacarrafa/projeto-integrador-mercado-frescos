@@ -10,8 +10,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.meli.projetointegradormelifrescos.enums.repository.BatchRepo;
+import com.meli.projetointegradormelifrescos.enums.repository.InboundOrderRepo;
+import com.meli.projetointegradormelifrescos.enums.repository.ManagerRepo;
+import com.meli.projetointegradormelifrescos.enums.repository.WarehouseRepo;
 import com.meli.projetointegradormelifrescos.model.*;
-import com.meli.projetointegradormelifrescos.repository.*;
 import com.meli.projetointegradormelifrescos.service.IInboundOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -103,7 +106,7 @@ public class InboundOrderService implements IInboundOrderService {
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      * @return
      */
-    private Warehouse validWarehouse(Long warehouseCode) {
+    public Warehouse validWarehouse(Long warehouseCode) {
         Optional<Warehouse> warehouse = warehouseRepo.findWarehouseByCode(warehouseCode);
         if (warehouse.isEmpty()) {
             throw new NotFoundException("Invalid warehouse Code");
