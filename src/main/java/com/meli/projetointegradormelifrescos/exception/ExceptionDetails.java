@@ -1,4 +1,4 @@
-package com.meli.projetointegradormelifrescos.config.exception;
+package com.meli.projetointegradormelifrescos.exception;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Data;
