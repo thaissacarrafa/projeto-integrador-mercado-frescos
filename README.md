@@ -11,8 +11,8 @@
 O projeto trata-se de uma atividade avaliativa da Digital House em parceria com o Mercado Livre e possui alguns
 requisitos, sendo:
 
-- [ ] Cadastro de Lotes de Produtos
-- [ ] Consulta e atualização do lote de produtos
+- [x] Cadastro de Lotes de Produtos
+- [x] Consulta e atualização do lote de produtos
 - [ ] Consulta da lista de Produtos disponível
 - [ ] Consulta da lista de Produtos por categoria (Congelados, Frescos e Resfriados)
 - [ ] Registro de um pedido de um determinado consumidor
@@ -26,7 +26,6 @@ sofrerá alterações.
 ### 💻 Informações relevantes
 
 Este projeto utilizará as seguintes tecnologias:
-
 
 <table>
   <tr>

@@ -1,49 +1,60 @@
 package com.meli.projetointegradormelifrescos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import java.time.*;
-import java.math.*;
+
 import javax.persistence.*;
-import com.fasterxml.jackson.annotation.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-
-@Entity
 @Data
+@Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Batch {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    private Long batchNumber;
 
-    @Column(nullable = false)
-    private Long currentTemperature;
+    @Column(name = "product_id", nullable = false)
+    private Long productId;
 
-    @Column(nullable = false)
+    @Column(name = "product_quantity", nullable = false)
     private int productQuantity;
 
-    @Column(nullable = false)
+    @Column(name = "current_temperature", nullable = false)
+    private Float currentTemperature;
+
+    @Column(name = "initial_quantity", nullable = false)
+    private Integer initialQuantity;
+
+    @Column(name = "manufacturing_date", nullable = false)
     private LocalDate manufacturingDate;
 
-    @Column(nullable = false)
+    @Column(name = "manufacturing_time", nullable = false)
     private LocalDateTime manufacturingTime;
 
-    @Column(nullable = false)
-    private Float volume;
-
-    @Column(nullable = false)
+    @Column(name = "due_date", nullable = false)
     private LocalDate dueDate;
 
-    @Column(nullable = false)
+    @Column(name = "volume", nullable = false)
+    private Float volume;
+
+    @Column(name = "price", nullable = false)
     private BigDecimal price;
 
     @ManyToOne
-    @JoinColumn(name = "announcement_id")
-    @JsonIgnoreProperties("batchs")
-    @JsonBackReference
+    @JoinColumn(name = "inbound_order_id", nullable = false)
+    @JsonIgnoreProperties("inboundOrders")
     private InboundOrder inboundOrder;
 
     @ManyToOne
-    @JoinColumn(name = "section_id")
-    @JsonIgnoreProperties("batchs")
-    @JsonBackReference
+    @JoinColumn(name = "section_id", nullable = false)
+    @JsonIgnoreProperties("batchStocks")
     private Section section;
+
 }
+
+
