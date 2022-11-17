@@ -1,6 +1,6 @@
-package com.meli.projetointegradormelifrescos.service.Impl;
+package com.meli.projetointegradormelifrescos.service;
 
-import com.meli.projetointegradormelifrescos.config.exception.NotFoundException;
+import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.model.Announcement;
 import com.meli.projetointegradormelifrescos.repository.AnnoucementRepo;
 import org.springframework.beans.factory.annotation.Autowired;
