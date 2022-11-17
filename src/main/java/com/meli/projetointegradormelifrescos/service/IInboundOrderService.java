@@ -8,5 +8,4 @@ import java.util.List;
 public interface IInboundOrderService {
 
     List<BatchDTO> createInboundOrder(InboundOrderDTO inboundOrder);
-
 }
