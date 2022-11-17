@@ -3,7 +3,7 @@ package com.meli.projetointegradormelifrescos.service.Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.meli.projetointegradormelifrescos.model.Batch;
-import com.meli.projetointegradormelifrescos.repository.BatchRepo;
+import com.meli.projetointegradormelifrescos.enums.repository.BatchRepo;
 
 public class BatchService {
     @Autowired
@@ -12,5 +12,7 @@ public class BatchService {
     public void saveBatch(Batch batch) {
         batchRepo.save(batch);
     }
+
+    private Integer sortedByDueDate(Batch batch, Batch batch2)
 
 }

@@ -1,5 +1,6 @@
 package com.meli.projetointegradormelifrescos.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.meli.projetointegradormelifrescos.model.Batch;
 
 import lombok.AllArgsConstructor;
@@ -27,14 +28,17 @@ public class BatchDTO {
     private int productQuantity;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate manufacturingDate;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime manufacturingTime;
 
     private Float volume;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
 
     private BigDecimal price;

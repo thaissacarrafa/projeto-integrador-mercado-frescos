@@ -7,7 +7,9 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Announcement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

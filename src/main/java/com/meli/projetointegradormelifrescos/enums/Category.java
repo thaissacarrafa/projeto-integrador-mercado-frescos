@@ -2,6 +2,7 @@ package com.meli.projetointegradormelifrescos.enums;
 
 import com.meli.projetointegradormelifrescos.config.exception.BadRequestException;
 import lombok.Getter;
+import lombok.Setter;
 
 public enum Category {
     FRESCO("FS", "Fresco", 15F, 25F),
@@ -10,12 +11,15 @@ public enum Category {
 
 
     @Getter
+    @Setter
     private String value;
 
     @Getter
+    @Setter
     private String name;
 
     @Getter
+    @Setter
     private Float minimumTemperature;
 
     @Getter
