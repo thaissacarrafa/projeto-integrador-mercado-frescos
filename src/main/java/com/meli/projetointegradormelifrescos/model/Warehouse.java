@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.*;
 
 @Data
 @Entity
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Warehouse {

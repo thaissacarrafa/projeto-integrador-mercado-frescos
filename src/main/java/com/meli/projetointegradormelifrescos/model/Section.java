@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.*;
 
 @Data
 @Entity
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Section {

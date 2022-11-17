@@ -122,7 +122,7 @@ public class InboundOrderService implements IInboundOrderService {
      @param warehouse, id
      @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      ***/
-    private Manager findManagerFromWarehouse(Warehouse warehouse, Long managerid) {
+    public Manager findManagerFromWarehouse(Warehouse warehouse, Long managerid) {
 
         if (!warehouse.getManagers().getId().equals(managerid)) {
             throw new BadRequestException("Invalid Manager Id");
@@ -137,7 +137,7 @@ public class InboundOrderService implements IInboundOrderService {
      * @return
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
-    private Section findSectionByCode(Warehouse warehouse, Long id) {
+    public Section findSectionByCode(Warehouse warehouse, Long id) {
         Optional<Section> section = warehouse.getSections()
                 .stream()
                 .filter(s -> s.getId().equals(id)).findFirst();
@@ -152,7 +152,7 @@ public class InboundOrderService implements IInboundOrderService {
      * que o setor corresponde aos tipos de produto - presumindo que todo o lote vem com o mesmo tipo de categoria
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
-     private void sectorIsEqualsBatch(BatchDTO batch, Section section) {
+     public void sectorIsEqualsBatch(BatchDTO batch, Section section) {
             Float maximumTemperature = section.getCategory().getMaximumTemperature();
             Float minimumTemperature = section.getCategory().getMinimumTemperature();
             Float batchCurrentTemperature = batch.getCurrentTemperature();
@@ -167,7 +167,7 @@ public class InboundOrderService implements IInboundOrderService {
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
 
-    private void ifTheSectionHasCapacity(Section section, InboundOrderDTO inbound) {
+    public void ifTheSectionHasCapacity(Section section, InboundOrderDTO inbound) {
         Float maxCapacity = section.getMaxCapacity();
         int currentCapacity = section.getBatches().size(); // ele analisa o tamanho de produtos do json
         Float availableCapacity = maxCapacity - currentCapacity;
