@@ -9,6 +9,9 @@ import com.fasterxml.jackson.annotation.*;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class InboundOrder {
 
     @Id

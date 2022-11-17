@@ -51,16 +51,15 @@ public class InboundOrderService implements IInboundOrderService {
         // e que a section tem espaco
         ifTheSectionHasCapacity(section, inboundOrderDTO);
 
-        InboundOrder inboundOrderEntity = new InboundOrder();
-
-        inboundOrderEntity.setOrderDate(inboundOrderDTO.getOrderDate());
-        inboundOrderEntity.setBatches(
-                inboundOrderDTO.getBatchStock().stream().map(BatchDTO::toEntity).collect(Collectors.toList()));
-        inboundOrderEntity.setSection(section);
-        inboundOrderEntity.setManager(manager);
-        inboundOrderEntity.setOrderNumber(inboundOrderDTO.getOrderNumber());
-        inboundOrderEntity.setWarehouse(warehouse);
-        inboundOrderEntity.setId(inboundOrderDTO.getOrderNumber());
+        InboundOrder inboundOrderEntity = InboundOrder.builder()
+                .orderDate(inboundOrderDTO.getOrderDate())
+                .batches(inboundOrderDTO.getBatchStock().stream().map(BatchDTO::toEntity).collect(Collectors.toList()))
+                .section(section)
+                .manager(manager)
+                .orderNumber(inboundOrderDTO.getOrderNumber())
+                .warehouse(warehouse)
+                .id(inboundOrderDTO.getOrderNumber())
+                .build();
 
         inboundOrderRepo.save(inboundOrderEntity);
         inboundOrderDTO.getBatchStock().forEach(b -> saveBatchStock(b, inboundOrderEntity));
@@ -83,7 +82,7 @@ public class InboundOrderService implements IInboundOrderService {
      *
      * método responsável por validar se a warehouse é válida, identificando
      * se ele é ou nao vazio
-     * 
+     *
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      * @return
      */
@@ -101,7 +100,7 @@ public class InboundOrderService implements IInboundOrderService {
      * representante é daquele armazem
      * quem sabe usando stream pra mapear a lista de representantes do armazem e
      * verificar se é igual o informado.
-     * 
+     *
      * @param warehouse
      * @param warehouse, id
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
@@ -117,7 +116,7 @@ public class InboundOrderService implements IInboundOrderService {
 
     /***
      * metodo que valida se o setor é o correto
-     * 
+     *
      * @return
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
@@ -134,7 +133,7 @@ public class InboundOrderService implements IInboundOrderService {
     /***
      * que o setor corresponde aos tipos de produto - presumindo que todo o lote vem
      * com o mesmo tipo de categoria
-     * 
+     *
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
     private void sectorIsEqualsBatch(BatchDTO batch, Section section) {
@@ -149,7 +148,7 @@ public class InboundOrderService implements IInboundOrderService {
 
     /***
      * que o setor tem espaço pra colocar o lote
-     * 
+     *
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
 
@@ -164,26 +163,27 @@ public class InboundOrderService implements IInboundOrderService {
     }
 
     private Batch saveBatchStock(BatchDTO dto, InboundOrder inboundOrder) {
-        Batch batchStock = new Batch();
-        batchStock.setBatchNumber(dto.getBatchNumber());
-        batchStock.setProductId(dto.getProductId());
-        batchStock.setCurrentTemperature(dto.getCurrentTemperature());
-        batchStock.setManufacturingTime(dto.getManufacturingTime());
-        batchStock.setManufacturingDate(dto.getManufacturingDate());
-        batchStock.setVolume(dto.getVolume());
-        batchStock.setDueDate(dto.getDueDate());
-        batchStock.setPrice(dto.getPrice());
-        batchStock.setInboundOrder(inboundOrder);
-        batchStock.setInitialQuantity(dto.getProductQuantity());
-        batchStock.setProductQuantity(dto.getProductQuantity());
-        batchStock.setSection(inboundOrder.getSection());
-        batchRepo.save(batchStock);
-        return batchStock;
+        Batch batchBuilder = Batch.builder()
+                .batchNumber(dto.getBatchNumber())
+                .productId(dto.getProductId())
+                .currentTemperature(dto.getCurrentTemperature())
+                .manufacturingTime(dto.getManufacturingTime())
+                .manufacturingDate(dto.getManufacturingDate())
+                .volume(dto.getVolume())
+                .dueDate(dto.getDueDate())
+                .price(dto.getPrice())
+                .inboundOrder(inboundOrder)
+                .initialQuantity(dto.getProductQuantity())
+                .productQuantity(dto.getProductQuantity())
+                .section(inboundOrder.getSection())
+                .build();
+        batchRepo.save(batchBuilder);
+        return batchBuilder;
     }
 
     /**
      * Busca uma ordem de entrada pelo ID
-     * 
+     *
      * @param id
      * @author Leonardo Santos
      */
