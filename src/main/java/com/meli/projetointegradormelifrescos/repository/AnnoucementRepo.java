@@ -10,5 +10,5 @@ public interface AnnoucementRepo extends JpaRepository<Announcement, Long> {
 
     List<Announcement> findAll();
 
-    List<Announcement> findAllByCategory(Category category);
+    List<Announcement> findAllByCategory(String category);
 }

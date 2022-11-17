@@ -3,6 +3,7 @@ package com.meli.projetointegradormelifrescos.controller;
 import com.meli.projetointegradormelifrescos.dto.AnnoucementDTO;
 import com.meli.projetointegradormelifrescos.dto.BatchDTO;
 import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
+import com.meli.projetointegradormelifrescos.enums.Category;
 import com.meli.projetointegradormelifrescos.service.AnnoucementService;
 import com.meli.projetointegradormelifrescos.service.IInboundOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,12 @@ public class InboundOrderController {
     public ResponseEntity<List<AnnoucementDTO>> listAllProduct(){
         List<AnnoucementDTO> allProducts = annoucementService.listAllProducts();
         return ResponseEntity.ok().body(allProducts);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<AnnoucementDTO>> listByCategory(
+            @RequestParam(value = "querytype", required = false, defaultValue = "") String category){
+        return new ResponseEntity(annoucementService.findAllByCategory(Category.valueOf(category)), HttpStatus.OK);
     }
 
 }

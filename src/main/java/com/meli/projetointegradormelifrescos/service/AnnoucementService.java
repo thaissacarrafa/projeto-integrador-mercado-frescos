@@ -41,7 +41,7 @@ public class AnnoucementService {
             throw new ListIsEmptyException("Nenhum produto cadastrado");
         }
         return allProducts;
-
+    }
 
         /***
          *
@@ -49,17 +49,17 @@ public class AnnoucementService {
          * @author Thaíssa Carrafa
          * @return
          */
-//    public List<Announcement> listByCategory(String category){
-//
-//        List<Announcement> products = annoucementRepo.findAll().stream()
-//        .filter(product -> Objects.equals(product.getCategory(),category.toUpperCase()))
-//
-//                .collect(Collectors.toList());
-//
-//        if(products.isEmpty()){
-//            throw new NotFoundException("No products found");
-//        }
-//        return products;
-//    }
+    public List<Announcement> findAllByCategory(Category category){
+
+        List<Announcement> products = annoucementRepo.findAll().stream()
+        .filter(product -> Objects.equals(product.getCategory().getName(),category.getName()))
+
+                .collect(Collectors.toList());
+
+        if(products.isEmpty()){
+            throw new NotFoundException("No products found");
+        }
+        return products;
     }
 }
+
