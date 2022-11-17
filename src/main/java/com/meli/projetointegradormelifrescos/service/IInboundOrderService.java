@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IInboundOrderService {
 
-    List<BatchDTO> createInboundOrder(InboundOrderDTO inboundOrder);
+    List<BatchDTO> createInboundOrder(InboundOrderDTO orderDTO);
+
+    List<BatchDTO> updateInboundOrder(Long orderId, InboundOrderDTO orderDTO);
 
 }

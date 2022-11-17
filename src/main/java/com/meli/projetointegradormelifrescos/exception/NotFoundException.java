@@ -1,4 +1,4 @@
-package com.meli.projetointegradormelifrescos.config.exception;
+package com.meli.projetointegradormelifrescos.exception;
 
 public class NotFoundException extends RuntimeException {
 
