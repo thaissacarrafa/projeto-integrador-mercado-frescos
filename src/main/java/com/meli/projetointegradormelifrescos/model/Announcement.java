@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.*;
 public class Announcement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(nullable = false)
