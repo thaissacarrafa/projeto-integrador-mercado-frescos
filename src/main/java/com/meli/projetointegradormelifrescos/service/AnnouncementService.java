@@ -2,7 +2,7 @@ package com.meli.projetointegradormelifrescos.service;
 
 import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.model.Announcement;
-import com.meli.projetointegradormelifrescos.repository.AnnoucementRepo;
+import com.meli.projetointegradormelifrescos.repository.AnnouncementRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +11,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class AnnoucementService {
+public class AnnouncementService {
         @Autowired
-        private AnnoucementRepo productRepository;
+        private AnnouncementRepo productRepository;
 
     /***
      *   @param message  método responsável por consultar todos os produtos
