@@ -55,6 +55,16 @@ public class BatchDTO {
         this.price = batch.getPrice();
     }
 
+    public BatchDTO(Long batchNumber, int productQuantity, LocalDate dueDate) {
+        Batch batch = new Batch();
+
+        this.batchNumber = batch.getBatchNumber();
+        this.productQuantity = batch.getProductQuantity();
+        this.dueDate = batch.getDueDate();
+
+
+    }
+
     public static Batch entityToDTO(BatchDTO batchDTO) {
         Batch batch = new Batch();
 

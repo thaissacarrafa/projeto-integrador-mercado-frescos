@@ -1,5 +1,7 @@
 package com.meli.projetointegradormelifrescos.service;
 
+import com.meli.projetointegradormelifrescos.dto.BatchDTO;
+import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
 import com.meli.projetointegradormelifrescos.dto.WarehouseCountDTO;
 import com.meli.projetointegradormelifrescos.dto.WarehouseStockDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,28 @@ public class BatchService implements IBatchService{
         WarehouseStockDTO warehouseStockDTO = new WarehouseStockDTO();
         warehouseStockDTO.setProductId(batches.stream().findFirst().get().getProductId());
         warehouseStockDTO.setWarehouses(warehouseCountDTOList);
+
         return warehouseStockDTO;
 
     }
+
+    @Override
+    public BatchDTO productsBySection(Long productId) {
+
+        List<Batch> batches = batchRepo.findSectionByProductId(productId);
+
+        List<BatchDTO> batchDTOList = new ArrayList<>();
+
+        batches.forEach(batch -> batchDTOList.add(new BatchDTO(batch)));
+
+        BatchDTO batchDTO = new BatchDTO();
+        batchDTO.setProductId(batches.stream().findFirst().get().getProductId());
+        batchDTO.setDueDate(batches.stream().findFirst().get().getDueDate());
+        batchDTO.setBatchNumber(batches.stream().findFirst().get().getBatchNumber());
+        batchDTO.setProductQuantity(batches.stream().findFirst().get().getProductQuantity());
+
+        return batchDTO;
+
+    }
 }
+

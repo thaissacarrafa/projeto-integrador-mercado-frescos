@@ -77,5 +77,11 @@ public class InboundOrderController {
         return ResponseEntity.ok(batchService.countStocksByProductId(productId));
     }
 
+
+    @GetMapping("/list/{productId}")
+    public  ResponseEntity<BatchDTO> listProductsBySection(
+            @PathVariable @Valid @NotEmpty Long productId) {
+        return ResponseEntity.ok(batchService.productsBySection(productId));
+    }
 }
 
