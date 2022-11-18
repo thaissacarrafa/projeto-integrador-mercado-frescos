@@ -87,8 +87,22 @@ public class PurchaseProductService implements IPurchaseProductService {
         return purchaseProduct;
     }
 
-    public PurchaseOrderDTO getPurchaseOrder(Long id) {
+    public HashMap getPurchaseOrder(Long id) {
         Optional<PurchaseOrder> purchaseOrder = purchaseOrderRepo.findById(id);
-        return new PurchaseOrderDTO(purchaseOrder.get());
+
+        if (purchaseOrder.isEmpty()) {
+            HashMap<String, String> response = new HashMap<>();
+            response.put("error", "Purchase order not found");
+            return response;
+        } else {
+            List<PurchaseProductDTO> productDTOS = new ArrayList<>();
+            List<PurchaseProduct> products = purchaseOrder.get().getProducts();
+            for (PurchaseProduct product : products) {
+                productDTOS.add(new PurchaseProductDTO(product));
+            }
+            HashMap<String, List> response = new HashMap<>();
+            response.put("products", productDTOS);
+            return response;
+        }
     }
 }

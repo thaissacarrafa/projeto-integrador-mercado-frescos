@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface IPurchaseProductService {
     HashMap createPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO);
 
-    PurchaseOrderDTO getPurchaseOrder(Long purchaseOrderId);
+    HashMap getPurchaseOrder(Long purchaseOrderId);
 }

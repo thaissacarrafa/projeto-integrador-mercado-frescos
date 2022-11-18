@@ -62,7 +62,7 @@ public class InboundOrderController {
     }
 
     @GetMapping("/orders/{purchaseOrderId}")
-    public ResponseEntity<PurchaseOrderDTO> getPurchaseOrder(@PathVariable Long purchaseOrderId) {
+    public ResponseEntity<HashMap> getPurchaseOrder(@PathVariable Long purchaseOrderId) {
         return ResponseEntity.ok(purchaseProductService.getPurchaseOrder(purchaseOrderId));
     }
 }

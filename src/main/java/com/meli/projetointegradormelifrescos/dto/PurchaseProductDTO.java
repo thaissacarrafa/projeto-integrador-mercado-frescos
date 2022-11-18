@@ -23,8 +23,11 @@ public class PurchaseProductDTO {
     private Long productId;
     private int quantity;
 
+    private AnnoucementDTO annoucement;
+
     public PurchaseProductDTO(PurchaseProduct purchaseProduct) {
         this.productId = purchaseProduct.getAnnouncement().getId();
         this.quantity = purchaseProduct.getQuantity();
+        this.annoucement = new AnnoucementDTO(purchaseProduct.getAnnouncement());
     }
 }
