@@ -5,6 +5,7 @@ import com.meli.projetointegradormelifrescos.exception.BadRequestException;
 import lombok.Getter;
 
 public enum Category {
+
     FRESCO("FS", "Fresco", 15F, 25F, 7),
     REFRIGERADO("RF", "Refrigerado", 8F, 15F, 60),
     CONGELADO("FF", "Congelado", 0F, 7F, 90);

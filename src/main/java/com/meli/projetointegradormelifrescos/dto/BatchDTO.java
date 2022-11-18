@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.NotNull;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class BatchDTO {
     private Long batchNumber;
@@ -54,7 +53,32 @@ public class BatchDTO {
         this.alert = batch.getAlert();
     }
 
-    public static Batch toEntity(BatchDTO batchDTO) {
+
+    public BatchDTO(
+            Long batchNumber,
+            Long productId,
+            Float currentTemperature,
+            int productQuantity,
+            LocalDate manufacturingDate,
+            LocalDateTime manufacturingTime,
+            Float volume,
+            LocalDate dueDate,
+            BigDecimal price,
+            Boolean alert
+    ) {
+        this.batchNumber = batchNumber;
+        this.productId = productId;
+        this.currentTemperature = currentTemperature;
+        this.productQuantity = productQuantity;
+        this.manufacturingDate = manufacturingDate;
+        this.manufacturingTime = manufacturingTime;
+        this.volume = volume;
+        this.dueDate = dueDate;
+        this.price = price;
+        this.alert = alert;
+    }
+
+    public static Batch entityToDTO(BatchDTO batchDTO) {
         Batch batch = new Batch();
 
         batch.setBatchNumber(batchDTO.getBatchNumber());
@@ -66,7 +90,10 @@ public class BatchDTO {
         batch.setVolume(batchDTO.getVolume());
         batch.setDueDate(batchDTO.getDueDate());
         batch.setPrice(batchDTO.getPrice());
+        batch.setAlert(batchDTO.getAlert());
 
         return batch;
+
     }
+
 }

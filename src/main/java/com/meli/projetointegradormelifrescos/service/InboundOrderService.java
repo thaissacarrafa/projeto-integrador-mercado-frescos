@@ -30,6 +30,7 @@ public class InboundOrderService implements IInboundOrderService {
     @Autowired
     private ManagerRepo managerRepo;
 
+
     @Override
     // @Transactional
     public List<BatchDTO> createInboundOrder(InboundOrderDTO inboundOrderDTO) {
@@ -53,7 +54,7 @@ public class InboundOrderService implements IInboundOrderService {
 
         InboundOrder inboundOrderEntity = InboundOrder.builder()
                 .orderDate(inboundOrderDTO.getOrderDate())
-                .batches(inboundOrderDTO.getBatchStock().stream().map(BatchDTO::toEntity).collect(Collectors.toList()))
+                .batches(inboundOrderDTO.getBatchStock().stream().map(BatchDTO::entityToDTO).collect(Collectors.toList()))
                 .section(section)
                 .manager(manager)
                 .orderNumber(inboundOrderDTO.getOrderNumber())
