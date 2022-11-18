@@ -185,15 +185,14 @@ public class InboundOrderService implements IInboundOrderService {
     }
 
     /**
-     * Verifica a data de validade (se é superior a 3 semanas)
+     * verifica a data de validade dos produtos de um lote.
      * @author Amanda Lobo
-     * @param batch -> Batch
+     * @param batchList -> List<Batch>
      * @param productId -> Long
-     * @throws NotFoundException
      */
-    public static void verifyProductDueDate(Batch batch, Long productId) {
-        if (batch.getDueDate().isBefore(LocalDate.now().plusWeeks(3))) {
-            throw new NotFoundException("expired product");
+    private static void verifyBatchDueDate(List<Batch> batchList, Long productId) {
+        for (Batch batch : batchList) {
+            AnnoucementService.verifyProductDueDate(batch, productId);
         }
     }
 
@@ -243,6 +242,20 @@ public class InboundOrderService implements IInboundOrderService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * cria uma Lista de Lotes
+     * @author Amanda Lobo
+     * @param batchList -> List<Batch>
+     * @return List<BatchDTO> - Retorna uma Lista de Lotes.
+     */
+    private static List<BatchDTO> getBatchDTO(List<Batch> batchList) {
+        return batchList.stream().map(batch -> BatchDTO.builder()
+                        .batchNumber(batch.getBatchNumber())
+                        .productQuantity(batch.getProductQuantity())
+                        .dueDate(batch.getDueDate())
+                        .build())
+                .collect(Collectors.toList());
+    }
 
     @Override
     public List<InboundOrder> getAll() {
@@ -264,10 +277,19 @@ public class InboundOrderService implements IInboundOrderService {
 
         for (InboundOrder inbound : inboundOrderList) {
             batchList = getBatchByProductId(inbound, productId);
-            //verifyProductDueDate(batchList, productId);
+            verifyBatchDueDate(batchList, productId);
+
+            List<BatchDTO> batchDTOList = getBatchDTO(batchList);
         }
         return warehouseDTOList;
     }
+
+    /**
+     * ordenação de lotes por parâmetro (L= lote, Q= quantidade, V = validade).
+     * @author Amanda Lobo
+     * @param warehouseDTOList -> List<WarehouseDTO>
+     * @param sorting -> String
+     * @return List<warehouseDTO> -> retorna o pârametro inserido de forma ordenada*/
 
     @Override
     public List<WarehouseDTO> getAllOrdinancesFotBatches(List<WarehouseDTO> warehouseDTOList, String sorting) {

@@ -44,10 +44,10 @@ public class InboundOrderController {
         return ResponseEntity.ok().body(allProducts);
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<List<AnnoucementDTO>> listByCategory(
-            @RequestParam(value = "querytype", required = false, defaultValue = "") String category){
-        return new ResponseEntity(annoucementService.findAllByCategory(Category.valueOf(category)), HttpStatus.OK);
-    }
+//    @GetMapping("/list")
+//    public ResponseEntity<List<AnnoucementDTO>> listByCategory(
+//            @RequestParam(value = "querytype", required = false, defaultValue = "") String category){
+//        return new ResponseEntity(annoucementService.findAllByCategory(Category.valueOf(category)), HttpStatus.OK);
+//    }
 
 }

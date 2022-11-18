@@ -11,6 +11,7 @@ import com.meli.projetointegradormelifrescos.model.Batch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -60,6 +61,19 @@ public class AnnoucementService {
             throw new NotFoundException("No products found");
         }
         return products;
+    }
+
+    /**
+     * Verifica a data de validade (se é superior a 3 semanas)
+     * @author Amanda Lobo
+     * @param batch -> Batch
+     * @param productId -> Long
+     * @throws NotFoundException
+     */
+    public static void verifyProductDueDate(Batch batch, Long productId) {
+        if (batch.getDueDate().isBefore(LocalDate.now().plusWeeks(3))) {
+            throw new NotFoundException("expired product");
+        }
     }
 }
 

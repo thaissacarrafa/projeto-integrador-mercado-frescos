@@ -1,7 +1,7 @@
 package com.meli.projetointegradormelifrescos.controller;
 
 import com.meli.projetointegradormelifrescos.dto.BatchDTO;
-import com.meli.projetointegradormelifrescos.dto.WarehouseDTO;
+import com.meli.projetointegradormelifrescos.enums.Sorting;
 import com.meli.projetointegradormelifrescos.service.InboundOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,7 @@ public class LocationController {
      * @return retorna um WarehouseDTO
      * @throws Exception*/
     @GetMapping("/{productId}")
-    public ResponseEntity<List<WarehouseDTO>> getAllProductWarehouse(@RequestParam Long productId) throws Exception {
+    public ResponseEntity<List<BatchDTO>> getAllProductWarehouse(@RequestParam Long productId) throws Exception {
         return new ResponseEntity(inboundOrderService.getAllProductWarehouse(productId), HttpStatus.OK);
     }
 }
