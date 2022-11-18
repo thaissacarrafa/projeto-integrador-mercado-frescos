@@ -18,6 +18,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -29,10 +31,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 
 
 @ExtendWith(MockitoExtension.class)
@@ -69,32 +67,15 @@ public class InboundOrderServiceTest {
         BadRequestException except = assertThrows(BadRequestException.class, () ->  this
                 .service.ifTheSectionHasCapacity(section, inboundOrderDTO));
         assertEquals( except.getMessage(), "Section don't have enought space.");
-
-
-
-      //  when(managerReMock).thenReturn(manager);
-
-      //  Manager managerVerifyMock = this.service.findManagerFromWarehouse(warehouse, warehouse.getManagers().getId());
-      //  when(managerVerifyMock).thenReturn(manager);
-
-       // when(this.service.findSectionByCode(warehouse, inboundOrderDTO.getSectionCode())).thenReturn(section);
-
-
-
-     /* Optional<Warehouse> warehouseExists = this.warehouseRepo.findWarehouseByCode(12L);
-        Manager manager = findManagerFromWarehouse(warehouse, inboundOrderDTO.getManagerId());
-        Section section = findSectionByCode(warehouse, inboundOrderDTO.getSectionCode());
-        ifTheSectionHasCapacity(section, inboundOrderDTO);
-       */
     }
 
 
     @Test
-    @DisplayName("valida se passando uma warehouse inexistente é lançado uma exeption ")
+    @DisplayName("valida se passando uma warehouse inexistente é lançado uma exception ")
     void test_Warehouse_Exists_exception() throws NotFoundException {
         InboundOrderDTO inboundOrderDTO = this.createInboundOrderDTOMock();
 
-         Optional<Warehouse> warehouseRe = warehouseRepo.findWarehouseByCode(anyLong());
+        Optional<Warehouse> warehouseRe = warehouseRepo.findWarehouseByCode(anyLong());
         Mockito.when(warehouseRe).thenReturn(Optional.empty());
 
         NotFoundException except = assertThrows(NotFoundException.class, () ->  this
@@ -116,28 +97,39 @@ public class InboundOrderServiceTest {
         assertEquals(warehouse.getCode(), warehouseReturned.getCode());
     }
     @Test
-    @DisplayName("validate search by managers da warehouse")
-        void valid_find_manager_from_warehouse() throws BadRequestException {
+    @DisplayName("valida se ao passar um mannager inesistente é retornada uma exception")
+        void valid_find_manager_from_warehouse_exception() throws BadRequestException {
         Manager  manager = createManagerMock();
         manager.setId(3l);
         Warehouse warehouse = this.createWarehouseMock();
         warehouse.setCode(32L);
 
-        // Manager managerReMock = managerRepo.findManagerById(anyLong());
-        //  when(managerReMock).thenReturn(manager);
-
         BadRequestException except = assertThrows(BadRequestException.class, () ->  this
                 .service.findManagerFromWarehouse(warehouse, manager.getId()));
         assertEquals(except.getMessage(), "Invalid Manager Id");
 
-        }
+    }
 
     @Test
-    @DisplayName("validate search by section by id")
-    void  valid_find_Section_By_Code(){
+    @DisplayName("valida se ao passar um mannager existente é retornado um mannager")
+    void valid_find_manager_from_warehouse(){
+        Manager  manager = createManagerMock();
+        Warehouse warehouse = this.createWarehouseMock();
+        warehouse.setCode(32L);
+
+        Mockito.when(managerRepo.findManagerById(anyLong()))
+                .thenReturn(manager);
+
+        Manager managerReturned = this.service.findManagerFromWarehouse(warehouse,manager.getId());
+
+        assertEquals(manager.getId(), managerReturned.getId());
+    }
+
+    @Test
+    @DisplayName("valida se ao passar uma section inexistente lança um exception")
+    void  valid_find_Section_By_Code_exception() throws BadRequestException {
         BatchDTO bachDtoMock = CreateBatchStockDTOMock();
         Section sectionMock =  createSectionMock();
-        // service.sectorIsEqualsBatch(bachDtoMock,sectionMock);
 
         BadRequestException except = assertThrows(BadRequestException.class, () ->  this
                 .service.sectorIsEqualsBatch(bachDtoMock,sectionMock));
@@ -145,9 +137,36 @@ public class InboundOrderServiceTest {
     }
 
     @Test
+    @DisplayName("validate search by section by id")
+    void  valid_find_Section_By_Code()  {
+        BatchDTO bachDtoMock = CreateBatchStockDTOMock();
+        bachDtoMock.setCurrentTemperature(16f);
+        Section sectionMock = createSectionMock();
+
+
+        assertDoesNotThrow(() ->  this.service.sectorIsEqualsBatch(bachDtoMock,sectionMock));
+    }
+
+    @Test
     @DisplayName("validate search by batchStock")
     void valid_getBatchStock(){
 
+    }
+
+    @Test
+    @DisplayName("valida se o o pedido de entrada é registrado ")
+    void create_InboundOrder_Saver_When_Correct_payload(){
+    /*    Warehouse warehouse = createWarehouseMock();
+        Optional<Warehouse> warehouseRe = warehouseRepo.findWarehouseByCode(anyLong());
+        Mockito.when(warehouseRe).thenReturn(Optional.of(warehouse));
+
+        Manager manager = createManagerMock();
+        Mockito.when(this.service.findManagerFromWarehouse(warehouse, manager.getId())).thenReturn(manager);
+
+
+
+
+        this.service.createInboundOrder(createInboundOrderDTOMock());*/
     }
 
 
@@ -214,7 +233,6 @@ public class InboundOrderServiceTest {
         warehouse.setId(1L);
         warehouse.setInboundOrders(new ArrayList<InboundOrder>());
         warehouse.setSections(Arrays.asList(section, section2));
-
 
      return warehouse;
     }
