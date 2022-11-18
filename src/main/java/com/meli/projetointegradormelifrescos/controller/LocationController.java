@@ -24,7 +24,7 @@ public class LocationController {
      * retorna uma lista de produtos com todos os lotes que ele aparece
      * @author Amanda Lobo
      * @param productId -> Long
-     * @return retorna um WarehouseDTO
+     * @return retorna um BatchDTO
      * @throws Exception*/
     @GetMapping("/{productId}")
     public ResponseEntity<List<BatchDTO>> getAllProductWarehouse(@RequestParam Long productId) throws Exception {
