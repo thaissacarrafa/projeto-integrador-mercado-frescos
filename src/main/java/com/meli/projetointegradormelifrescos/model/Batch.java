@@ -46,6 +46,9 @@ public class Batch {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
+    @Column(name = "alert", nullable = false)
+    private Boolean alert;
+
     @ManyToOne
     @JoinColumn(name = "inbound_order_id", nullable = false)
     @JsonIgnoreProperties("inboundOrders")

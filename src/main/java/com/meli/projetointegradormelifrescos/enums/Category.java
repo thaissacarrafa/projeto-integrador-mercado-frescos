@@ -5,9 +5,9 @@ import com.meli.projetointegradormelifrescos.exception.BadRequestException;
 import lombok.Getter;
 
 public enum Category {
-    FRESCO("FS", "Fresco", 15F, 25F),
-    REFRIGERADO("RF", "Refrigerado", 8F, 15F),
-    CONGELADO("FF", "Congelado", 0F, 7F);
+    FRESCO("FS", "Fresco", 15F, 25F, 7),
+    REFRIGERADO("RF", "Refrigerado", 8F, 15F, 60),
+    CONGELADO("FF", "Congelado", 0F, 7F, 90);
 
 
     @Getter
@@ -22,12 +22,16 @@ public enum Category {
     @Getter
     private Float maximumTemperature;
 
+    @Getter
+    private int startAlert;
 
-    Category(String value, String name, Float minimumTemperature, Float maximumTemperature) {
+
+    Category(String value, String name, Float minimumTemperature, Float maximumTemperature, int startAlert) {
         this.value = value;
         this.name = name;
         this.minimumTemperature = minimumTemperature;
         this.maximumTemperature = maximumTemperature;
+        this.startAlert = startAlert;
     }
 
     public static Category valueOf(int categoryId) {

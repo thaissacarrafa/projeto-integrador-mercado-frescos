@@ -39,6 +39,8 @@ public class BatchDTO {
 
     private BigDecimal price;
 
+    private Boolean alert;
+
     public BatchDTO(Batch batch) {
         this.batchNumber = batch.getBatchNumber();
         this.productId = batch.getProductId();
@@ -49,6 +51,7 @@ public class BatchDTO {
         this.volume = batch.getVolume();
         this.dueDate = batch.getDueDate();
         this.price = batch.getPrice();
+        this.alert = batch.getAlert();
     }
 
     public static Batch toEntity(BatchDTO batchDTO) {

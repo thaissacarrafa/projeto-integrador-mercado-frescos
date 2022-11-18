@@ -15,11 +15,15 @@ public class AnnoucementService {
         @Autowired
         private AnnoucementRepo productRepository;
 
+        @Autowired
+        private AlertService alertService;
+
     /***
      *   @param message  método responsável por consultar todos os produtos
       */
         public List<Announcement> listAllProducts() {
             List<Announcement> productList = productRepository.findAll();
+            alertService.startAlertForProduct(
             if(productList.isEmpty()) {
                 throw new NotFoundException("Product list is empty");
             }
