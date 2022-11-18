@@ -2,8 +2,8 @@ package com.meli.projetointegradormelifrescos.service;
 
 import com.meli.projetointegradormelifrescos.config.exception.BadRequestException;
 import com.meli.projetointegradormelifrescos.config.exception.NotFoundException;
-import com.meli.projetointegradormelifrescos.dto.*;
-
+import com.meli.projetointegradormelifrescos.dto.BatchDTO;
+import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
 import com.meli.projetointegradormelifrescos.enums.Category;
 import com.meli.projetointegradormelifrescos.enums.repository.BatchRepo;
 import com.meli.projetointegradormelifrescos.enums.repository.InboundOrderRepo;
@@ -16,10 +16,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.Spy;
+import static org.mockito.ArgumentMatchers.anyLong;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.junit.jupiter.api.Assertions.*;
-
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,7 +27,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 
@@ -67,7 +71,7 @@ public class InboundOrderServiceTest {
         assertEquals( except.getMessage(), "Section don't have enought space.");
 
 
-      //  Manager managerReMock = managerRepo.findManagerById(anyLong());
+
       //  when(managerReMock).thenReturn(manager);
 
       //  Manager managerVerifyMock = this.service.findManagerFromWarehouse(warehouse, warehouse.getManagers().getId());
@@ -86,19 +90,30 @@ public class InboundOrderServiceTest {
 
 
     @Test
-    @DisplayName("valida se a warehouse passado no json existe no banco ")
-    void testWarehouseExists() throws NotFoundException {
+    @DisplayName("valida se passando uma warehouse inexistente é lançado uma exeption ")
+    void test_Warehouse_Exists_exception() throws NotFoundException {
         InboundOrderDTO inboundOrderDTO = this.createInboundOrderDTOMock();
-        Warehouse warehouse = this.createWarehouseMock();
-        warehouse.setCode(32L);
 
-        // Optional<Warehouse> warehouseRe = warehouseRepo.findWarehouseByCode(inboundOrderDTO.getWarehouseCode());
-        // when(warehouseRe).thenReturn(Optional.of(warehouse));
+         Optional<Warehouse> warehouseRe = warehouseRepo.findWarehouseByCode(anyLong());
+        Mockito.when(warehouseRe).thenReturn(Optional.empty());
 
         NotFoundException except = assertThrows(NotFoundException.class, () ->  this
                 .service.validWarehouse(inboundOrderDTO.getWarehouseCode()));
 
         assertEquals(except.getMessage(), "Invalid warehouse Code");
+    }
+
+    @Test
+    @DisplayName("valida se passando uma warehouse é retornada quando  é passado um codigo existente")
+    void test_Warehouse_exit_when_warehouse_Correct(){
+        Warehouse warehouse = createWarehouseMock();
+
+        Optional<Warehouse> warehouseRe = warehouseRepo.findWarehouseByCode(anyLong());
+        Mockito.when(warehouseRe).thenReturn(Optional.of(warehouse));
+
+        Warehouse warehouseReturned = this.service.validWarehouse(1L);
+
+        assertEquals(warehouse.getCode(), warehouseReturned.getCode());
     }
     @Test
     @DisplayName("validate search by managers da warehouse")
@@ -108,7 +123,7 @@ public class InboundOrderServiceTest {
         Warehouse warehouse = this.createWarehouseMock();
         warehouse.setCode(32L);
 
-         // Manager managerReMock = managerRepo.findManagerById(anyLong());
+        // Manager managerReMock = managerRepo.findManagerById(anyLong());
         //  when(managerReMock).thenReturn(manager);
 
         BadRequestException except = assertThrows(BadRequestException.class, () ->  this
