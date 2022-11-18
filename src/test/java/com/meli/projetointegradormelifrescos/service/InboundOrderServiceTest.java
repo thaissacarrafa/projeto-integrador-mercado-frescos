@@ -19,11 +19,6 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
-
-import org.mockito.Mockito.*;
-
 
 
 import java.math.BigDecimal;
@@ -32,7 +27,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -51,7 +45,7 @@ public class InboundOrderServiceTest {
 
     @Test
     @DisplayName("testa se uma exeção é lançada ao um volume maior que a capacidade da seção")
-    void methods_validations_Json() throws BadRequestException {
+    void valid_if_The_Section_Has_Capacity() throws BadRequestException {
         InboundOrderDTO inboundOrderDTO = this.createInboundOrderDTOMock();
         Section section = this.createSectionMock();
         BatchDTO batch = this.CreateBatchStockDTOMock();
@@ -73,7 +67,7 @@ public class InboundOrderServiceTest {
         assertEquals( except.getMessage(), "Section don't have enought space.");
 
 
-     //   Manager managerReMock = managerRepo.findManagerById(anyLong());
+      //  Manager managerReMock = managerRepo.findManagerById(anyLong());
       //  when(managerReMock).thenReturn(manager);
 
       //  Manager managerVerifyMock = this.service.findManagerFromWarehouse(warehouse, warehouse.getManagers().getId());
@@ -94,27 +88,45 @@ public class InboundOrderServiceTest {
     @Test
     @DisplayName("valida se a warehouse passado no json existe no banco ")
     void testWarehouseExists() throws NotFoundException {
-      /*  InboundOrderDTO inboundOrderDTO = this.createInboundOrderDTOMock();
+        InboundOrderDTO inboundOrderDTO = this.createInboundOrderDTOMock();
         Warehouse warehouse = this.createWarehouseMock();
         warehouse.setCode(32L);
 
-          Optional<Warehouse> warehouseRe = warehouseRepo.findWarehouseByCode(inboundOrderDTO.getWarehouseCode());
-          when(warehouseRe).thenReturn(Optional.of(warehouse));
+        // Optional<Warehouse> warehouseRe = warehouseRepo.findWarehouseByCode(inboundOrderDTO.getWarehouseCode());
+        // when(warehouseRe).thenReturn(Optional.of(warehouse));
 
         NotFoundException except = assertThrows(NotFoundException.class, () ->  this
                 .service.validWarehouse(inboundOrderDTO.getWarehouseCode()));
-        assertEquals(except.getMessage(), "Section don't have enought space.");*/
+
+        assertEquals(except.getMessage(), "Invalid warehouse Code");
     }
     @Test
     @DisplayName("validate search by managers da warehouse")
-        void valid_find_manager_from_warehouse() {
+        void valid_find_manager_from_warehouse() throws BadRequestException {
+        Manager  manager = createManagerMock();
+        manager.setId(3l);
+        Warehouse warehouse = this.createWarehouseMock();
+        warehouse.setCode(32L);
+
+         // Manager managerReMock = managerRepo.findManagerById(anyLong());
+        //  when(managerReMock).thenReturn(manager);
+
+        BadRequestException except = assertThrows(BadRequestException.class, () ->  this
+                .service.findManagerFromWarehouse(warehouse, manager.getId()));
+        assertEquals(except.getMessage(), "Invalid Manager Id");
 
         }
 
     @Test
     @DisplayName("validate search by section by id")
     void  valid_find_Section_By_Code(){
+        BatchDTO bachDtoMock = CreateBatchStockDTOMock();
+        Section sectionMock =  createSectionMock();
+        // service.sectorIsEqualsBatch(bachDtoMock,sectionMock);
 
+        BadRequestException except = assertThrows(BadRequestException.class, () ->  this
+                .service.sectorIsEqualsBatch(bachDtoMock,sectionMock));
+        assertEquals(except.getMessage(), "Batch doesn't belong to the section.");
     }
 
     @Test
@@ -123,11 +135,6 @@ public class InboundOrderServiceTest {
 
     }
 
-    @Test
-    @DisplayName("validate if sections has capacity")
-    void valid_if_The_Section_Has_Capacity(){
-
-    }
 
 
     private BatchDTO CreateBatchStockDTOMock() {
