@@ -59,7 +59,6 @@ public class InboundOrderServiceTest {
         section.setMaxCapacity(1f);
         section.setCategory(Category.FRESCO);
         section.setId(3L);
-        section.setId(14L);
 
         inboundOrderDTO.setBatchStock(Arrays.asList(batch, batch2));
 
@@ -95,6 +94,7 @@ public class InboundOrderServiceTest {
 
         assertEquals(warehouse.getCode(), warehouseReturned.getCode());
     }
+
     @Test
     @DisplayName("valida se ao passar um mannager inesistente é retornada uma exception")
         void valid_find_manager_from_warehouse_exception() throws BadRequestException {
@@ -165,24 +165,48 @@ public class InboundOrderServiceTest {
     @Test
     @DisplayName("valida se o o pedido de entrada é registrado ")
     void create_InboundOrder_Saver_When_Correct_payload(){
-     /*  InboundOrderDTO inboundOrderDTOMock = createInboundOrderDTOMock();
+        InboundOrderDTO inboundOrderDTOMock = createInboundOrderDTOMock();
+        inboundOrderDTOMock.setManagerId(4L);
+        inboundOrderDTOMock.setSectionCode(1L);
         Warehouse warehouse = createWarehouseMock();
-        warehouse.getManagers().setId(4L);
-        Manager manager = createManagerMock();
-        manager.setId(4L);
 
         Optional<Warehouse> warehouseRe = warehouseRepo.findWarehouseByCode(anyLong());
         Mockito.when(warehouseRe).thenReturn(Optional.of(warehouse));
 
-        Mockito.when(this.service.findManagerFromWarehouse(warehouse, 4L)).thenReturn(manager);
+        List<BatchDTO> ProductReturSave = this.service.createInboundOrder(inboundOrderDTOMock);
 
+        assertEquals(ProductReturSave, inboundOrderDTOMock.getBatchStock());
+    }
 
-        BatchDTO bachDtoMock = CreateBatchStockDTOMock();
-        bachDtoMock.setCurrentTemperature(16f);
-        Section sectionMock = createSectionMock();
+    @Test
+    @DisplayName("valida se passando um orderNumber inexistente lença uma exception")
+    void update_InboundOrder_exception() throws NotFoundException {
+        InboundOrderDTO inboundOrderDTOMock = createInboundOrderDTOMock();
+        Optional<InboundOrder> inboundReturn = inboundOrderRepo.findById(inboundOrderDTOMock.getOrderNumber());
 
+        Mockito.when(inboundReturn).thenReturn(Optional.empty());
+        NotFoundException except = assertThrows(NotFoundException.class, () ->  this
+                .service.updateInboundOrder(inboundOrderDTOMock.getOrderNumber() ,inboundOrderDTOMock));
+        assertEquals( except.getMessage(), "Pedido não encontrado");
 
-        this.service.createInboundOrder(inboundOrderDTOMock);*/
+    }
+
+    @Test
+    @DisplayName("valida se passando um orderNumber faz o update no banco")
+    void update_InboundOrder(){
+        InboundOrderDTO inboundOrderDTOMock = createInboundOrderDTOMock();
+        inboundOrderDTOMock.setManagerId(4L);
+        inboundOrderDTOMock.setSectionCode(1L);
+        Warehouse warehouse = createWarehouseMock();
+
+        Optional<Warehouse> warehouseRe = warehouseRepo.findWarehouseByCode(anyLong());
+        Mockito.when(warehouseRe).thenReturn(Optional.of(warehouse));
+
+        Mockito.when(inboundOrderRepo.findById(inboundOrderDTOMock.getOrderNumber()))
+                .thenReturn(Optional.of(CreateInboundOrderEntityMock(inboundOrderDTOMock)));
+        List<BatchDTO> ProductReturnUpdateMock = this.service.updateInboundOrder(inboundOrderDTOMock.getOrderNumber(),inboundOrderDTOMock);
+
+        assertEquals(ProductReturnUpdateMock, inboundOrderDTOMock.getBatchStock());
     }
 
 
@@ -212,6 +236,7 @@ public class InboundOrderServiceTest {
         requestExample.setOrderNumber(13L);
         requestExample.setSectionCode(14L);
         requestExample.setBatchStock(batch);
+        requestExample.setManagerId(4L);
         return requestExample;
     }
 
@@ -221,7 +246,6 @@ public class InboundOrderServiceTest {
         section.setCategory(Category.FRESCO);
         section.setName("test");
         section.setInboundOrders(new ArrayList<InboundOrder>());
-        section.setId(1L);
         section.setMaxCapacity(100f);
         section.setBatches(new ArrayList<Batch>());
         section.setWarehouse(new Warehouse());
