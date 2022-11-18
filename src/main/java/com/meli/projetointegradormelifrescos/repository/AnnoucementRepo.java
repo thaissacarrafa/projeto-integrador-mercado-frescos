@@ -1,6 +1,5 @@
 package com.meli.projetointegradormelifrescos.repository;
 
-import com.meli.projetointegradormelifrescos.enums.Category;
 import com.meli.projetointegradormelifrescos.model.Announcement;
 import org.springframework.data.jpa.repository.JpaRepository;
 

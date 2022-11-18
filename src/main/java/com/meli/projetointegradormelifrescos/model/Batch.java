@@ -58,6 +58,10 @@ public class Batch {
     @JsonIgnoreProperties("batchStocks")
     private Section section;
 
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id", nullable = false)
+    @JsonIgnoreProperties("inboundOrders")
+    private Warehouse warehouse;
 }
 
 

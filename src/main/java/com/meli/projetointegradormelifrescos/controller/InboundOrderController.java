@@ -1,19 +1,15 @@
 package com.meli.projetointegradormelifrescos.controller;
 
-import com.meli.projetointegradormelifrescos.dto.AnnoucementDTO;
-import com.meli.projetointegradormelifrescos.dto.BatchDTO;
-import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
-import com.meli.projetointegradormelifrescos.dto.PurchaseOrderDTO;
+import com.meli.projetointegradormelifrescos.dto.*;
 import com.meli.projetointegradormelifrescos.enums.Category;
-import com.meli.projetointegradormelifrescos.service.AnnoucementService;
-import com.meli.projetointegradormelifrescos.service.IPurchaseProductService;
-import com.meli.projetointegradormelifrescos.service.IInboundOrderService;
+import com.meli.projetointegradormelifrescos.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,10 +21,13 @@ public class InboundOrderController {
     IInboundOrderService service;
 
     @Autowired
-    AnnoucementService annoucementService;
+    IAnnoucementService annoucementService;
 
     @Autowired
-    private IPurchaseProductService purchaseProductService;
+    IPurchaseProductService purchaseProductService;
+
+    @Autowired
+    BatchService batchService;
 
 
     @PostMapping("/inboundorder")
@@ -43,6 +42,7 @@ public class InboundOrderController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(service.updateInboundOrder(id, orderDTO));
     }
+
 
     @GetMapping
     public ResponseEntity<List<AnnoucementDTO>> listAllProduct(){
@@ -70,4 +70,12 @@ public class InboundOrderController {
     public ResponseEntity<HashMap> putPurchaseOrder(@PathVariable Long purchaseOrderId) {
         return ResponseEntity.ok(purchaseProductService.putPurchaseOrder(purchaseOrderId));
     }
+
+    @GetMapping("/warehouse/{productId}")
+    public  ResponseEntity<WarehouseStockDTO> listProductsByWarehouse(
+            @PathVariable @Valid @NotEmpty Long productId) {
+        return ResponseEntity.ok(batchService.countStocksByProductId(productId));
+    }
+
 }
+

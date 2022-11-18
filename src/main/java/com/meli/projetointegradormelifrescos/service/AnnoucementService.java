@@ -6,18 +6,15 @@ import com.meli.projetointegradormelifrescos.exception.ListIsEmptyException;
 import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.model.Announcement;
 import com.meli.projetointegradormelifrescos.repository.AnnoucementRepo;
-import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotBlank;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class AnnoucementService {
+public class AnnoucementService implements IAnnoucementService{
     @Autowired
     private AnnoucementRepo annoucementRepo;
 
