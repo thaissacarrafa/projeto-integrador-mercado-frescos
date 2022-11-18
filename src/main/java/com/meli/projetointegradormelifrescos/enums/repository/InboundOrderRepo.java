@@ -9,7 +9,5 @@ import com.meli.projetointegradormelifrescos.model.InboundOrder;
 public interface InboundOrderRepo extends JpaRepository<InboundOrder, Long> {
     InboundOrder save(InboundOrder inboundOrder);
     InboundOrder getById(long id);
-
-
 }
 

@@ -55,7 +55,7 @@ public class BatchDTO {
         this.price = batch.getPrice();
     }
 
-    public static Batch toEntity(BatchDTO batchDTO) {
+    public static Batch entityToDTO(BatchDTO batchDTO) {
         Batch batch = new Batch();
 
         batch.setBatchNumber(batchDTO.getBatchNumber());
@@ -69,5 +69,6 @@ public class BatchDTO {
         batch.setPrice(batchDTO.getPrice());
 
         return batch;
+
     }
 }
