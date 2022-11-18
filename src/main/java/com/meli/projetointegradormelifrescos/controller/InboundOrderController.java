@@ -65,4 +65,9 @@ public class InboundOrderController {
     public ResponseEntity<HashMap> getPurchaseOrder(@PathVariable Long purchaseOrderId) {
         return ResponseEntity.ok(purchaseProductService.getPurchaseOrder(purchaseOrderId));
     }
+
+    @PutMapping("/orders/{purchaseOrderId}")
+    public ResponseEntity<HashMap> putPurchaseOrder(@PathVariable Long purchaseOrderId) {
+        return ResponseEntity.ok(purchaseProductService.putPurchaseOrder(purchaseOrderId));
+    }
 }

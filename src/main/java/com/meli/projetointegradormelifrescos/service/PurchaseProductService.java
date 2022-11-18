@@ -105,4 +105,22 @@ public class PurchaseProductService implements IPurchaseProductService {
             return response;
         }
     }
+
+    public HashMap putPurchaseOrder(Long id) {
+        Optional<PurchaseOrder> purchaseOrder = purchaseOrderRepo.findById(id);
+
+        if (purchaseOrder.isEmpty()) {
+            HashMap<String, String> response = new HashMap<>();
+            response.put("error", "Purchase order not found");
+            return response;
+        } else {
+            PurchaseOrder purchase = purchaseOrder.get();
+            purchase.setOrderStatus("FINALIZADO");
+
+            HashMap<String, String> response = new HashMap<>();
+            response.put("id", id.toString());
+            response.put("orderStatus", "FINALIZADO");
+            return response;
+        }
+    }
 }

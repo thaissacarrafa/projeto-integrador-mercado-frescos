@@ -12,4 +12,6 @@ public interface IPurchaseProductService {
     HashMap createPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO);
 
     HashMap getPurchaseOrder(Long purchaseOrderId);
+
+    HashMap putPurchaseOrder(Long purchaseOrderId);
 }
