@@ -16,8 +16,9 @@ public class WarehouseDTO {
     private Long productId;
     private int totalQuantity;
     public  Manager managerList;
-
     SectionDTO sectionDTO;
-    List<BatchDTO>batchDTOList;
+    List<BatchDTO> batchDTOList;
+
+
 
 }

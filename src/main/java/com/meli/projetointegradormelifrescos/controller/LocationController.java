@@ -1,15 +1,12 @@
 package com.meli.projetointegradormelifrescos.controller;
 
 import com.meli.projetointegradormelifrescos.dto.BatchDTO;
-import com.meli.projetointegradormelifrescos.enums.Sorting;
+import com.meli.projetointegradormelifrescos.dto.WarehouseDTO;
 import com.meli.projetointegradormelifrescos.service.InboundOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,7 +24,21 @@ public class LocationController {
      * @return retorna um BatchDTO
      * @throws Exception*/
     @GetMapping("/{productId}")
-    public ResponseEntity<List<BatchDTO>> getAllProductWarehouse(@RequestParam Long productId) throws Exception {
+    public ResponseEntity<List<WarehouseDTO>> getAllProductWarehouse(@RequestParam Long productId) throws Exception {
         return new ResponseEntity(inboundOrderService.getAllProductWarehouse(productId), HttpStatus.OK);
+    }
+
+    /**
+     * ordenação de lotes por parâmetro (L= lote, Q= quantidade, V = validade).
+     * @author Amanda Lobo
+     * @param productId -> Long
+     * @param sorting -> String
+     * @return List<BatchDTO>
+     * @throws Exception
+     */
+    @GetMapping({"/{productId}/{sorting"})
+    public ResponseEntity<List<WarehouseDTO>> getAllOrdinancesForBatches(@RequestParam("productId") Long productId, @RequestParam("sorting") String sorting) throws Exception {
+        List<WarehouseDTO> warehouseDTOList = inboundOrderService.getAllProductWarehouse(productId);
+        return new ResponseEntity(inboundOrderService.getAllOrdinancesFotBatches(warehouseDTOList, sorting), HttpStatus.OK);
     }
 }

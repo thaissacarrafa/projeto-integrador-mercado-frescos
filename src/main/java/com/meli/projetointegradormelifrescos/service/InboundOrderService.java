@@ -289,7 +289,8 @@ public class InboundOrderService implements IInboundOrderService {
      * @author Amanda Lobo
      * @param warehouseDTOList -> List<WarehouseDTO>
      * @param sorting -> String
-     * @return List<warehouseDTO> -> retorna o pârametro inserido de forma ordenada*/
+     * @return List<warehouseDTO> -> retorna o pârametro inserido de forma ordenada
+     */
 
     @Override
     public List<WarehouseDTO> getAllOrdinancesFotBatches(List<WarehouseDTO> warehouseDTOList, String sorting) {
