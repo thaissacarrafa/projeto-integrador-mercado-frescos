@@ -1,16 +1,12 @@
 package com.meli.projetointegradormelifrescos.service;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.meli.projetointegradormelifrescos.dto.AnnoucementDTO;
-import com.meli.projetointegradormelifrescos.dto.BatchDTO;
 import com.meli.projetointegradormelifrescos.dto.PurchaseOrderDTO;
 import com.meli.projetointegradormelifrescos.dto.PurchaseProductDTO;
 import com.meli.projetointegradormelifrescos.enums.Category;
 
-import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.model.*;
 import com.meli.projetointegradormelifrescos.repository.AnnoucementRepo;
-import com.meli.projetointegradormelifrescos.repository.InboundOrderRepo;
 import com.meli.projetointegradormelifrescos.repository.PurchaseOrderRepo;
 import com.meli.projetointegradormelifrescos.repository.PurchaseProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +18,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
-public class FreshProductsService implements IFreshProductsService {
+public class PurchaseProductService implements IPurchaseProductService {
     @AutoConfigureOrder
     private PurchaseOrder purchaseOrder;
 
@@ -38,15 +33,6 @@ public class FreshProductsService implements IFreshProductsService {
     @Autowired
     private AnnoucementRepo annoucementRepo;
 
-    @Override
-    public List<AnnoucementDTO> getAllProductsAnnoucement() {
-        return null;
-    }
-
-    @Override
-    public List<AnnoucementDTO> getAllProductsByCategory(Optional<Category> category) {
-        return null;
-    }
 
     @Override
     public HashMap createPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) {

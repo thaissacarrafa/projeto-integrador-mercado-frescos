@@ -8,12 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-public interface IFreshProductsService {
-
-    List<AnnoucementDTO> getAllProductsAnnoucement();
-
-    List<AnnoucementDTO> getAllProductsByCategory(Optional<Category> category);
-
+public interface IPurchaseProductService {
     HashMap createPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO);
 
     PurchaseOrderDTO getPurchaseOrder(Long purchaseOrderId);

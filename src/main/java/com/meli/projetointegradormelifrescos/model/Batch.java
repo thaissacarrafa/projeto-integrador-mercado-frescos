@@ -11,11 +11,14 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Batch {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long batchNumber;
 
     @Column(name = "product_id", nullable = false)
