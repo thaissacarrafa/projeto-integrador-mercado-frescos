@@ -116,6 +116,7 @@ public class PurchaseProductService implements IPurchaseProductService {
         } else {
             PurchaseOrder purchase = purchaseOrder.get();
             purchase.setOrderStatus("FINALIZADO");
+            purchaseOrderRepo.save(purchase);
 
             HashMap<String, String> response = new HashMap<>();
             response.put("id", id.toString());
