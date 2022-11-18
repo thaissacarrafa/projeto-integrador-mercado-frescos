@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface BatchRepo extends JpaRepository<Batch, Long> {
     List<Batch> findBatchByProductId(Long productId);
+    List<Batch> findSectionByProductId(Long productId);
+
 }

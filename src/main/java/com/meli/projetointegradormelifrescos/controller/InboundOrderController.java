@@ -43,6 +43,7 @@ public class InboundOrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.updateInboundOrder(id, orderDTO));
     }
 
+
     @GetMapping
     public ResponseEntity<List<AnnoucementDTO>> listAllProduct(){
         List<AnnoucementDTO> allProducts = annoucementService.listAllProducts();
@@ -75,3 +76,12 @@ public class InboundOrderController {
             @PathVariable @Valid @NotEmpty Long productId) {
         return ResponseEntity.ok(batchService.countStocksByProductId(productId));
     }
+
+
+    @GetMapping("/list/{productId}")
+    public  ResponseEntity<BatchDTO> listProductsBySection(
+            @PathVariable @Valid @NotEmpty Long productId) {
+        return ResponseEntity.ok(batchService.productsBySection(productId));
+    }
+}
+
