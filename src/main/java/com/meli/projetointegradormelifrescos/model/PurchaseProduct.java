@@ -18,14 +18,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PurchaseProduct {
     @Id
-    @Column(name = "id")
-    private Long productId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
     @ManyToOne
     @JoinColumn(name = "purchase_order_id", nullable = false)
-    @JsonIgnoreProperties("purchaseOrders")
     private PurchaseOrder purchaseOrder;
+
+    @ManyToOne
+    @JoinColumn(name = "announcement_id", nullable = false)
+    private Announcement announcement;
 }

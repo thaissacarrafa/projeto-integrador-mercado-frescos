@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -26,8 +27,12 @@ public class FreshProductsController {
         }
 
         @PostMapping("/orders")
-        public ResponseEntity<Integer> createPurchaseOrder(@RequestBody @Valid PurchaseOrderDTO purchaseOrderDTO) {
+        public ResponseEntity<HashMap> createPurchaseOrder(@RequestBody @Valid PurchaseOrderDTO purchaseOrderDTO) {
                 return ResponseEntity.status(HttpStatus.CREATED).body(service.createPurchaseOrder(purchaseOrderDTO));
         }
 
+        @GetMapping("/orders/{purchaseOrderId}")
+        public ResponseEntity<PurchaseOrderDTO> getPurchaseOrder(@PathVariable Long purchaseOrderId) {
+                return ResponseEntity.ok(service.getPurchaseOrder(purchaseOrderId));
+        }
 }

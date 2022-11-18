@@ -24,7 +24,7 @@ public class PurchaseProductDTO {
     private int quantity;
 
     public PurchaseProductDTO(PurchaseProduct purchaseProduct) {
-        this.productId = purchaseProduct.getProductId();
+        this.productId = purchaseProduct.getAnnouncement().getId();
         this.quantity = purchaseProduct.getQuantity();
     }
 }
