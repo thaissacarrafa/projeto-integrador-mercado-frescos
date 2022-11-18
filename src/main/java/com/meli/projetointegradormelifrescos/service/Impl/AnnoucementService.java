@@ -1,6 +1,6 @@
 package com.meli.projetointegradormelifrescos.service.Impl;
 
-import com.meli.projetointegradormelifrescos.config.exception.NotFoundException;
+import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.model.Announcement;
 import com.meli.projetointegradormelifrescos.enums.repository.AnnoucementRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,9 @@ public class AnnoucementService {
         private AnnoucementRepo productRepository;
 
     /***
-     *   @param message  método responsável por consultar todos os produtos
-      */
+     *   message  método responsável por consultar todos os produtos
+     * @return List<Announcement>
+     */
         public List<Announcement> listAllProducts() {
             List<Announcement> productList = productRepository.findAll();
             if(productList.isEmpty()) {
@@ -28,8 +29,8 @@ public class AnnoucementService {
 
     /***
      *
-     * @param message     método responsável por consultar todos os produtos
-     * @return
+     * @param category método responsável por consultar todos os produtos
+     * @return List<Announcement>
      */
     public List<Announcement> listByCategory(String category){
 

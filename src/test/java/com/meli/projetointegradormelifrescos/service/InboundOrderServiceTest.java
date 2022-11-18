@@ -1,7 +1,7 @@
 package com.meli.projetointegradormelifrescos.service;
 
-import com.meli.projetointegradormelifrescos.config.exception.BadRequestException;
-import com.meli.projetointegradormelifrescos.config.exception.NotFoundException;
+import com.meli.projetointegradormelifrescos.exception.BadRequestException;
+import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.dto.BatchDTO;
 import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
 import com.meli.projetointegradormelifrescos.enums.Category;
@@ -10,7 +10,6 @@ import com.meli.projetointegradormelifrescos.enums.repository.InboundOrderRepo;
 import com.meli.projetointegradormelifrescos.enums.repository.ManagerRepo;
 import com.meli.projetointegradormelifrescos.enums.repository.WarehouseRepo;
 import com.meli.projetointegradormelifrescos.model.*;
-import com.meli.projetointegradormelifrescos.service.Impl.InboundOrderService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -130,7 +129,6 @@ public class InboundOrderServiceTest {
     void  valid_find_Section_By_Code_exception() throws BadRequestException {
         BatchDTO bachDtoMock = CreateBatchStockDTOMock();
         Section sectionMock =  createSectionMock();
-
         BadRequestException except = assertThrows(BadRequestException.class, () ->  this
                 .service.sectorIsEqualsBatch(bachDtoMock,sectionMock));
         assertEquals(except.getMessage(), "Batch doesn't belong to the section.");
@@ -156,7 +154,7 @@ public class InboundOrderServiceTest {
     @Test
     @DisplayName("valida se o o pedido de entrada é registrado ")
     void create_InboundOrder_Saver_When_Correct_payload(){
-    /*    Warehouse warehouse = createWarehouseMock();
+       Warehouse warehouse = createWarehouseMock();
         Optional<Warehouse> warehouseRe = warehouseRepo.findWarehouseByCode(anyLong());
         Mockito.when(warehouseRe).thenReturn(Optional.of(warehouse));
 
@@ -166,7 +164,7 @@ public class InboundOrderServiceTest {
 
 
 
-        this.service.createInboundOrder(createInboundOrderDTOMock());*/
+        this.service.createInboundOrder(createInboundOrderDTOMock());
     }
 
 
@@ -239,9 +237,8 @@ public class InboundOrderServiceTest {
 
      private InboundOrder CreateInboundOrderEntityMock(InboundOrderDTO inboundOrderDTO){
         InboundOrder inboundOrderEntity = new InboundOrder();
-
         inboundOrderEntity.setOrderDate(inboundOrderDTO.getOrderDate());
-        inboundOrderEntity.setBatches(inboundOrderDTO.getBatchStock().stream().map(BatchDTO::toEntity).collect(Collectors.toList()));
+        inboundOrderEntity.setBatches(inboundOrderDTO.getBatchStock().stream().map(BatchDTO::entityToDTO).collect(Collectors.toList()));
         inboundOrderEntity.setSection(createSectionMock());
         inboundOrderEntity.setManager(createManagerMock());
         inboundOrderEntity.setOrderNumber(inboundOrderDTO.getOrderNumber());

@@ -3,6 +3,7 @@ package com.meli.projetointegradormelifrescos.model;
 import com.meli.projetointegradormelifrescos.enums.Category;
 import lombok.*;
 import java.math.*;
+import java.util.List;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.*;
 
@@ -22,6 +23,7 @@ public class Announcement {
     @Column(nullable = false)
     private BigDecimal price;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Category category;
 
@@ -31,4 +33,7 @@ public class Announcement {
     @JsonBackReference
     private Seller seller;
 
+    @OneToMany(mappedBy = "announcement")
+    @JsonManagedReference
+    private List<PurchaseProduct> purchaseProducts;
 }

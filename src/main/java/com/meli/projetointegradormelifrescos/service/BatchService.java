@@ -1,4 +1,4 @@
-package com.meli.projetointegradormelifrescos.service.Impl;
+package com.meli.projetointegradormelifrescos.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

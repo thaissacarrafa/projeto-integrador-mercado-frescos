@@ -1,9 +1,11 @@
 package com.meli.projetointegradormelifrescos.enums;
 
-import com.meli.projetointegradormelifrescos.config.exception.BadRequestException;
+import com.meli.projetointegradormelifrescos.exception.BadRequestException;
+
 import lombok.Getter;
 
 public enum Category {
+
     FRESCO("FS", "Fresco", 15F, 25F),
     REFRIGERADO("RF", "Refrigerado", 8F, 15F),
     CONGELADO("FF", "Congelado", 0F, 7F);

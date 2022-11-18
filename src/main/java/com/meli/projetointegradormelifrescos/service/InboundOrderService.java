@@ -1,27 +1,18 @@
 
-package com.meli.projetointegradormelifrescos.service.Impl;
+package com.meli.projetointegradormelifrescos.service;
 
-import com.meli.projetointegradormelifrescos.config.exception.NotFoundException;
-import com.meli.projetointegradormelifrescos.config.exception.BadRequestException;
-import com.meli.projetointegradormelifrescos.dto.BatchDTO;
-import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
+import java.util.*;
+import java.util.stream.*;
 import com.meli.projetointegradormelifrescos.enums.repository.BatchRepo;
 import com.meli.projetointegradormelifrescos.enums.repository.InboundOrderRepo;
 import com.meli.projetointegradormelifrescos.enums.repository.ManagerRepo;
 import com.meli.projetointegradormelifrescos.enums.repository.WarehouseRepo;
 import com.meli.projetointegradormelifrescos.model.*;
-import com.meli.projetointegradormelifrescos.service.IInboundOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-
-
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
-
+import com.meli.projetointegradormelifrescos.dto.*;
+import com.meli.projetointegradormelifrescos.exception.*;
 
 @Service
 public class InboundOrderService implements IInboundOrderService {
@@ -35,14 +26,11 @@ public class InboundOrderService implements IInboundOrderService {
     @Autowired
     private WarehouseRepo warehouseRepo;
 
-
-     @Autowired
-     private BatchRepo batchRepo;
+    @Autowired
+    private BatchRepo batchRepo;
 
     @Autowired
     private ManagerRepo managerRepo;
-
-
 
     @Override
 
@@ -66,43 +54,38 @@ public class InboundOrderService implements IInboundOrderService {
         // e que a section tem espaco
         ifTheSectionHasCapacity(section, inboundOrderDTO);
 
-        InboundOrder inboundOrderEntity = new InboundOrder();
-
-        inboundOrderEntity.setOrderDate(inboundOrderDTO.getOrderDate());
-        inboundOrderEntity.setBatches(inboundOrderDTO.getBatchStock().stream().map(BatchDTO::toEntity).collect(Collectors.toList()));
-        inboundOrderEntity.setSection(section);
-        inboundOrderEntity.setManager(manager);
-        inboundOrderEntity.setOrderNumber(inboundOrderDTO.getOrderNumber());
-        inboundOrderEntity.setWarehouse(warehouse);
+        InboundOrder inboundOrderEntity = InboundOrder.builder()
+                .orderDate(inboundOrderDTO.getOrderDate())
+                .batches(inboundOrderDTO.getBatchStock().stream().map(BatchDTO::entityToDTO).collect(Collectors.toList()))
+                .section(section)
+                .manager(manager)
+                .orderNumber(inboundOrderDTO.getOrderNumber())
+                .warehouse(warehouse)
+                .id(inboundOrderDTO.getOrderNumber())
+                .build();
 
         inboundOrderRepo.save(inboundOrderEntity);
         inboundOrderDTO.getBatchStock().forEach(b -> saveBatchStock(b, inboundOrderEntity));
+
         return inboundOrderDTO.getBatchStock();
     }
 
-    private Batch saveBatchStock(BatchDTO dto, InboundOrder inboundOrder) {
-        Batch batchStock = new Batch();
-         batchStock.setBatchNumber(dto.getBatchNumber());
-         batchStock.setProductId(dto.getProductId());
-         batchStock.setCurrentTemperature(dto.getCurrentTemperature());
-         batchStock.setManufacturingTime(dto.getManufacturingTime());
-         batchStock.setManufacturingDate(dto.getManufacturingDate());
-         batchStock.setVolume(dto.getVolume());
-         batchStock.setDueDate(dto.getDueDate());
-         batchStock.setPrice(dto.getPrice());
-         batchStock.setInboundOrder(inboundOrder);
-         batchStock.setInitialQuantity(dto.getProductQuantity());
-         batchStock.setProductQuantity(dto.getProductQuantity());
-         batchStock.setSection(inboundOrder.getSection());
-         batchRepo.save(batchStock);
-         return batchStock;
-     }
+    @Override
+    public List<BatchDTO> updateInboundOrder(Long orderId, InboundOrderDTO inboundOrderDTO) {
+        var order = inboundOrderRepo.findById(orderId);
 
+        if (order.isEmpty() || !orderId.equals(inboundOrderDTO.getOrderNumber())) {
+            throw new NotFoundException("Pedido não encontrado");
+        }
+
+        return createInboundOrder(inboundOrderDTO);
+    }
 
     /***
      *
-     *  método responsável por validar se a warehouse é válida, identificando
-     *  se ele é ou nao vazio
+     * método responsável por validar se a warehouse é válida, identificando
+     * se ele é ou nao vazio
+     *
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      * @return
      */
@@ -116,11 +99,14 @@ public class InboundOrderService implements IInboundOrderService {
 
     /***
      * método responsável por validar se o representante pertence ao armazém
-     ainda falta fazer o Manager repo ou tentar outra forma de validar se o representante é daquele armazem
-     quem sabe usando stream pra mapear a lista de representantes do armazem e verificar se é igual o informado.
-     @param warehouse
-     @param warehouse, id
-     @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
+     * ainda falta fazer o Manager repo ou tentar outra forma de validar se o
+     * representante é daquele armazem
+     * quem sabe usando stream pra mapear a lista de representantes do armazem e
+     * verificar se é igual o informado.
+     *
+     * @param warehouse
+     * @param warehouse, id
+     * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      ***/
     public Manager findManagerFromWarehouse(Warehouse warehouse, Long managerid) {
 
@@ -131,9 +117,9 @@ public class InboundOrderService implements IInboundOrderService {
         return managerRepo.findManagerById(managerid);
     }
 
-
     /***
      * metodo que valida se o setor é o correto
+     *
      * @return
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
@@ -147,23 +133,26 @@ public class InboundOrderService implements IInboundOrderService {
         return section.get();
     }
 
-
     /***
-     * que o setor corresponde aos tipos de produto - presumindo que todo o lote vem com o mesmo tipo de categoria
+     * que o setor corresponde aos tipos de produto - presumindo que todo o lote vem
+     * com o mesmo tipo de categoria
+     *
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
-     public void sectorIsEqualsBatch(BatchDTO batch, Section section) {
-            Float maximumTemperature = section.getCategory().getMaximumTemperature();
-            Float minimumTemperature = section.getCategory().getMinimumTemperature();
-            Float batchCurrentTemperature = batch.getCurrentTemperature();
 
-            if (batchCurrentTemperature > maximumTemperature || batchCurrentTemperature < minimumTemperature) {
-                throw new BadRequestException("Batch doesn't belong to the section.");
-            }
+    public void sectorIsEqualsBatch(BatchDTO batch, Section section) {
+        Float maximumTemperature = section.getCategory().getMaximumTemperature();
+        Float minimumTemperature = section.getCategory().getMinimumTemperature();
+        Float batchCurrentTemperature = batch.getCurrentTemperature();
+
+        if (batchCurrentTemperature > maximumTemperature || batchCurrentTemperature < minimumTemperature) {
+            throw new BadRequestException("Batch doesn't belong to the section.");
+        }
     }
 
     /***
      * que o setor tem espaço pra colocar o lote
+     *
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
 
@@ -176,7 +165,35 @@ public class InboundOrderService implements IInboundOrderService {
             throw new BadRequestException("Section don't have enought space.");
         }
     }
+
+    public Batch saveBatchStock(BatchDTO dto, InboundOrder inboundOrder) {
+        Batch batchBuilder = Batch.builder()
+                .batchNumber(dto.getBatchNumber())
+                .productId(dto.getProductId())
+                .currentTemperature(dto.getCurrentTemperature())
+                .manufacturingTime(dto.getManufacturingTime())
+                .manufacturingDate(dto.getManufacturingDate())
+                .volume(dto.getVolume())
+                .dueDate(dto.getDueDate())
+                .price(dto.getPrice())
+                .inboundOrder(inboundOrder)
+                .initialQuantity(dto.getProductQuantity())
+                .productQuantity(dto.getProductQuantity())
+                .section(inboundOrder.getSection())
+                .build();
+        batchRepo.save(batchBuilder);
+        return batchBuilder;
+    }
+
+    /**
+     * Busca uma ordem de entrada pelo ID
+     *
+     * @param id
+     * @author Leonardo Santos
+     */
+    public InboundOrder findById(Long id) {
+        return inboundOrderRepo.findById(id).orElseThrow(
+                () -> new NotFoundException("Order " + id + " not found"));
+    }
+
 }
-
-
-
