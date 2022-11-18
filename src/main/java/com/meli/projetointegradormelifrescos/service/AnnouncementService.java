@@ -6,7 +6,6 @@ import com.meli.projetointegradormelifrescos.enums.repository.AnnoucementRepo;
 import com.meli.projetointegradormelifrescos.exception.ListIsEmptyException;
 import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.model.Announcement;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

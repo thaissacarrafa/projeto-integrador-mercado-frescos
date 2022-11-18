@@ -112,15 +112,11 @@ public class InboundOrderServiceTest {
     @Test
     @DisplayName("valida se ao passar um mannager existente é retornado um mannager")
     void valid_find_manager_from_warehouse(){
-        Manager  manager = createManagerMock();
-        Warehouse warehouse = this.createWarehouseMock();
-        warehouse.setCode(32L);
-
+        Manager manager = createManagerMock();
+        Warehouse warehouse = createWarehouseMock();
         Mockito.when(managerRepo.findManagerById(anyLong()))
                 .thenReturn(manager);
-
         Manager managerReturned = this.service.findManagerFromWarehouse(warehouse,manager.getId());
-
         assertEquals(manager.getId(), managerReturned.getId());
     }
 
@@ -128,6 +124,7 @@ public class InboundOrderServiceTest {
     @DisplayName("valida se ao passar uma section inexistente lança um exception")
     void  valid_find_Section_By_Code_exception() throws BadRequestException {
         BatchDTO bachDtoMock = CreateBatchStockDTOMock();
+        bachDtoMock.setCurrentTemperature(14f);
         Section sectionMock =  createSectionMock();
         BadRequestException except = assertThrows(BadRequestException.class, () ->  this
                 .service.sectorIsEqualsBatch(bachDtoMock,sectionMock));
@@ -140,31 +137,52 @@ public class InboundOrderServiceTest {
         BatchDTO bachDtoMock = CreateBatchStockDTOMock();
         bachDtoMock.setCurrentTemperature(16f);
         Section sectionMock = createSectionMock();
-
-
         assertDoesNotThrow(() ->  this.service.sectorIsEqualsBatch(bachDtoMock,sectionMock));
+    }
+
+
+    @Test
+    @DisplayName("valida se lança uma section ao passar uma section exception")
+    void valid_find_Section_exeption() throws BadRequestException{
+        Warehouse warehouse = createWarehouseMock();
+
+        BadRequestException except = assertThrows(BadRequestException.class, () ->  this
+                .service.findSectionByCode(warehouse, 37L));
+        assertEquals(except.getMessage(), "Invalid section");
     }
 
     @Test
     @DisplayName("validate search by batchStock")
     void valid_getBatchStock(){
+        Warehouse warehouse = createWarehouseMock();
+        Section sectionMock = createSectionMock();
 
+        InboundOrderDTO inboundOrderDTOMock = createInboundOrderDTOMock();
+        Section sectionReturned = this.service.findSectionByCode(warehouse, warehouse.getId());
+        assertEquals(sectionReturned,  sectionMock);
     }
 
     @Test
     @DisplayName("valida se o o pedido de entrada é registrado ")
     void create_InboundOrder_Saver_When_Correct_payload(){
-       Warehouse warehouse = createWarehouseMock();
+     /*  InboundOrderDTO inboundOrderDTOMock = createInboundOrderDTOMock();
+        Warehouse warehouse = createWarehouseMock();
+        warehouse.getManagers().setId(4L);
+        Manager manager = createManagerMock();
+        manager.setId(4L);
+
         Optional<Warehouse> warehouseRe = warehouseRepo.findWarehouseByCode(anyLong());
         Mockito.when(warehouseRe).thenReturn(Optional.of(warehouse));
 
-        Manager manager = createManagerMock();
-        Mockito.when(this.service.findManagerFromWarehouse(warehouse, manager.getId())).thenReturn(manager);
+        Mockito.when(this.service.findManagerFromWarehouse(warehouse, 4L)).thenReturn(manager);
 
 
+        BatchDTO bachDtoMock = CreateBatchStockDTOMock();
+        bachDtoMock.setCurrentTemperature(16f);
+        Section sectionMock = createSectionMock();
 
 
-        this.service.createInboundOrder(createInboundOrderDTOMock());
+        this.service.createInboundOrder(inboundOrderDTOMock);*/
     }
 
 
@@ -173,7 +191,7 @@ public class InboundOrderServiceTest {
         BatchDTO requestExampleBaches = new BatchDTO();
         requestExampleBaches.setBatchNumber(1L);
         requestExampleBaches.setProductId(1L);
-        requestExampleBaches.setCurrentTemperature(14f);
+        requestExampleBaches.setCurrentTemperature(16f);
         requestExampleBaches.setProductQuantity(10);
         requestExampleBaches.setManufacturingDate(LocalDate.parse("2022-10-01"));
         requestExampleBaches.setManufacturingTime(LocalDateTime.parse("2022-01-01T00:00:00"));
