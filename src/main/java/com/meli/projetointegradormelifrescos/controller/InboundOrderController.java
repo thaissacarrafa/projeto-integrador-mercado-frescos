@@ -1,19 +1,15 @@
 package com.meli.projetointegradormelifrescos.controller;
 
-import com.meli.projetointegradormelifrescos.dto.AnnoucementDTO;
-import com.meli.projetointegradormelifrescos.dto.BatchDTO;
-import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
-import com.meli.projetointegradormelifrescos.dto.PurchaseOrderDTO;
+import com.meli.projetointegradormelifrescos.dto.*;
 import com.meli.projetointegradormelifrescos.enums.Category;
-import com.meli.projetointegradormelifrescos.service.AnnouncementService;
-import com.meli.projetointegradormelifrescos.service.IPurchaseProductService;
-import com.meli.projetointegradormelifrescos.service.IInboundOrderService;
+import com.meli.projetointegradormelifrescos.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,10 +21,13 @@ public class InboundOrderController {
     IInboundOrderService service;
 
     @Autowired
-    AnnouncementService announcementService;
+    IAnnoucementService annoucementService;
 
     @Autowired
-    private IPurchaseProductService purchaseProductService;
+    IPurchaseProductService purchaseProductService;
+
+    @Autowired
+    BatchService batchService;
 
 
     @PostMapping("/inboundorder")
@@ -46,14 +45,14 @@ public class InboundOrderController {
 
     @GetMapping
     public ResponseEntity<List<AnnoucementDTO>> listAllProduct(){
-        List<AnnoucementDTO> allProducts = announcementService.listAllProducts();
+        List<AnnoucementDTO> allProducts = annoucementService.listAllProducts();
         return ResponseEntity.ok().body(allProducts);
     }
 
     @GetMapping("/list")
     public ResponseEntity<List<AnnoucementDTO>> listByCategory(
             @RequestParam(value = "querytype", required = false, defaultValue = "") String category){
-        return new ResponseEntity(announcementService.findAllByCategory(Category.valueOf(category)), HttpStatus.OK);
+        return new ResponseEntity(annoucementService.findAllByCategory(Category.valueOf(category)), HttpStatus.OK);
     }
 
     @PostMapping("/orders")
@@ -70,4 +69,9 @@ public class InboundOrderController {
     public ResponseEntity<HashMap> putPurchaseOrder(@PathVariable Long purchaseOrderId) {
         return ResponseEntity.ok(purchaseProductService.putPurchaseOrder(purchaseOrderId));
     }
-}
+
+    @GetMapping("/warehouse/{productId}")
+    public  ResponseEntity<WarehouseStockDTO> listProductsByWarehouse(
+            @PathVariable @Valid @NotEmpty Long productId) {
+        return ResponseEntity.ok(batchService.countStocksByProductId(productId));
+    }

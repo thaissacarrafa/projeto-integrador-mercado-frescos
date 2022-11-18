@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class WarehouseDTO {
     @NotBlank
-    private String warehouseCode;
+    private Long warehouseCode;
     public  Manager managerList;
 
 }
