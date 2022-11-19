@@ -1,7 +1,5 @@
 package com.meli.projetointegradormelifrescos.service;
 
-import com.meli.projetointegradormelifrescos.exception.BadRequestException;
-import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.dto.BatchDTO;
 import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
 import com.meli.projetointegradormelifrescos.enums.Category;
@@ -9,7 +7,13 @@ import com.meli.projetointegradormelifrescos.enums.repository.BatchRepo;
 import com.meli.projetointegradormelifrescos.enums.repository.InboundOrderRepo;
 import com.meli.projetointegradormelifrescos.enums.repository.ManagerRepo;
 import com.meli.projetointegradormelifrescos.enums.repository.WarehouseRepo;
-import com.meli.projetointegradormelifrescos.model.*;
+import com.meli.projetointegradormelifrescos.exception.BadRequestException;
+import com.meli.projetointegradormelifrescos.exception.NotFoundException;
+import com.meli.projetointegradormelifrescos.model.InboundOrder;
+import com.meli.projetointegradormelifrescos.model.Manager;
+import com.meli.projetointegradormelifrescos.model.Section;
+import com.meli.projetointegradormelifrescos.model.Warehouse;
+import com.meli.projetointegradormelifrescos.utils.GenerateMocksPayloads;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,19 +21,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
+import static com.meli.projetointegradormelifrescos.utils.GenerateMocksPayloads.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -47,10 +47,10 @@ public class InboundOrderServiceTest {
     @Test
     @DisplayName("testa se uma exeção é lançada ao um volume maior que a capacidade da seção")
     void valid_if_The_Section_Has_Capacity() throws BadRequestException {
-        InboundOrderDTO inboundOrderDTO = this.createInboundOrderDTOMock();
-        Section section = this.createSectionMock();
-        BatchDTO batch = this.CreateBatchStockDTOMock();
-        BatchDTO batch2 = this.CreateBatchStockDTOMock();
+        InboundOrderDTO inboundOrderDTO = createInboundOrderDTOMock();
+        Section section = createSectionMock();
+        BatchDTO batch = CreateBatchStockDTOMock();
+        BatchDTO batch2 = CreateBatchStockDTOMock();
 
         batch2.setVolume(10f);
         batch2.setBatchNumber(2l);
@@ -71,7 +71,7 @@ public class InboundOrderServiceTest {
     @Test
     @DisplayName("valida se passando uma warehouse inexistente é lançado uma exception ")
     void test_Warehouse_Exists_exception() throws NotFoundException {
-        InboundOrderDTO inboundOrderDTO = this.createInboundOrderDTOMock();
+        InboundOrderDTO inboundOrderDTO = createInboundOrderDTOMock();
 
         Optional<Warehouse> warehouseRe = warehouseRepo.findWarehouseByCode(anyLong());
         Mockito.when(warehouseRe).thenReturn(Optional.empty());
@@ -100,7 +100,7 @@ public class InboundOrderServiceTest {
         void valid_find_manager_from_warehouse_exception() throws BadRequestException {
         Manager  manager = createManagerMock();
         manager.setId(3l);
-        Warehouse warehouse = this.createWarehouseMock();
+        Warehouse warehouse = createWarehouseMock();
         warehouse.setCode(32L);
 
         BadRequestException except = assertThrows(BadRequestException.class, () ->  this
@@ -203,88 +203,9 @@ public class InboundOrderServiceTest {
         Mockito.when(warehouseRe).thenReturn(Optional.of(warehouse));
 
         Mockito.when(inboundOrderRepo.findById(inboundOrderDTOMock.getOrderNumber()))
-                .thenReturn(Optional.of(CreateInboundOrderEntityMock(inboundOrderDTOMock)));
+                .thenReturn(Optional.of(GenerateMocksPayloads.CreateInboundOrderEntityMock(inboundOrderDTOMock)));
         List<BatchDTO> ProductReturnUpdateMock = this.service.updateInboundOrder(inboundOrderDTOMock.getOrderNumber(),inboundOrderDTOMock);
 
         assertEquals(ProductReturnUpdateMock, inboundOrderDTOMock.getBatchStock());
-    }
-
-
-
-    private BatchDTO CreateBatchStockDTOMock() {
-        BatchDTO requestExampleBaches = new BatchDTO();
-        requestExampleBaches.setBatchNumber(1L);
-        requestExampleBaches.setProductId(1L);
-        requestExampleBaches.setCurrentTemperature(16f);
-        requestExampleBaches.setProductQuantity(10);
-        requestExampleBaches.setManufacturingDate(LocalDate.parse("2022-10-01"));
-        requestExampleBaches.setManufacturingTime(LocalDateTime.parse("2022-01-01T00:00:00"));
-        requestExampleBaches.setVolume(10f);
-        requestExampleBaches.setDueDate(LocalDate.ofEpochDay(2022-11-11));
-        requestExampleBaches.setPrice(BigDecimal.valueOf(79));
-        return requestExampleBaches;
-    }
-
-    private InboundOrderDTO createInboundOrderDTOMock(){
-        List<BatchDTO> batch = new ArrayList<BatchDTO>();
-        batch.add(CreateBatchStockDTOMock());
-        batch.add(CreateBatchStockDTOMock());
-
-        InboundOrderDTO requestExample = new InboundOrderDTO();
-        requestExample.setWarehouseCode(1L);
-        requestExample.setOrderDate(LocalDate.parse("2022-11-11"));
-        requestExample.setOrderNumber(13L);
-        requestExample.setSectionCode(14L);
-        requestExample.setBatchStock(batch);
-        requestExample.setManagerId(4L);
-        return requestExample;
-    }
-
-    private Section createSectionMock(){
-        Section section = new Section();
-        section.setId(1L);
-        section.setCategory(Category.FRESCO);
-        section.setName("test");
-        section.setInboundOrders(new ArrayList<InboundOrder>());
-        section.setMaxCapacity(100f);
-        section.setBatches(new ArrayList<Batch>());
-        section.setWarehouse(new Warehouse());
-        return section;
-    }
-
-    private Manager createManagerMock(){
-        Manager manager = new Manager();
-        manager.setId(4L);
-        manager.setName("Joao");
-        manager.setSection(createSectionMock());
-        manager.setWarehouse(new Warehouse());
-        manager.setInboundOrder(new InboundOrder());
-        return manager;
-    }
-
-   private Warehouse createWarehouseMock(){
-        Section section = createSectionMock();
-        Section section2 = createSectionMock();
-
-        Warehouse warehouse = new Warehouse();
-        warehouse.setManagers(createManagerMock());
-        warehouse.setName("Warehouse");
-        warehouse.setCode(1L);
-        warehouse.setId(1L);
-        warehouse.setInboundOrders(new ArrayList<InboundOrder>());
-        warehouse.setSections(Arrays.asList(section, section2));
-
-     return warehouse;
-    }
-
-     private InboundOrder CreateInboundOrderEntityMock(InboundOrderDTO inboundOrderDTO){
-        InboundOrder inboundOrderEntity = new InboundOrder();
-        inboundOrderEntity.setOrderDate(inboundOrderDTO.getOrderDate());
-        inboundOrderEntity.setBatches(inboundOrderDTO.getBatchStock().stream().map(BatchDTO::entityToDTO).collect(Collectors.toList()));
-        inboundOrderEntity.setSection(createSectionMock());
-        inboundOrderEntity.setManager(createManagerMock());
-        inboundOrderEntity.setOrderNumber(inboundOrderDTO.getOrderNumber());
-        inboundOrderEntity.setWarehouse(createWarehouseMock());
-        return inboundOrderEntity;
     }
 }
