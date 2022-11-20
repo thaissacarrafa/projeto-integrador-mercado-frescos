@@ -31,6 +31,9 @@ public class InboundOrderService implements IInboundOrderService {
     @Autowired
     private ManagerRepo managerRepo;
 
+    @Autowired
+    private  SectionRepo sectionRepo;
+
     @Override
 
     // @Transactional
@@ -263,7 +266,7 @@ public class InboundOrderService implements IInboundOrderService {
     }
 
     /**
-     * lista de produtos com todos os lotes onde ele aparece (incompleto)
+     * lista de produtos com todos os lotes que possui o produto(incompleto)
      * @author Amanda Lobo
      * @param productId -> Long
      * @return List<WarehouseDTO> -> retorna uma lista do tipo WarehouseDTO
@@ -276,7 +279,7 @@ public class InboundOrderService implements IInboundOrderService {
         List<WarehouseDTO> warehouseDTOList = new ArrayList<>();
 
         for (InboundOrder inbound : inboundOrderList) {
-            batchList = getBatchByProductId(inbound, productId);
+            batchList = getBatchByProductId(inbound, productId); //242
             verifyBatchDueDate(batchList, productId);
 
             List<BatchDTO> batchDTOList = getBatchDTO(batchList);
@@ -309,5 +312,18 @@ public class InboundOrderService implements IInboundOrderService {
         }
         return warehouseDTOList;
     }
-
+    /**
+     * busca se um setor é o dono do lote
+     * @author Amanda Lobo
+     * @param sectionId -> Long
+     * @param batchId -> Long
+     * @exception NotFoundException
+     */
+    @Override
+    public void findBatchBySectionId(Long sectionId, Long batchId) {
+        List<Batch> batchList = sectionRepo.findBatchBysSectionId(sectionId, batchId);
+        if (batchList.isEmpty()){
+            throw new NotFoundException("batch doesn't existing in section");
+        }
+    }
 }
