@@ -22,7 +22,8 @@ public class LocationController {
      * @author Amanda Lobo
      * @param productId -> Long
      * @return retorna um BatchDTO
-     * @throws Exception*/
+     * @throws Exception
+     * */
     @GetMapping("/{productId}")
     public ResponseEntity<List<WarehouseDTO>> getAllProductWarehouse(@RequestParam Long productId) throws Exception {
         return new ResponseEntity(inboundOrderService.getAllProductWarehouse(productId), HttpStatus.OK);
@@ -34,8 +35,7 @@ public class LocationController {
      * @param productId -> Long
      * @param sorting -> String
      * @return List<BatchDTO>
-     * @throws Exception
-     */
+     * @throws Exception*/
     @GetMapping({"/{productId}/{sorting"})
     public ResponseEntity<List<WarehouseDTO>> getAllOrdinancesForBatches(@RequestParam("productId") Long productId, @RequestParam("sorting") String sorting) throws Exception {
         List<WarehouseDTO> warehouseDTOList = inboundOrderService.getAllProductWarehouse(productId);
