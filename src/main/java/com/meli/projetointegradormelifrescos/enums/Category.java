@@ -1,24 +1,25 @@
 package com.meli.projetointegradormelifrescos.enums;
 
 import com.meli.projetointegradormelifrescos.exception.BadRequestException;
-
 import lombok.Getter;
 
 @Getter
 public enum Category {
-
     FRESCO("FS", "Fresco", 15F, 25F),
     REFRIGERADO("RF", "Refrigerado", 8F, 15F),
     CONGELADO("FF", "Congelado", 0F, 7F);
-
 
     private final String value;
     private final String name;
     private final Float minimumTemperature;
     private final Float maximumTemperature;
 
-
-    Category(String value, String name, Float minimumTemperature, Float maximumTemperature) {
+    Category(
+        String value,
+        String name,
+        Float minimumTemperature,
+        Float maximumTemperature
+    ) {
         this.value = value;
         this.name = name;
         this.minimumTemperature = minimumTemperature;
@@ -47,5 +48,3 @@ public enum Category {
         throw new BadRequestException("Invalid category");
     }
 }
-
-
