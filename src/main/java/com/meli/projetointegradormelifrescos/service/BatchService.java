@@ -1,16 +1,79 @@
 package com.meli.projetointegradormelifrescos.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
+import com.meli.projetointegradormelifrescos.dto.BatchStockResDTO;
+import com.meli.projetointegradormelifrescos.enums.Category;
 import com.meli.projetointegradormelifrescos.model.BatchStock;
-import com.meli.projetointegradormelifrescos.enums.repository.BatchRepo;
+import com.meli.projetointegradormelifrescos.model.Section;
+import com.meli.projetointegradormelifrescos.repository.BatchRepo;
+import com.meli.projetointegradormelifrescos.repository.SectionRepo;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
-public class BatchService {
-    @Autowired
-    BatchRepo batchRepo;
+@Service
+@RequiredArgsConstructor
+public class BatchService implements IBatchStockService {
 
-    public void saveBatch(Batch batch) {
+    private final BatchRepo batchRepo;
+    private final SectionRepo sectionRepo;
+
+    public void saveBatch(BatchStock batch) {
         batchRepo.save(batch);
     }
 
+    @Override
+    public BatchStockResDTO getBatchStockBySection(
+        Integer numberOfDays,
+        Long sectionId
+    ) {
+        return null;
+    }
+
+    @Override
+    public BatchStockResDTO getBatchStockByCategory(
+        Integer numberOfDays,
+        String categoryCode,
+        String sortBy
+    ) {
+        Category category;
+
+        try {
+            category = Category.getCategoryByValue(categoryCode);
+        } catch (Exception e) {
+            throw new NotFoundException("Category not found");
+        }
+
+        List<BatchStock> batches = batchRepo.findAllByDueDateBetween(
+            LocalDate.now(),
+            LocalDate.now().plusDays(numberOfDays)
+        );
+
+        if (batches.isEmpty()) throw new NotFoundException("No batches found");
+
+        List<BatchStock> filteredBatches = batches
+            .stream()
+            .filter(batch -> batch.getSection().getCategory().equals(category))
+            .collect(Collectors.toList());
+
+        if (filteredBatches.isEmpty()) throw new NotFoundException(
+            "No batches found"
+        );
+
+        if (sortBy.equalsIgnoreCase("asc")) {
+            filteredBatches.sort(Comparator.comparing(BatchStock::getDueDate));
+        } else if (sortBy.equalsIgnoreCase("desc")) {
+            filteredBatches.sort(
+                Comparator.comparing(BatchStock::getDueDate).reversed()
+            );
+        } else {
+            throw new NotFoundException("Sort by not found");
+        }
+
+        return new BatchStockResDTO(filteredBatches);
+    }
 }
