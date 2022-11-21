@@ -4,6 +4,8 @@ import com.meli.projetointegradormelifrescos.dto.BatchDTO;
 import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
 import com.meli.projetointegradormelifrescos.dto.WarehouseCountDTO;
 import com.meli.projetointegradormelifrescos.dto.WarehouseStockDTO;
+import com.meli.projetointegradormelifrescos.exception.BadRequestException;
+import com.meli.projetointegradormelifrescos.exception.ListIsEmptyException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.meli.projetointegradormelifrescos.model.Batch;
@@ -26,6 +28,10 @@ public class BatchService implements IBatchService{
     public WarehouseStockDTO countStocksByProductId(Long productId) {
 
         List<Batch> batches = batchRepo.findBatchByProductId(productId);
+
+        if (batches.isEmpty()) {
+            throw new ListIsEmptyException("Este produto não foi encontrado em nenhum armazém.");
+        }
 
         List<WarehouseCountDTO> warehouseCountDTOList = new ArrayList<WarehouseCountDTO>();
 
