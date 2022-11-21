@@ -24,7 +24,7 @@ public class Warehouse {
 
     @OneToMany(mappedBy = "warehouse")
     @JsonIgnoreProperties("warehouse")
-    @JsonBackReference
+
     private List<Section> sections;
 
     @OneToOne
@@ -35,4 +35,5 @@ public class Warehouse {
     @OneToMany(mappedBy = "warehouse")
     @JsonIgnoreProperties("warehouse")
     private List<InboundOrder> inboundOrders;
+    
 }
