@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface SectionRepo extends JpaRepository<Section, Long> {
-//    List<Batch> findBatchBysSectionId(Long sectionId, Long batchId);
+    List<Batch> findBatchBySectionId(Long sectionId, Long batchId);
 }

@@ -37,12 +37,12 @@ public interface IInboundOrderService {
      * @return List<WarehouseDTO> -> Lista do tipo WarehouseDTO ordenada pelo parâmetro requerido*/
     List<WarehouseDTO> getAllOrdinancesFotBatches(List<WarehouseDTO> warehouseDTOList, String sorting);
 
-//    /**
-//     * Método que busca se um setor é dono de um lote
-//     * @author Amanda Lobo
-//     * @param sectionId -> Long
-//     * @param batchId -> Long
-//     */
-//    void findBatchBySectionId(Long sectionId, Long batchId);
+    /**
+     * Método que busca se um setor é dono de um lote
+     * @author Amanda Lobo
+     * @param sectionId -> Long
+     * @param batchId -> Long
+     */
+    void findBatchBySectionId(Long sectionId, Long batchId);
 
 }
