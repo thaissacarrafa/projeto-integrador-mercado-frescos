@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class AnnouncementService implements IAnnoucementService{
+
     @Autowired
     private AnnoucementRepo annoucementRepo;
 

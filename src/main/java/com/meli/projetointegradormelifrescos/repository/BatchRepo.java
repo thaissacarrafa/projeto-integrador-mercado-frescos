@@ -15,6 +15,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import java.util.List;
+
 
 public interface BatchRepo extends JpaRepository<Batch, Long> {
     List<Batch> findBatchByProductId(Long productId);
