@@ -31,7 +31,35 @@ public class BatchService implements IBatchStockService {
         Integer numberOfDays,
         Long sectionId
     ) {
-        return null;
+        Section section = sectionRepo
+            .findById(sectionId)
+            .orElseThrow(() -> new NotFoundException("Section not found"));
+
+        if (section.getInboundOrders().isEmpty()) throw new NotFoundException(
+            "Section without inbound orders"
+        );
+
+        List<BatchStock> batches = new ArrayList<>();
+
+        section
+            .getInboundOrders()
+            .forEach(inboundOrder -> batches.addAll(inboundOrder.getBatches()));
+
+        List<BatchStock> filteredBatches = batches
+            .stream()
+            .filter(batch ->
+                batch.getDueDate().isAfter(LocalDate.now()) &&
+                batch
+                    .getDueDate()
+                    .isBefore(batch.getDueDate().plusDays(numberOfDays))
+            )
+            .collect(Collectors.toList());
+
+        if (filteredBatches.isEmpty()) throw new NotFoundException(
+            "No batches found"
+        );
+
+        return new BatchStockResDTO(filteredBatches);
     }
 
     @Override
