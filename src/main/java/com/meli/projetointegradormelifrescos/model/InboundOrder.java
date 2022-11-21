@@ -27,7 +27,7 @@ public class InboundOrder {
     @OneToMany(mappedBy = "inboundOrder")
     @JsonIgnoreProperties("inboundOrder")
     @JsonManagedReference
-    private List<Batch> batches;
+    private List<BatchStock> batches;
 
     @ManyToOne
     @JoinColumn(name = "section_id", nullable = false)
