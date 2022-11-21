@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
-import com.meli.projetointegradormelifrescos.model.Batch;
+import com.meli.projetointegradormelifrescos.model.BatchStock;
 
 import java.time.LocalDate;
 import java.util.List;

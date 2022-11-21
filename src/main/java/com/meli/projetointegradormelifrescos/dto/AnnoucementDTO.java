@@ -2,7 +2,7 @@ package com.meli.projetointegradormelifrescos.dto;
 
 import com.meli.projetointegradormelifrescos.enums.Category;
 import com.meli.projetointegradormelifrescos.model.Announcement;
-import com.meli.projetointegradormelifrescos.model.Batch;
+import com.meli.projetointegradormelifrescos.model.BatchStock;
 import com.sun.istack.NotNull;
 import lombok.*;
 

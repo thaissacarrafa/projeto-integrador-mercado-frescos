@@ -1,6 +1,6 @@
 package com.meli.projetointegradormelifrescos.dto;
 
-import com.meli.projetointegradormelifrescos.model.Batch;
+import com.meli.projetointegradormelifrescos.model.BatchStock;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

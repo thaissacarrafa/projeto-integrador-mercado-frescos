@@ -1,6 +1,6 @@
 package com.meli.projetointegradormelifrescos.service;
 
-import com.meli.projetointegradormelifrescos.model.Batch;
+import com.meli.projetointegradormelifrescos.model.BatchStock;
 
 import java.util.List;
 

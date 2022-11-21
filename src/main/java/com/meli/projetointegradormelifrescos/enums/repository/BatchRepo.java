@@ -1,6 +1,6 @@
 package com.meli.projetointegradormelifrescos.enums.repository;
 
-import com.meli.projetointegradormelifrescos.model.Batch;
+import com.meli.projetointegradormelifrescos.model.BatchStock;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
