@@ -2,8 +2,7 @@ package com.meli.projetointegradormelifrescos.service;
 
 import com.meli.projetointegradormelifrescos.dto.AnnoucementDTO;
 import com.meli.projetointegradormelifrescos.enums.Category;
-import com.meli.projetointegradormelifrescos.enums.repository.AnnoucementRepo;
-import com.meli.projetointegradormelifrescos.enums.repository.BatchRepo;
+import com.meli.projetointegradormelifrescos.enums.repository.AnnouncementRepo;
 import com.meli.projetointegradormelifrescos.exception.ListIsEmptyException;
 import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.model.Announcement;
@@ -14,13 +13,12 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class AnnoucementService {
     @Autowired
-    private AnnoucementRepo annoucementRepo;
+    private AnnouncementRepo annoucementRepo;
 
     /***
      *   @param message  método responsável por consultar todos os produtos

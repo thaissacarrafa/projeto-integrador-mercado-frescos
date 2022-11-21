@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface AnnoucementRepo extends JpaRepository<Announcement, Long> {
+public interface AnnouncementRepo extends JpaRepository<Announcement, Long> {
 
     List<Announcement> findAll();
 
