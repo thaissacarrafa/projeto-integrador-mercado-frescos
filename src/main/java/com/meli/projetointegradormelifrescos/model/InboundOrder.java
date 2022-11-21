@@ -26,7 +26,6 @@ public class InboundOrder {
 
     @OneToMany(mappedBy = "inboundOrder")
     @JsonIgnoreProperties("inboundOrder")
-    @JsonManagedReference
     private List<Batch> batches;
 
     @ManyToOne

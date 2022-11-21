@@ -180,6 +180,7 @@ public class InboundOrderService implements IInboundOrderService {
                 .initialQuantity(dto.getProductQuantity())
                 .productQuantity(dto.getProductQuantity())
                 .section(inboundOrder.getSection())
+                .warehouse(validWarehouse(inboundOrder.getWarehouse().getCode()))
                 .build();
         batchRepo.save(batchBuilder);
         return batchBuilder;

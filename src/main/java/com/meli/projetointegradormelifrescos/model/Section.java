@@ -28,16 +28,14 @@ public class Section {
     @ManyToOne
     @JoinColumn(name = "warehouse_id")
     @JsonIgnoreProperties("section")
-    @JsonBackReference
+
     private Warehouse warehouse;
     
     @OneToMany(mappedBy = "section")
     @JsonIgnoreProperties("section")
-    @JsonBackReference
     private List<InboundOrder> inboundOrders;
 
     @OneToMany
     @JsonIgnoreProperties("section")
-    @JsonBackReference
     private List<Batch> batches;
 }
