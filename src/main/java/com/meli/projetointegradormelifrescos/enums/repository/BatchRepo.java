@@ -1,9 +1,9 @@
-package com.meli.projetointegradormelifrescos.enums.repository;
+/*package com.meli.projetointegradormelifrescos.enums.repository;
 
-import com.meli.projetointegradormelifrescos.model.Batch;
+import com.meli.projetointegradormelifrescos.model.BatchStock;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface BatchRepo extends JpaRepository<Batch, Long> {
-    Batch findBatchBySection(Long sectionId);
-}
+public interface BatchRepo extends JpaRepository<BatchStock, Long> {
+    BatchStock findBatchBySection(Long sectionId);
+}*/

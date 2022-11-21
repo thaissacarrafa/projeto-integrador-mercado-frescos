@@ -3,7 +3,7 @@ package com.meli.projetointegradormelifrescos.service;
 
 import java.util.*;
 import java.util.stream.*;
-import com.meli.projetointegradormelifrescos.enums.repository.BatchRepo;
+import com.meli.projetointegradormelifrescos.repository.BatchRepo;
 import com.meli.projetointegradormelifrescos.enums.repository.InboundOrderRepo;
 import com.meli.projetointegradormelifrescos.enums.repository.ManagerRepo;
 import com.meli.projetointegradormelifrescos.enums.repository.WarehouseRepo;

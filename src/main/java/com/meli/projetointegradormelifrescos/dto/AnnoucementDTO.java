@@ -2,14 +2,11 @@ package com.meli.projetointegradormelifrescos.dto;
 
 import com.meli.projetointegradormelifrescos.enums.Category;
 import com.meli.projetointegradormelifrescos.model.Announcement;
-import com.meli.projetointegradormelifrescos.model.Batch;
 import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor

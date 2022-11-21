@@ -3,7 +3,7 @@ package com.meli.projetointegradormelifrescos.service;
 import com.meli.projetointegradormelifrescos.dto.BatchDTO;
 import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
 import com.meli.projetointegradormelifrescos.enums.Category;
-import com.meli.projetointegradormelifrescos.enums.repository.BatchRepo;
+import com.meli.projetointegradormelifrescos.repository.BatchRepo;
 import com.meli.projetointegradormelifrescos.enums.repository.InboundOrderRepo;
 import com.meli.projetointegradormelifrescos.enums.repository.ManagerRepo;
 import com.meli.projetointegradormelifrescos.enums.repository.WarehouseRepo;
