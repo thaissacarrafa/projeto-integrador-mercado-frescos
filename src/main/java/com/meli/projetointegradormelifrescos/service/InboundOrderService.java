@@ -3,10 +3,10 @@ package com.meli.projetointegradormelifrescos.service;
 
 import java.util.*;
 import java.util.stream.*;
-import com.meli.projetointegradormelifrescos.enums.repository.BatchRepo;
-import com.meli.projetointegradormelifrescos.enums.repository.InboundOrderRepo;
-import com.meli.projetointegradormelifrescos.enums.repository.ManagerRepo;
-import com.meli.projetointegradormelifrescos.enums.repository.WarehouseRepo;
+import com.meli.projetointegradormelifrescos.repository.BatchRepo;
+import com.meli.projetointegradormelifrescos.repository.InboundOrderRepo;
+import com.meli.projetointegradormelifrescos.repository.ManagerRepo;
+import com.meli.projetointegradormelifrescos.repository.WarehouseRepo;
 import com.meli.projetointegradormelifrescos.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;

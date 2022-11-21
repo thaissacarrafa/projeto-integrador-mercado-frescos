@@ -1,10 +1,10 @@
 package com.meli.projetointegradormelifrescos.service;
 
 
-import com.meli.projetointegradormelifrescos.enums.repository.AnnoucementRepo;
+import com.meli.projetointegradormelifrescos.repository.AnnoucementRepo;
+import com.meli.projetointegradormelifrescos.repository.BatchRepo;
+import com.meli.projetointegradormelifrescos.repository.InboundOrderRepo;
 import com.meli.projetointegradormelifrescos.model.PurchaseOrder;
-import com.meli.projetointegradormelifrescos.repository.PurchaseOrderRepo;
-import com.meli.projetointegradormelifrescos.repository.PurchaseProductRepo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,9 +18,9 @@ public class PurchseProductServiceTest {
 
     @Mock private PurchaseOrder purchaseOrder;
 
-    @Mock private PurchaseOrderRepo purchaseOrderRepo;
+    @Mock private BatchRepo.PurchaseOrderRepo purchaseOrderRepo;
 
-    @Mock private PurchaseProductRepo purchaseProductRepo;
+    @Mock private InboundOrderRepo.PurchaseProductRepo purchaseProductRepo;
 
     @Mock private AnnoucementRepo annoucementRepo;
 

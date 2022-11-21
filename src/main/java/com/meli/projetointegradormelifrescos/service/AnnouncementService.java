@@ -2,7 +2,7 @@ package com.meli.projetointegradormelifrescos.service;
 
 import com.meli.projetointegradormelifrescos.dto.AnnoucementDTO;
 import com.meli.projetointegradormelifrescos.enums.Category;
-import com.meli.projetointegradormelifrescos.enums.repository.AnnoucementRepo;
+import com.meli.projetointegradormelifrescos.repository.AnnoucementRepo;
 import com.meli.projetointegradormelifrescos.exception.ListIsEmptyException;
 import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.model.Announcement;
@@ -14,7 +14,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class AnnouncementService {
+public class AnnouncementService implements IAnnoucementService{
+
     @Autowired
     private AnnoucementRepo annoucementRepo;
 

@@ -11,6 +11,7 @@ package com.meli.projetointegradormelifrescos.dto;
 import com.meli.projetointegradormelifrescos.dto.BatchDTO;
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
 
+import com.meli.projetointegradormelifrescos.model.Section;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,5 +49,6 @@ public class InboundOrderDTO {
         this.managerId = inboundOrder.getManager().getId();
         this.batchStock = inboundOrder.getBatches().stream().map(BatchDTO::new).collect(Collectors.toList());
     }
+
 
 }

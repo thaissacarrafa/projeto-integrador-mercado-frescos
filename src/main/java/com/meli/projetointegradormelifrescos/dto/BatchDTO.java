@@ -2,6 +2,7 @@ package com.meli.projetointegradormelifrescos.dto;
 
 import com.meli.projetointegradormelifrescos.model.Batch;
 
+import com.meli.projetointegradormelifrescos.model.Warehouse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,6 +40,9 @@ public class BatchDTO {
 
     private BigDecimal price;
 
+    private WarehouseDTO warehouse;
+
+
     public BatchDTO(Batch batch) {
         this.batchNumber = batch.getBatchNumber();
         this.productId = batch.getProductId();
@@ -49,6 +53,16 @@ public class BatchDTO {
         this.volume = batch.getVolume();
         this.dueDate = batch.getDueDate();
         this.price = batch.getPrice();
+    }
+
+    public BatchDTO(Long batchNumber, int productQuantity, LocalDate dueDate) {
+        Batch batch = new Batch();
+
+        this.batchNumber = batch.getBatchNumber();
+        this.productQuantity = batch.getProductQuantity();
+        this.dueDate = batch.getDueDate();
+
+
     }
 
     public static Batch entityToDTO(BatchDTO batchDTO) {
