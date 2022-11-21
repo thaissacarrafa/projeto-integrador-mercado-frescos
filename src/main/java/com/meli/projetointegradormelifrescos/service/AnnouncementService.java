@@ -9,6 +9,7 @@ import com.meli.projetointegradormelifrescos.model.Announcement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -17,6 +18,9 @@ import java.util.stream.Collectors;
 public class AnnouncementService {
     @Autowired
     private AnnoucementRepo annoucementRepo;
+
+    @Autowired
+    private CurrencyService currencyService;
 
     /***
      *   message  método responsável por consultar todos os produtos
@@ -38,6 +42,29 @@ public class AnnouncementService {
         if (allProducts.isEmpty()) {
             throw new ListIsEmptyException("Nenhum produto cadastrado");
         }
+        return allProducts;
+    }
+
+    public List<AnnoucementDTO> listAllProductsWithCurrency(String currency) {
+        List<AnnoucementDTO> allProducts = annoucementRepo.findAll().stream()
+                .map(announcement -> new AnnoucementDTO(
+                        announcement.getId(),
+                        announcement.getName(),
+                        announcement.getPrice(),
+                        announcement.getCategory(),
+                        announcement.getDescription())
+                )
+                .collect(Collectors.toList());
+
+        if (allProducts.isEmpty()) {
+            throw new ListIsEmptyException("Nenhum produto cadastrado");
+        }
+
+        var currentBid = currencyService.getCurrency(currency);
+        allProducts.forEach(annoucementDTO -> {
+            annoucementDTO.setPrice(annoucementDTO.getPrice().multiply(currentBid));
+        });
+
         return allProducts;
     }
 

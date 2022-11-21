@@ -50,6 +50,12 @@ public class InboundOrderController {
         return ResponseEntity.ok().body(allProducts);
     }
 
+    @GetMapping(params = "currency")
+    public ResponseEntity<List<AnnoucementDTO>> listAllProductWothCurrency(@RequestParam String currency){
+        List<AnnoucementDTO> allProducts = announcementService.listAllProductsWithCurrency(currency);
+        return ResponseEntity.ok().body(allProducts);
+    }
+
     @GetMapping("/list")
     public ResponseEntity<List<AnnoucementDTO>> listByCategory(
             @RequestParam(value = "querytype", required = false, defaultValue = "") String category){
