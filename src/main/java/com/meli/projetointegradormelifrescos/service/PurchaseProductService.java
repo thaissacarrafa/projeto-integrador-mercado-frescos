@@ -5,8 +5,9 @@ import com.meli.projetointegradormelifrescos.dto.PurchaseOrderDTO;
 import com.meli.projetointegradormelifrescos.dto.PurchaseProductDTO;
 import com.meli.projetointegradormelifrescos.enums.Category;
 
+import com.meli.projetointegradormelifrescos.enums.repository.AnnoucementRepo;
 import com.meli.projetointegradormelifrescos.model.*;
-import com.meli.projetointegradormelifrescos.repository.AnnoucementRepo;
+import com.meli.projetointegradormelifrescos.repository.*;
 import com.meli.projetointegradormelifrescos.repository.PurchaseOrderRepo;
 import com.meli.projetointegradormelifrescos.repository.PurchaseProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;

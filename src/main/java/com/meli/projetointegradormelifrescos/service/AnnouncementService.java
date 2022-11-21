@@ -2,28 +2,26 @@ package com.meli.projetointegradormelifrescos.service;
 
 import com.meli.projetointegradormelifrescos.dto.AnnoucementDTO;
 import com.meli.projetointegradormelifrescos.enums.Category;
+import com.meli.projetointegradormelifrescos.enums.repository.AnnoucementRepo;
 import com.meli.projetointegradormelifrescos.exception.ListIsEmptyException;
 import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.model.Announcement;
-import com.meli.projetointegradormelifrescos.repository.AnnoucementRepo;
-import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotBlank;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class AnnoucementService {
+public class AnnouncementService {
     @Autowired
     private AnnoucementRepo annoucementRepo;
 
     /***
-     *   @param message  método responsável por consultar todos os produtos
+     *   message  método responsável por consultar todos os produtos
      *   @author Thaíssa Carrafa
+     *  @return List<AnnouncementDTO>
      */
 
     public List<AnnoucementDTO> listAllProducts() {
@@ -45,7 +43,7 @@ public class AnnoucementService {
 
         /***
          *
-         * @param message     método responsável por consultar todos os produtos de determinada categoria
+         * @param category método responsável por consultar todos os produtos de determinada categoria
          * @author Thaíssa Carrafa
          * @return
          */

@@ -3,14 +3,16 @@ package com.meli.projetointegradormelifrescos.service;
 
 import java.util.*;
 import java.util.stream.*;
-
+import com.meli.projetointegradormelifrescos.enums.repository.BatchRepo;
+import com.meli.projetointegradormelifrescos.enums.repository.InboundOrderRepo;
+import com.meli.projetointegradormelifrescos.enums.repository.ManagerRepo;
+import com.meli.projetointegradormelifrescos.enums.repository.WarehouseRepo;
+import com.meli.projetointegradormelifrescos.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.stereotype.Service;
 import com.meli.projetointegradormelifrescos.dto.*;
 import com.meli.projetointegradormelifrescos.exception.*;
-import com.meli.projetointegradormelifrescos.model.*;
-import com.meli.projetointegradormelifrescos.repository.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.boot.autoconfigure.*;
-import org.springframework.stereotype.*;
 
 @Service
 public class InboundOrderService implements IInboundOrderService {
@@ -31,6 +33,7 @@ public class InboundOrderService implements IInboundOrderService {
     private ManagerRepo managerRepo;
 
     @Override
+
     // @Transactional
     public List<BatchDTO> createInboundOrder(InboundOrderDTO inboundOrderDTO) {
 
@@ -86,7 +89,7 @@ public class InboundOrderService implements IInboundOrderService {
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      * @return
      */
-    private Warehouse validWarehouse(Long warehouseCode) {
+    public Warehouse validWarehouse(Long warehouseCode) {
         Optional<Warehouse> warehouse = warehouseRepo.findWarehouseByCode(warehouseCode);
         if (warehouse.isEmpty()) {
             throw new NotFoundException("Invalid warehouse Code");
@@ -105,7 +108,7 @@ public class InboundOrderService implements IInboundOrderService {
      * @param warehouse, id
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      ***/
-    private Manager findManagerFromWarehouse(Warehouse warehouse, Long managerid) {
+    public Manager findManagerFromWarehouse(Warehouse warehouse, Long managerid) {
 
         if (!warehouse.getManagers().getId().equals(managerid)) {
             throw new BadRequestException("Invalid Manager Id");
@@ -120,7 +123,7 @@ public class InboundOrderService implements IInboundOrderService {
      * @return
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
-    private Section findSectionByCode(Warehouse warehouse, Long id) {
+    public Section findSectionByCode(Warehouse warehouse, Long id) {
         Optional<Section> section = warehouse.getSections()
                 .stream()
                 .filter(s -> s.getId().equals(id)).findFirst();
@@ -136,7 +139,8 @@ public class InboundOrderService implements IInboundOrderService {
      *
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
-    private void sectorIsEqualsBatch(BatchDTO batch, Section section) {
+
+    public void sectorIsEqualsBatch(BatchDTO batch, Section section) {
         Float maximumTemperature = section.getCategory().getMaximumTemperature();
         Float minimumTemperature = section.getCategory().getMinimumTemperature();
         Float batchCurrentTemperature = batch.getCurrentTemperature();
@@ -152,7 +156,7 @@ public class InboundOrderService implements IInboundOrderService {
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
 
-    private void ifTheSectionHasCapacity(Section section, InboundOrderDTO inbound) {
+    public void ifTheSectionHasCapacity(Section section, InboundOrderDTO inbound) {
         Float maxCapacity = section.getMaxCapacity();
         int currentCapacity = section.getBatches().size(); // ele analisa o tamanho de produtos do json
         Float availableCapacity = maxCapacity - currentCapacity;
@@ -162,7 +166,7 @@ public class InboundOrderService implements IInboundOrderService {
         }
     }
 
-    private Batch saveBatchStock(BatchDTO dto, InboundOrder inboundOrder) {
+    public Batch saveBatchStock(BatchDTO dto, InboundOrder inboundOrder) {
         Batch batchBuilder = Batch.builder()
                 .batchNumber(dto.getBatchNumber())
                 .productId(dto.getProductId())
