@@ -8,10 +8,16 @@
 
 package com.meli.projetointegradormelifrescos.repository;
 
-import com.meli.projetointegradormelifrescos.model.PurchaseProduct;
+import com.meli.projetointegradormelifrescos.model.Batch;
+import com.meli.projetointegradormelifrescos.model.PurchaseOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
- @Repository
-public interface PurchaseProductRepo extends JpaRepository<PurchaseProduct, Long> {
-    PurchaseProduct save(PurchaseProduct purchaseProduct);
+
+import java.util.List;
+
+
+public interface BatchRepo extends JpaRepository<Batch, Long> {
+    List<Batch> findBatchByProductId(Long productId);
+    List<Batch> findSectionByProductId(Long productId);
+
 }

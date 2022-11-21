@@ -2,10 +2,10 @@ package com.meli.projetointegradormelifrescos.service;
 
 import com.meli.projetointegradormelifrescos.dto.AnnoucementDTO;
 import com.meli.projetointegradormelifrescos.enums.Category;
+import com.meli.projetointegradormelifrescos.repository.AnnoucementRepo;
 import com.meli.projetointegradormelifrescos.exception.ListIsEmptyException;
 import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.model.Announcement;
-import com.meli.projetointegradormelifrescos.repository.AnnoucementRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class AnnoucementService implements IAnnoucementService{
+public class AnnouncementService implements IAnnoucementService{
     @Autowired
     private AnnoucementRepo annoucementRepo;
 

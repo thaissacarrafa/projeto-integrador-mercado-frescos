@@ -8,10 +8,14 @@
 
 package com.meli.projetointegradormelifrescos.repository;
 
-import com.meli.projetointegradormelifrescos.model.PurchaseProduct;
+import com.meli.projetointegradormelifrescos.model.Announcement;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
- @Repository
-public interface PurchaseProductRepo extends JpaRepository<PurchaseProduct, Long> {
-    PurchaseProduct save(PurchaseProduct purchaseProduct);
+
+import java.util.List;
+
+public interface AnnoucementRepo extends JpaRepository<Announcement, Long> {
+
+    List<Announcement> findAll();
+
+    List<Announcement> findAllByCategory(String category);
 }
