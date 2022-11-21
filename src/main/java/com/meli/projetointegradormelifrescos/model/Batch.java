@@ -18,6 +18,9 @@ public class Batch {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
+
+    @Column(name = "batch_number")
     private Long batchNumber;
 
     @Column(name = "product_id", nullable = false)
