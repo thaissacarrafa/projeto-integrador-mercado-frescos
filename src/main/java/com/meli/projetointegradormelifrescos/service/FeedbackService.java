@@ -100,10 +100,9 @@ public class FeedbackService implements IFeedbackService{
 
     /**
      * listar os produtos filtrados por nota (de 0 a 5)
-     *
+     * @author Amanda Lobo
      * @param filtredEvaluation -> Double
      * @return AnnouncementDTO
-     * @author Amanda Lobo
      * @Excpetion ListIsEmptyException
      * @Excpetion InvalidEvaluationException
      */
