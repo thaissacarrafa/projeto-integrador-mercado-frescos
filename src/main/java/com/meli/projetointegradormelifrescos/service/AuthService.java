@@ -12,6 +12,14 @@ public class AuthService {
     @Autowired
     private JWTUtils jwtUtils;
 
+    /**
+     * verifica os objetos passados no body da requisição para gerar um token
+     * caso login e senha não seja o manager simulado lançará uma exception
+     * @throws BadCredentialsException
+     * @param login
+     * @autor Igor S. Fernandes
+     * @return String
+     */
     public TokenDTO generateTokenManager(LoginDTO login){
         String MockManager = "eusoumanager@gmail.com";
         String PasswordManagerMock = "123456";
