@@ -2,6 +2,7 @@ package com.meli.projetointegradormelifrescos.controller;
 
 import com.meli.projetointegradormelifrescos.dto.BatchDTO;
 import com.meli.projetointegradormelifrescos.dto.WarehouseDTO;
+import com.meli.projetointegradormelifrescos.model.Warehouse;
 import com.meli.projetointegradormelifrescos.service.InboundOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,8 +26,8 @@ public class LocationController {
      * @throws Exception
      */
     @GetMapping("/{productId}")
-    public ResponseEntity<List<WarehouseDTO>> getAllProductWarehouse(@PathVariable Long productId) throws Exception {
-        return new ResponseEntity(inboundOrderService.getAllProductWarehouse(productId), HttpStatus.OK);
+    public ResponseEntity<List<Warehouse>> getAllProductWarehouse(@PathVariable Long productId) throws Exception {
+        return new ResponseEntity(inboundOrderService.warehouseT(productId), HttpStatus.OK);
     }
 
     /**
@@ -37,8 +38,8 @@ public class LocationController {
      * @return List<BatchDTO>
      * @throws Exception
      */
-    @GetMapping({"/{productId}/{sorting}"})
-    public ResponseEntity<List<WarehouseDTO>> getAllOrdinancesForBatches(
+    @GetMapping("/{productId}/{sorting}")
+    public ResponseEntity<List<Warehouse>> getAllOrdinancesForBatches(
         @PathVariable("productId") Long productId,
         @PathVariable("sorting") String sorting) throws Exception {
         List<WarehouseDTO> warehouseDTOList = inboundOrderService.getAllProductWarehouse(productId);

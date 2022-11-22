@@ -4,6 +4,7 @@ import com.meli.projetointegradormelifrescos.dto.BatchDTO;
 import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
 import com.meli.projetointegradormelifrescos.dto.WarehouseDTO;
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
+import com.meli.projetointegradormelifrescos.model.Warehouse;
 
 import java.util.List;
 
@@ -40,9 +41,10 @@ public interface IInboundOrderService {
     /**
      * Método que busca se um setor é dono de um lote
      * @author Amanda Lobo
-     * @param sectionId -> Long
-     * @param batchId -> Long
+     * @param productId -> Long
      */
-    void findBatchBySectionId(Long sectionId, Long batchId);
+    void findSectionByProductId(Long productId);
+
+    public List<Warehouse> warehouseT(Long productId);
 
 }

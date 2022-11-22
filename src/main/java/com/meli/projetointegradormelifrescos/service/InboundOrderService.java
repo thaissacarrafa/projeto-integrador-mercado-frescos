@@ -1,6 +1,5 @@
 package com.meli.projetointegradormelifrescos.service;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.*;
 
@@ -8,7 +7,9 @@ import com.meli.projetointegradormelifrescos.dto.*;
 import com.meli.projetointegradormelifrescos.enums.Sorting;
 import com.meli.projetointegradormelifrescos.exception.*;
 import com.meli.projetointegradormelifrescos.model.*;
-import com.meli.projetointegradormelifrescos.enums.repository.*;
+import com.meli.projetointegradormelifrescos.repository.*;
+import com.meli.projetointegradormelifrescos.repository.*;
+import com.meli.projetointegradormelifrescos.repository.test.IBatchRepo;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.stereotype.*;
@@ -32,7 +33,7 @@ public class InboundOrderService implements IInboundOrderService {
     private ManagerRepo managerRepo;
 
     @Autowired
-    private  SectionRepo sectionRepo;
+    IBatchRepo iBatchRepo;
 
     @Override
 
@@ -266,7 +267,7 @@ public class InboundOrderService implements IInboundOrderService {
     }
 
     /**
-     * lista de produtos com todos os lotes que possui o produto(incompleto)
+     * lista de produtos com todos os lotes que possui o produto e a localização do produto em um setor(incompleto)
      * @author Amanda Lobo
      * @param productId -> Long
      * @return List<WarehouseDTO> -> retorna uma lista do tipo WarehouseDTO
@@ -274,18 +275,36 @@ public class InboundOrderService implements IInboundOrderService {
      */
     @Override
     public List<WarehouseDTO> getAllProductWarehouse(Long productId) throws Exception {
-        List<InboundOrder> inboundOrderList = getAll();
-        List<Batch> batchList;
-        List<WarehouseDTO> warehouseDTOList = new ArrayList<>();
+        List<WarehouseDTO> warehouseDTOList = warehouseRepo.findWarehouseByProductId(productId);
+        var a = 0;
 
-        for (InboundOrder inbound : inboundOrderList) {
-            batchList = getBatchByProductId(inbound, productId); //242
-            verifyBatchDueDate(batchList, productId);
-
-            List<BatchDTO> batchDTOList = getBatchDTO(batchList);
-        }
-        return warehouseDTOList;
+        return null;
     }
+    @Override
+    public List<Warehouse> warehouseT(Long productId){
+        List<Warehouse> warehouses = warehouseRepo.warehouseT(productId);
+        var z =0;
+        return warehouses;
+    }
+
+    //        List<WarehouseDTO> warehouseDTOList = warehouseRepo.findWarehouseByProductId(productId);
+//
+//        List<InboundOrder> inboundOrderList = getAll();
+//        List<Batch> batchList;
+////        List<WarehouseDTO> warehouseDTOList = warehouseRepo.findBatchByProductId(productId);
+////
+//        for (InboundOrder inbound : inboundOrderList) {
+//            batchList = getBatchByProductId(inbound, productId);
+//            verifyBatchDueDate(batchList, productId);
+////
+//            List<BatchDTO> batchDTOList = getBatchDTO(batchList);
+//////            List<WarehouseDTO> listProductId = iBatchRepo.findBatchByProductId(productId);
+//        }
+//        return warehouseDTOList;
+//    public String testeDeQuery(Long id){
+//        var a = iBatchRepo.testeDeQuery(id);
+//        return a.toString();
+//    }
 
     /**
      * ordenação de lotes por parâmetro (L= lote, Q= quantidade, V = validade).
@@ -315,13 +334,12 @@ public class InboundOrderService implements IInboundOrderService {
     /**
      * busca se um setor é o dono do lote
      * @author Amanda Lobo
-     * @param sectionId -> Long
-     * @param batchId -> Long
+     * @param productId -> Long
      * @exception NotFoundException
      */
     @Override
-    public void findBatchBySectionId(Long sectionId, Long batchId) {
-        List<Batch> batchList = sectionRepo.findBatchBysSectionId(sectionId, batchId);
+    public void findSectionByProductId(Long productId) {
+        List<Batch> batchList = batchRepo.findSectionByProductId(productId);
         if (batchList.isEmpty()){
             throw new NotFoundException("batch doesn't existing in section");
         }

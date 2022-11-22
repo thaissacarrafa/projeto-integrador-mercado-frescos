@@ -1,4 +1,4 @@
-package com.meli.projetointegradormelifrescos.enums.repository;
+package com.meli.projetointegradormelifrescos.repository;
 
 import com.meli.projetointegradormelifrescos.model.Announcement;
 import com.meli.projetointegradormelifrescos.model.Batch;
@@ -12,4 +12,6 @@ import java.util.List;
 
 public interface BatchRepo extends JpaRepository<Batch, Long> {
 //    List<Batch> findAllByProductId(Announcement id);
+    List<Batch> findSectionByProductId(Long productId);
+
 }
