@@ -9,12 +9,10 @@
 package com.meli.projetointegradormelifrescos.repository;
 
 import com.meli.projetointegradormelifrescos.model.Announcement;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
 public interface AnnoucementRepo extends JpaRepository<Announcement, Long> {
-
     List<Announcement> findAll();
 
     List<Announcement> findAllByCategory(String category);

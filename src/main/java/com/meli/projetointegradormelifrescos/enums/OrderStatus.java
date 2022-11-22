@@ -15,5 +15,4 @@ public enum OrderStatus {
             throw new BadRequestException("Invalid status");
         }
     }
-
 }

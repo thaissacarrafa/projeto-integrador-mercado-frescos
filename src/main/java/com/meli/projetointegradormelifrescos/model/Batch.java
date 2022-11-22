@@ -2,12 +2,11 @@ package com.meli.projetointegradormelifrescos.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
-
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import javax.persistence.*;
+import lombok.*;
 
 @Entity
 @Builder
@@ -16,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Batch {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,5 +66,3 @@ public class Batch {
     @JsonIgnoreProperties("warehouse")
     private Warehouse warehouse;
 }
-
-

@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WarehouseCountDTO {
+
     private Long warehouseCode;
     private Integer totalQuantity;
-
 }

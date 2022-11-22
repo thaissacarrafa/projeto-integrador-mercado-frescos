@@ -8,7 +8,8 @@
 
 package com.meli.projetointegradormelifrescos.exception;
 
-public class ListIsEmptyException  extends RuntimeException{
+public class ListIsEmptyException extends RuntimeException {
+
     public ListIsEmptyException(String message) {
         super(message);
     }

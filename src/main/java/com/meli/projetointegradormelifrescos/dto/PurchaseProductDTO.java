@@ -20,6 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PurchaseProductDTO {
+
     private Long productId;
     private int quantity;
 
@@ -28,6 +29,7 @@ public class PurchaseProductDTO {
     public PurchaseProductDTO(PurchaseProduct purchaseProduct) {
         this.productId = purchaseProduct.getAnnouncement().getId();
         this.quantity = purchaseProduct.getQuantity();
-        this.annoucement = new AnnoucementDTO(purchaseProduct.getAnnouncement());
+        this.annoucement =
+            new AnnoucementDTO(purchaseProduct.getAnnouncement());
     }
 }

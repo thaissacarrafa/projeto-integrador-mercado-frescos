@@ -15,5 +15,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PurchaseOrderRepo extends JpaRepository<PurchaseOrder, Long> {
     PurchaseOrder save(PurchaseOrder purchaseOrder);
-
 }

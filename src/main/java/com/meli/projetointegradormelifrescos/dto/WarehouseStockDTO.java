@@ -8,20 +8,18 @@
 
 package com.meli.projetointegradormelifrescos.dto;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
 public class WarehouseStockDTO {
+
     private Long productId;
     private List<WarehouseCountDTO> warehouses;
 
-    public WarehouseStockDTO() {
-
-    }
+    public WarehouseStockDTO() {}
 }
