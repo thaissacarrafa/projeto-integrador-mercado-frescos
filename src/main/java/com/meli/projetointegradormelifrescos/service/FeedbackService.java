@@ -1,6 +1,8 @@
 package com.meli.projetointegradormelifrescos.service;
 
+import com.meli.projetointegradormelifrescos.dto.AnnoucementDTO;
 import com.meli.projetointegradormelifrescos.dto.FeedbackDTO;
+import com.meli.projetointegradormelifrescos.exception.InvalidEvaluationException;
 import com.meli.projetointegradormelifrescos.repository.AnnouncementRepo;
 import com.meli.projetointegradormelifrescos.repository.FeedbackRepo;
 import com.meli.projetointegradormelifrescos.exception.ListIsEmptyException;
@@ -50,33 +52,33 @@ public class FeedbackService implements IFeedbackService{
                 newFeedback.getEvaluation());
     }
 
-//    /**
-//     * método que atualiza o feedback de um produto e calcula a sua média de avaliação
-//     * @author Amanda Lobo
-//     * @param feedbackId -> Long
-//     * @param feedback -> Feedback
-//     * @Return new FeedbackDTO -> retorna o feedback atualizado
-//     */
-//    @Transactional
-//    public FeedbackDTO updateFeedback(Long feedbackId, Feedback feedback){
-//        Feedback feedbacks = feedbackRepo.findById(feedbackId).orElseThrow(() -> new NotFoundException("feedback not found"));
-//        Announcement announcement = feedback.getAnnouncement();
-//
-//        feedbacks.setId(feedbackId);
-//        feedbacks.setComment(feedback.getComment());
-//        feedbacks.setEvaluation(feedback.getEvaluation());
-//
-//        Feedback update = feedbackRepo.save(feedbacks);
-//
-//        Double newAverageEvaluation = announcement.getFeedbacks().stream()
-//                .reduce(0D,(subtotal,element)-> subtotal+element.getEvaluation(), Double::sum);
-//
-//        announcement.setAvarageEvaluation(newAverageEvaluation/announcement.getFeedbacks().size());
-//        announcementRepo.save(announcement);
-//
-//        return new FeedbackDTO(update.getId(),update.getAnnouncement().getName(),
-//                update.getComment(), update.getEvaluation());
-//    }
+    /**
+     * método que atualiza o feedback de um produto e calcula a sua média de avaliação
+     * @author Amanda Lobo
+     * @param feedbackId -> Long
+     * @param feedback -> Feedback
+     * @Return new FeedbackDTO -> retorna o feedback atualizado
+     */
+    @Transactional
+    public FeedbackDTO updateFeedback(Long feedbackId, Feedback feedback){
+        Feedback feedbacks = feedbackRepo.findById(feedbackId).orElseThrow(() -> new NotFoundException("feedback not found"));
+        Announcement announcement = feedbacks.getAnnouncement();
+
+        feedbacks.setId(feedbackId);
+        feedbacks.setComment(feedback.getComment());
+        feedbacks.setEvaluation(feedback.getEvaluation());
+
+        Feedback update = feedbackRepo.save(feedbacks);
+
+        Double newAverageEvaluation = announcement.getFeedbacks().stream()
+                .reduce(0D,(subtotal,element)-> subtotal+element.getEvaluation(), Double::sum);
+
+        announcement.setAvarageEvaluation(newAverageEvaluation/announcement.getFeedbacks().size());
+        announcementRepo.save(announcement);
+
+        return new FeedbackDTO(update.getId(),update.getAnnouncement().getName(),
+                update.getComment(), update.getEvaluation());
+    }
 
     /**
      * lista os feedbacks pelo ID
@@ -96,4 +98,29 @@ public class FeedbackService implements IFeedbackService{
                 a.getComment(), a.getEvaluation())).collect(Collectors.toList());
     }
 
+    /**
+     * listar os produtos filtrados por nota (de 0 a 5)
+     *
+     * @param filtredEvaluation -> Double
+     * @return AnnouncementDTO
+     * @author Amanda Lobo
+     * @Excpetion ListIsEmptyException
+     * @Excpetion InvalidEvaluationException
+     */
+    public List<AnnoucementDTO> listProductsByMinimumRating(Double filtredEvaluation) {
+        List<Announcement> announcementList = feedbackRepo.finAllByEvaluation(filtredEvaluation);
+
+        if (announcementList.isEmpty()) {
+            throw new ListIsEmptyException("product without minimum rating");
+        }
+
+        if (filtredEvaluation > 5.0 || filtredEvaluation < 0.0) {
+            throw new InvalidEvaluationException("products rated only between 0 and 5");
+        }
+
+        return announcementList.stream()
+                .map(announcement -> new AnnoucementDTO(announcement.getId(), announcement.getName(), announcement.getPrice(),
+                        announcement.getCategory(), announcement.getAvarageEvaluation()))
+                .collect(Collectors.toList());
+    }
 }

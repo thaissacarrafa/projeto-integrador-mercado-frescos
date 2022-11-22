@@ -19,9 +19,6 @@ public class FeedbackController {
     @Autowired
     private FeedbackService service;
 
-    @Autowired
-    private AnnoucementService annoucementService;
-
     /**
      * Criar um novo feedback do produto
      * @author Amanda Lobo
@@ -33,18 +30,18 @@ public class FeedbackController {
     public ResponseEntity<FeedbackDTO> createNewFeedback(@PathVariable Long productId, @RequestBody Feedback feedback){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createFeedbackProduct(productId,feedback));
     }
-//
-//    /**
-//     * Atualizar um feedback pelo ID do produto
-//     * @author Amanda Lobo
-//     * @param feedbackId -> Long
-//     * @param feedback -> Feedback
-//     * @return 201 - Created (feedback atualizado com sucesso)
-//     */
-//    @PutMapping("/update-feedback/{feedbackId}")
-//    public ResponseEntity<FeedbackDTO> updateFeedback(@PathVariable Long feedbackId, @RequestBody Feedback feedback){
-//        return ResponseEntity.status(HttpStatus.CREATED).body(service.updateFeedback(feedbackId, feedback));
-//    }
+
+    /**
+     * Atualizar um feedback pelo ID do produto
+     * @author Amanda Lobo
+     * @param feedbackId -> Long
+     * @param feedback -> Feedback
+     * @return 201 - Created (feedback atualizado com sucesso)
+     */
+    @PutMapping("/update-feedback/{feedbackId}")
+    public ResponseEntity<FeedbackDTO> updateFeedback(@PathVariable Long feedbackId, @RequestBody Feedback feedback){
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.updateFeedback(feedbackId, feedback));
+    }
 
     /**
      * Listar todos os feedbacks de um produto pelo ID do produto
@@ -59,14 +56,14 @@ public class FeedbackController {
     }
 
     /**
-     * Listar todos os feedbacks de um produto pelo ID do produto com a nota inserida (de 0 a 5)
+     * Listar todos os feedbacks de uma determinada avaliação inserida (de 0 a 5)
      * @author Amanda Lobo
      * @param evaluation -> Double
      * @return List<AnnouncementDTO> -> Lista de productos com determinada avaliação
      */
     @GetMapping("/evaluation-feedback")
     public ResponseEntity<List<AnnoucementDTO>> getEvaluation(@RequestParam(required = false, name = "evaluation") Double evaluation){
-        List<AnnoucementDTO> evaluationFeedback = annoucementService.listProductsByMinimumRating(evaluation);
+        List<AnnoucementDTO> evaluationFeedback = service.listProductsByMinimumRating(evaluation);
         return ResponseEntity.ok().body(evaluationFeedback);
     }
 

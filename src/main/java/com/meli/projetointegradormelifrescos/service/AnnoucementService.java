@@ -43,20 +43,20 @@ public class AnnoucementService {
         return allProducts;
     }
 
-        /***
-         *
-         * @param message     método responsável por consultar todos os produtos de determinada categoria
-         * @author Thaíssa Carrafa
-         * @return
-         */
-    public List<Announcement> findAllByCategory(Category category){
+    /***
+     *
+     * @param message     método responsável por consultar todos os produtos de determinada categoria
+     * @author Thaíssa Carrafa
+     * @return
+     */
+    public List<Announcement> findAllByCategory(Category category) {
 
         List<Announcement> products = annoucementRepo.findAll().stream()
-        .filter(product -> Objects.equals(product.getCategory().getName(),category.getName()))
+                .filter(product -> Objects.equals(product.getCategory().getName(), category.getName()))
 
                 .collect(Collectors.toList());
 
-        if(products.isEmpty()){
+        if (products.isEmpty()) {
             throw new NotFoundException("No products found");
         }
         return products;
@@ -64,55 +64,16 @@ public class AnnoucementService {
 
     /**
      * Verifica a data de validade (se é superior a 3 semanas)
-     * @author Amanda Lobo
-     * @param batch -> Batch
+     *
+     * @param batch     -> Batch
      * @param productId -> Long
      * @throws NotFoundException
+     * @author Amanda Lobo
      */
     public static void verifyProductDueDate(Batch batch, Long productId) {
         if (batch.getDueDate().isBefore(LocalDate.now().plusWeeks(3))) {
             throw new NotFoundException("expired product");
         }
     }
-
-    /**
-     * listar os produtos filtrados por nota (de 0 a 5)
-     * @author Amanda Lobo
-     * @param evaluation -> Double
-     * @return AnnouncementDTO
-     * @Excpetion ListIsEmptyException
-     * @Excpetion InvalidEvaluationException
-     */
-    public List<AnnoucementDTO> listProductsByMinimumRating(Double evaluation) {
-        List<Announcement> announcementList = annoucementRepo.finAllByMinimumEvaluation(evaluation);
-
-        if (announcementList.isEmpty()) {
-            throw new ListIsEmptyException("product without minimum rating");
-        }
-
-        if (evaluation > 5.0 || evaluation < 0.0) {
-            throw new InvalidEvaluationException("products rated only between 0 and 5");
-        }
-
-        return announcementList.stream()
-                .map(announcement -> new AnnoucementDTO(announcement.getId(), announcement.getName(), announcement.getPrice(),
-                        announcement.getCategory(), announcement.getDescription()))
-                .collect(Collectors.toList());
-
-    }
-
-    /**
-     * lista todos os produtos pelo seu ID
-     * @author Amanda Lobo
-     * @param productId -> Long
-     * @return AnnouncementDTO
-     * @exception NotFoundException
-     */
-    public AnnoucementDTO getProductById(Long productId){
-        Announcement announcement = annoucementRepo.findById(productId)
-                .orElseThrow(() -> new NotFoundException("announcement not found"));
-
-        return new AnnoucementDTO();
-    }
-    }
+}
 

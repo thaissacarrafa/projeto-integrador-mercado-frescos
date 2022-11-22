@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class AnnoucementDTO {
 
-    private Long id;
+    private Long productId;
     @NotBlank(message = "O nome do produto não pode ser vazio! Infome um nome válido.")
     private String name;
     @NotNull
@@ -27,23 +27,35 @@ public class AnnoucementDTO {
     @NotBlank(message = "A categoria não pode estar vazia!")
     private Category category;
 
-    public AnnoucementDTO(Announcement annoucement) {
-        this.id = annoucement.getId();
-        this.name = annoucement.getName();
-        this.price = annoucement.getPrice();
-        this.description = annoucement.getDescription();
+    @NotNull
+    private Double AverageEvaluation;
+
+    public AnnoucementDTO(Announcement announcement){
+        this.productId = announcement.getId();
+        this.name = announcement.getName();
+        this.price = announcement.getPrice();
+        this.description = announcement.getDescription();
+        this.AverageEvaluation = announcement.getAvarageEvaluation();
     }
 
     public AnnoucementDTO(Long id, String name, BigDecimal price, Category category, String description) {
-        this.id = id;
+        this.productId = id;
         this.name = name;
         this.price = price;
         this.category = category;
         this.description = description;
     }
 
+    public AnnoucementDTO(Long productId, String name, BigDecimal price, Category category, Double avarageEvaluation) {
+        this.productId = productId;
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.AverageEvaluation = avarageEvaluation;
+    }
+
     public Long getId() {
-        return id;
+        return productId;
     }
 }
 

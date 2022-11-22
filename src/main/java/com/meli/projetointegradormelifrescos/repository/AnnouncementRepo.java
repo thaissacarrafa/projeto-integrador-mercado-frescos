@@ -13,6 +13,5 @@ public interface AnnouncementRepo extends JpaRepository<Announcement, Long> {
 
     List<Announcement> findAllByCategory(String category);
 
-    @Query(value = "select a from Announcement a where a.avarageEvaluation > :minimumEvaluation")
-    List<Announcement> finAllByMinimumEvaluation(Double minimumEvaluation);
+
 }
