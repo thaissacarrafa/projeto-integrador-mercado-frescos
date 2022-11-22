@@ -40,14 +40,7 @@ public class InboundOrderService implements IInboundOrderService {
     // @Transactional
     public List<BatchDTO> createInboundOrder(String tokenAccess, InboundOrderDTO inboundOrderDTO) {
 
-        /*JWTUtils Implements DecodedJWT
-        *
-        *
-        */
-        if(!jwtUtils.isValidToken(tokenAccess)){
-            throw new BadRequestException("Invalid token");
-        };
-
+        Boolean isValid = verifytokenAccess(tokenAccess);
         // se o armazém é válido
         Warehouse warehouse = validWarehouse(
             inboundOrderDTO.getWarehouseCode()
@@ -239,6 +232,19 @@ public class InboundOrderService implements IInboundOrderService {
             .build();
         batchRepo.save(batchBuilder);
         return batchBuilder;
+    }
+    /**
+     * verifica se o tokenAccess é valido
+     * caso seja invalido lançará uma exception
+     * @Throws BadRequestException
+     * @return Boolean
+     * @author Igor S. Fernandes
+     */
+    public Boolean verifytokenAccess(String tokenAccess){
+        if(!jwtUtils.isValidToken(tokenAccess)){
+            throw new BadRequestException("Invalid token");
+        };
+        return true;
     }
 
     /**
