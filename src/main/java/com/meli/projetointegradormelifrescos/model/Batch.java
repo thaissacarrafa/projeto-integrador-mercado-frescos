@@ -1,5 +1,6 @@
 package com.meli.projetointegradormelifrescos.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -18,7 +19,8 @@ public class Batch {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
+
 
     @Column(name = "batch_number")
     private Long batchNumber;
@@ -60,6 +62,10 @@ public class Batch {
     @JsonIgnoreProperties("batchStocks")
     private Section section;
 
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id")
+    @JsonIgnoreProperties("warehouse")
+    private Warehouse warehouse;
 }
 
 

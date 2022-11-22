@@ -6,12 +6,19 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.meli.projetointegradormelifrescos.repository;
+package com.meli.projetointegradormelifrescos.dto;
 
-import com.meli.projetointegradormelifrescos.model.PurchaseProduct;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
- @Repository
-public interface PurchaseProductRepo extends JpaRepository<PurchaseProduct, Long> {
-    PurchaseProduct save(PurchaseProduct purchaseProduct);
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class WarehouseCountDTO {
+    private Long warehouseCode;
+    private Integer totalQuantity;
+
 }

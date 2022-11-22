@@ -1,7 +1,7 @@
 package com.meli.projetointegradormelifrescos.controller;
 
 import com.meli.projetointegradormelifrescos.dto.BatchStockResDTO;
-import com.meli.projetointegradormelifrescos.service.IBatchStockService;
+import com.meli.projetointegradormelifrescos.service.IBatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class BatchStockController {
 
     @Autowired
-    private IBatchStockService service;
+    private IBatchService service;
 
     @GetMapping("/{numberOfDays}/{section}")
     @ResponseBody

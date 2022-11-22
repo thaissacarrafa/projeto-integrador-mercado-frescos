@@ -1,15 +1,10 @@
 package com.meli.projetointegradormelifrescos.service;
 
-import com.meli.projetointegradormelifrescos.dto.AnnoucementDTO;
 import com.meli.projetointegradormelifrescos.dto.PurchaseOrderDTO;
 import com.meli.projetointegradormelifrescos.dto.PurchaseProductDTO;
-import com.meli.projetointegradormelifrescos.enums.Category;
 
-import com.meli.projetointegradormelifrescos.enums.repository.AnnoucementRepo;
-import com.meli.projetointegradormelifrescos.model.*;
 import com.meli.projetointegradormelifrescos.repository.*;
-import com.meli.projetointegradormelifrescos.repository.PurchaseOrderRepo;
-import com.meli.projetointegradormelifrescos.repository.PurchaseProductRepo;
+import com.meli.projetointegradormelifrescos.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
