@@ -97,8 +97,8 @@ public class InboundOrderService implements IInboundOrderService {
     @Override
     public List<BatchDTO> updateInboundOrder(
         Long orderId,
-        InboundOrderDTO inboundOrderDTO
-    ) {
+        InboundOrderDTO inboundOrderDTO,
+        String tokenAccess) {
         var order = inboundOrderRepo.findById(orderId);
 
         if (
@@ -107,7 +107,7 @@ public class InboundOrderService implements IInboundOrderService {
             throw new NotFoundException("Pedido não encontrado");
         }
 
-        return createInboundOrder("token", inboundOrderDTO);
+        return createInboundOrder(tokenAccess, inboundOrderDTO);
     }
 
     /***

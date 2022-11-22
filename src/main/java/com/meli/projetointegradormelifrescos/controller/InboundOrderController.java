@@ -43,11 +43,13 @@ public class InboundOrderController {
     @PutMapping("/inboundorder/{id}")
     public ResponseEntity<List<BatchDTO>> updateInboundOrder(
         @PathVariable Long id,
-        @RequestBody @Valid InboundOrderDTO orderDTO
+        @RequestBody @Valid InboundOrderDTO orderDTO,
+        @RequestHeader HttpHeaders headers
     ) {
+        String tokenAccess = headers.get("Authorization").toString().replace("[", "").replace("]", "");
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(service.updateInboundOrder(id, orderDTO));
+            .body(service.updateInboundOrder(id, orderDTO, tokenAccess));
     }
 
     @GetMapping
