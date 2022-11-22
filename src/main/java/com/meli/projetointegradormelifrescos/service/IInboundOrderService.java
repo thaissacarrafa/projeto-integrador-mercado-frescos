@@ -40,9 +40,8 @@ public interface IInboundOrderService {
     /**
      * Método que busca se um setor é dono de um lote
      * @author Amanda Lobo
-     * @param sectionId -> Long
-     * @param batchId -> Long
+     * @param productId -> Long
      */
-    void findBatchBySectionId(Long sectionId, Long batchId);
+   void findSectionByProductId(Long productId);
 
 }

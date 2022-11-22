@@ -50,33 +50,33 @@ public class FeedbackService implements IFeedbackService{
                 newFeedback.getEvaluation());
     }
 
-    /**
-     * método que atualiza o feedback de um produto e calcula a sua média de avaliação
-     * @author Amanda Lobo
-     * @param feedbackId -> Long
-     * @param feedback -> Feedback
-     * @Return new FeedbackDTO -> retorna o feedback atualizado
-     */
-    @Transactional
-    public FeedbackDTO updateFeedback(Long feedbackId, Feedback feedback){
-        Feedback feedbacks = feedbackRepo.findById(feedbackId).orElseThrow(() -> new NotFoundException("feedback not found"));
-        Announcement announcement = feedback.getAnnouncement();
-
-        feedbacks.setId(feedbackId);
-        feedbacks.setComment(feedback.getComment());
-        feedbacks.setEvaluation(feedback.getEvaluation());
-
-        Feedback update = feedbackRepo.save(feedbacks);
-
-        Double newAverageEvaluation = announcement.getFeedbacks().stream()
-                .reduce(0D,(subtotal,element)-> subtotal+element.getEvaluation(), Double::sum);
-
-        announcement.setAvarageEvaluation(newAverageEvaluation/announcement.getFeedbacks().size());
-        announcementRepo.save(announcement);
-
-        return new FeedbackDTO(update.getId(),update.getAnnouncement().getName(),
-                update.getComment(), update.getEvaluation());
-    }
+//    /**
+//     * método que atualiza o feedback de um produto e calcula a sua média de avaliação
+//     * @author Amanda Lobo
+//     * @param feedbackId -> Long
+//     * @param feedback -> Feedback
+//     * @Return new FeedbackDTO -> retorna o feedback atualizado
+//     */
+//    @Transactional
+//    public FeedbackDTO updateFeedback(Long feedbackId, Feedback feedback){
+//        Feedback feedbacks = feedbackRepo.findById(feedbackId).orElseThrow(() -> new NotFoundException("feedback not found"));
+//        Announcement announcement = feedback.getAnnouncement();
+//
+//        feedbacks.setId(feedbackId);
+//        feedbacks.setComment(feedback.getComment());
+//        feedbacks.setEvaluation(feedback.getEvaluation());
+//
+//        Feedback update = feedbackRepo.save(feedbacks);
+//
+//        Double newAverageEvaluation = announcement.getFeedbacks().stream()
+//                .reduce(0D,(subtotal,element)-> subtotal+element.getEvaluation(), Double::sum);
+//
+//        announcement.setAvarageEvaluation(newAverageEvaluation/announcement.getFeedbacks().size());
+//        announcementRepo.save(announcement);
+//
+//        return new FeedbackDTO(update.getId(),update.getAnnouncement().getName(),
+//                update.getComment(), update.getEvaluation());
+//    }
 
     /**
      * lista os feedbacks pelo ID
@@ -92,8 +92,8 @@ public class FeedbackService implements IFeedbackService{
         if (announcement.getFeedbacks().isEmpty()){
             throw new ListIsEmptyException("no feedback found");
         }
-        return announcement.getFeedbacks().stream().map(a -> new FeedbackDTO(a.getId(),a.getComment(),
-                        a.getAnnouncement().getName(),a.getEvaluation())).collect(Collectors.toList());
+        return announcement.getFeedbacks().stream().map(a -> new FeedbackDTO(a.getId(), a.getAnnouncement().getName(),
+                a.getComment(), a.getEvaluation())).collect(Collectors.toList());
     }
 
 }

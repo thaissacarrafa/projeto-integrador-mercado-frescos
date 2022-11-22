@@ -95,7 +95,8 @@ public class AnnoucementService {
         }
 
         return announcementList.stream()
-                .map(announcement -> new AnnoucementDTO())
+                .map(announcement -> new AnnoucementDTO(announcement.getId(), announcement.getName(), announcement.getPrice(),
+                        announcement.getCategory(), announcement.getDescription()))
                 .collect(Collectors.toList());
 
     }

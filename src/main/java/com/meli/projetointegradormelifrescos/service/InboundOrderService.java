@@ -30,9 +30,6 @@ public class InboundOrderService implements IInboundOrderService {
     @Autowired
     private ManagerRepo managerRepo;
 
-    @Autowired
-    private SectionRepo sectionRepo;
-
     @Override
 
     // @Transactional
@@ -314,12 +311,12 @@ public class InboundOrderService implements IInboundOrderService {
     /**
      * busca se um setor é o dono do lote
      * @author Amanda Lobo
-     * @param sectionId -> Long
-     * @param batchId -> Long
+     * @param productId -> Long
      * @exception NotFoundException
      */
-    public void findBatchBySectionId(Long sectionId, Long batchId) {
-        List<Batch> batchList = sectionRepo.findBatchBySectionId(sectionId, batchId);
+    @Override
+    public void findSectionByProductId(Long productId) {
+        List<Batch> batchList = batchRepo.findSectionByProductId(productId);
         if (batchList.isEmpty()){
             throw new NotFoundException("batch doesn't existing in section");
         }

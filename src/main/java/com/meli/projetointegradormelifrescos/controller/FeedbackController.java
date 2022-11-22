@@ -33,18 +33,18 @@ public class FeedbackController {
     public ResponseEntity<FeedbackDTO> createNewFeedback(@PathVariable Long productId, @RequestBody Feedback feedback){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createFeedbackProduct(productId,feedback));
     }
-
-    /**
-     * Atualizar um feedback pelo ID do produto
-     * @author Amanda Lobo
-     * @param productId -> Long
-     * @param feedback -> Feedback
-     * @return 201 - Created (feedback atualizado com sucesso)
-     */
-    @PutMapping("update-feedback/{productId}")
-    public ResponseEntity<FeedbackDTO> updateFeedback(@PathVariable Long productId, @RequestBody Feedback feedback){
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.updateFeedback(productId, feedback));
-    }
+//
+//    /**
+//     * Atualizar um feedback pelo ID do produto
+//     * @author Amanda Lobo
+//     * @param feedbackId -> Long
+//     * @param feedback -> Feedback
+//     * @return 201 - Created (feedback atualizado com sucesso)
+//     */
+//    @PutMapping("/update-feedback/{feedbackId}")
+//    public ResponseEntity<FeedbackDTO> updateFeedback(@PathVariable Long feedbackId, @RequestBody Feedback feedback){
+//        return ResponseEntity.status(HttpStatus.CREATED).body(service.updateFeedback(feedbackId, feedback));
+//    }
 
     /**
      * Listar todos os feedbacks de um produto pelo ID do produto
@@ -52,7 +52,7 @@ public class FeedbackController {
      * @param productId -> Long
      * @return List<FeedbackDTO> -> lista de feedbacks
      */
-    @GetMapping("feedback-product/{productId}")
+    @GetMapping("/feedback-product/{productId}")
     public ResponseEntity<List<FeedbackDTO>> getFeedbackByProductId(@PathVariable Long productId){
         List<FeedbackDTO> feedbackProduct = service.getFeedbackByProductId(productId);
         return ResponseEntity.ok().body(feedbackProduct);
@@ -61,12 +61,11 @@ public class FeedbackController {
     /**
      * Listar todos os feedbacks de um produto pelo ID do produto com a nota inserida (de 0 a 5)
      * @author Amanda Lobo
-     * @param productId -> Long
      * @param evaluation -> Double
      * @return List<AnnouncementDTO> -> Lista de productos com determinada avaliação
      */
-    @GetMapping("evaluation-feedback/{productId}/{evaluation}")
-    public ResponseEntity<List<AnnoucementDTO>> getEvaluation(@PathVariable Double evaluation, @PathVariable Long productId){
+    @GetMapping("/evaluation-feedback")
+    public ResponseEntity<List<AnnoucementDTO>> getEvaluation(@RequestParam(required = false, name = "evaluation") Double evaluation){
         List<AnnoucementDTO> evaluationFeedback = annoucementService.listProductsByMinimumRating(evaluation);
         return ResponseEntity.ok().body(evaluationFeedback);
     }
