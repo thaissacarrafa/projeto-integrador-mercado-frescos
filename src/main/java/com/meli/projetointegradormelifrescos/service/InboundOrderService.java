@@ -1,6 +1,5 @@
 package com.meli.projetointegradormelifrescos.service;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.*;
 
@@ -8,7 +7,7 @@ import com.meli.projetointegradormelifrescos.dto.*;
 import com.meli.projetointegradormelifrescos.enums.Sorting;
 import com.meli.projetointegradormelifrescos.exception.*;
 import com.meli.projetointegradormelifrescos.model.*;
-import com.meli.projetointegradormelifrescos.enums.repository.*;
+import com.meli.projetointegradormelifrescos.repository.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.stereotype.*;
@@ -32,7 +31,7 @@ public class InboundOrderService implements IInboundOrderService {
     private ManagerRepo managerRepo;
 
     @Autowired
-    private  SectionRepo sectionRepo;
+    private SectionRepo sectionRepo;
 
     @Override
 

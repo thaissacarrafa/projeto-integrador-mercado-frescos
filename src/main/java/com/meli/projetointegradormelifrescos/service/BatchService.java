@@ -3,7 +3,7 @@ package com.meli.projetointegradormelifrescos.service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.meli.projetointegradormelifrescos.model.Batch;
-import com.meli.projetointegradormelifrescos.enums.repository.BatchRepo;
+import com.meli.projetointegradormelifrescos.repository.BatchRepo;
 import org.springframework.stereotype.Service;
 
 @Service

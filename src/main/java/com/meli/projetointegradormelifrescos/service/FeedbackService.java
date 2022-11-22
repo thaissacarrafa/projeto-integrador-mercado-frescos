@@ -1,8 +1,8 @@
 package com.meli.projetointegradormelifrescos.service;
 
 import com.meli.projetointegradormelifrescos.dto.FeedbackDTO;
-import com.meli.projetointegradormelifrescos.enums.repository.AnnouncementRepo;
-import com.meli.projetointegradormelifrescos.enums.repository.FeedbackRepo;
+import com.meli.projetointegradormelifrescos.repository.AnnouncementRepo;
+import com.meli.projetointegradormelifrescos.repository.FeedbackRepo;
 import com.meli.projetointegradormelifrescos.exception.ListIsEmptyException;
 import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.model.Announcement;
@@ -33,28 +33,50 @@ public class FeedbackService implements IFeedbackService{
     @Transactional
     public FeedbackDTO createFeedbackProduct(Long productId, Feedback feedback) {
         Announcement announcement = announcementRepo.findById(productId)
+
                 .orElseThrow(() -> new NotFoundException("product not found"));
         announcement.getFeedbacks().add(feedback);
-        Double newAverageRating = announcement.getFeedbacks().stream().reduce(0D,(subtotal, element) ->
+
+        Double newAverageEvaluation = announcement.getFeedbacks().stream().reduce(0D,(subtotal, element) ->
                 subtotal + element.getEvaluation(), Double::sum);
         feedback.setAnnouncement(announcement);
+
         Feedback newFeedback = feedbackRepo.save(feedback);
-        announcement.setAvarageEvaluation(newAverageRating/announcement.getFeedbacks().size());
+
+        announcement.setAvarageEvaluation(newAverageEvaluation/announcement.getFeedbacks().size());
         announcementRepo.save(announcement);
+
         return new FeedbackDTO(newFeedback.getId(),newFeedback.getAnnouncement().getName(),newFeedback.getComment(),
                 newFeedback.getEvaluation());
     }
 
-    //atualizar o feedback e calcular a média da avaliação
-//    public FeedbackDTO updateFeedback(Long feedbackId, Feedback feedback){
-//        Feedback feedback = feedbackRepo.findById(feedback).orElseThrow(() -> new NotFoundException("feedback not found"));
-//        Announcement announcement = feedback.getAnnouncement();
-//
-//        feedback.setId(feedbackId);
-//        feedback.setComment(feedback.getComment());
-//        feedback.setEvaluation(feedback.getEvaluation());
-//    }
+    /**
+     * método que atualiza o feedback de um produto e calcula a sua média de avaliação
+     * @author Amanda Lobo
+     * @param feedbackId -> Long
+     * @param feedback -> Feedback
+     * @Return new FeedbackDTO -> retorna o feedback atualizado
+     */
+    @Transactional
+    public FeedbackDTO updateFeedback(Long feedbackId, Feedback feedback){
+        Feedback feedbacks = feedbackRepo.findById(feedbackId).orElseThrow(() -> new NotFoundException("feedback not found"));
+        Announcement announcement = feedback.getAnnouncement();
 
+        feedbacks.setId(feedbackId);
+        feedbacks.setComment(feedback.getComment());
+        feedbacks.setEvaluation(feedback.getEvaluation());
+
+        Feedback update = feedbackRepo.save(feedbacks);
+
+        Double newAverageEvaluation = announcement.getFeedbacks().stream()
+                .reduce(0D,(subtotal,element)-> subtotal+element.getEvaluation(), Double::sum);
+
+        announcement.setAvarageEvaluation(newAverageEvaluation/announcement.getFeedbacks().size());
+        announcementRepo.save(announcement);
+
+        return new FeedbackDTO(update.getId(),update.getAnnouncement().getName(),
+                update.getComment(), update.getEvaluation());
+    }
 
     /**
      * lista os feedbacks pelo ID

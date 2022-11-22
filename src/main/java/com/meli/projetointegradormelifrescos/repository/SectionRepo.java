@@ -1,4 +1,4 @@
-package com.meli.projetointegradormelifrescos.enums.repository;
+package com.meli.projetointegradormelifrescos.repository;
 
 import com.meli.projetointegradormelifrescos.model.Batch;
 import com.meli.projetointegradormelifrescos.model.Section;

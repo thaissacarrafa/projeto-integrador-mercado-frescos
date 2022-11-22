@@ -2,7 +2,8 @@ package com.meli.projetointegradormelifrescos.service;
 
 import com.meli.projetointegradormelifrescos.dto.AnnoucementDTO;
 import com.meli.projetointegradormelifrescos.enums.Category;
-import com.meli.projetointegradormelifrescos.enums.repository.AnnouncementRepo;
+import com.meli.projetointegradormelifrescos.exception.InvalidEvaluationException;
+import com.meli.projetointegradormelifrescos.repository.AnnouncementRepo;
 import com.meli.projetointegradormelifrescos.exception.ListIsEmptyException;
 import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.model.Announcement;
@@ -73,5 +74,44 @@ public class AnnoucementService {
             throw new NotFoundException("expired product");
         }
     }
-}
+
+    /**
+     * listar os produtos filtrados por nota (de 0 a 5)
+     * @author Amanda Lobo
+     * @param evaluation -> Double
+     * @return AnnouncementDTO
+     * @Excpetion ListIsEmptyException
+     * @Excpetion InvalidEvaluationException
+     */
+    public List<AnnoucementDTO> listProductsByMinimumRating(Double evaluation) {
+        List<Announcement> announcementList = annoucementRepo.finAllByMinimumEvaluation(evaluation);
+
+        if (announcementList.isEmpty()) {
+            throw new ListIsEmptyException("product without minimum rating");
+        }
+
+        if (evaluation > 5.0 || evaluation < 0.0) {
+            throw new InvalidEvaluationException("products rated only between 0 and 5");
+        }
+
+        return announcementList.stream()
+                .map(announcement -> new AnnoucementDTO())
+                .collect(Collectors.toList());
+
+    }
+
+    /**
+     * lista todos os produtos pelo seu ID
+     * @author Amanda Lobo
+     * @param productId -> Long
+     * @return AnnouncementDTO
+     * @exception NotFoundException
+     */
+    public AnnoucementDTO getProductById(Long productId){
+        Announcement announcement = annoucementRepo.findById(productId)
+                .orElseThrow(() -> new NotFoundException("announcement not found"));
+
+        return new AnnoucementDTO();
+    }
+    }
 

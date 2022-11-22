@@ -4,10 +4,10 @@ import com.meli.projetointegradormelifrescos.dto.BatchDTO;
 import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
 
 import com.meli.projetointegradormelifrescos.enums.Category;
-import com.meli.projetointegradormelifrescos.enums.repository.BatchRepo;
-import com.meli.projetointegradormelifrescos.enums.repository.InboundOrderRepo;
-import com.meli.projetointegradormelifrescos.enums.repository.ManagerRepo;
-import com.meli.projetointegradormelifrescos.enums.repository.WarehouseRepo;
+import com.meli.projetointegradormelifrescos.repository.BatchRepo;
+import com.meli.projetointegradormelifrescos.repository.InboundOrderRepo;
+import com.meli.projetointegradormelifrescos.repository.ManagerRepo;
+import com.meli.projetointegradormelifrescos.repository.WarehouseRepo;
 import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
 import com.meli.projetointegradormelifrescos.model.Manager;
