@@ -9,6 +9,8 @@ import com.meli.projetointegradormelifrescos.repository.ManagerRepo;
 import com.meli.projetointegradormelifrescos.repository.WarehouseRepo;
 import java.util.*;
 import java.util.stream.*;
+
+import com.meli.projetointegradormelifrescos.untils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
@@ -31,9 +33,14 @@ public class InboundOrderService implements IInboundOrderService {
     @Autowired
     private ManagerRepo managerRepo;
 
+    @Autowired
+    private JWTUtils jwtUtils;
+
     @Override
     // @Transactional
-    public List<BatchDTO> createInboundOrder(InboundOrderDTO inboundOrderDTO) {
+    public List<BatchDTO> createInboundOrder(String tokenAccess, InboundOrderDTO inboundOrderDTO) {
+
+        Boolean isValid = verifytokenAccess(tokenAccess);
         // se o armazém é válido
         Warehouse warehouse = validWarehouse(
             inboundOrderDTO.getWarehouseCode()
@@ -90,8 +97,8 @@ public class InboundOrderService implements IInboundOrderService {
     @Override
     public List<BatchDTO> updateInboundOrder(
         Long orderId,
-        InboundOrderDTO inboundOrderDTO
-    ) {
+        InboundOrderDTO inboundOrderDTO,
+        String tokenAccess) {
         var order = inboundOrderRepo.findById(orderId);
 
         if (
@@ -100,7 +107,7 @@ public class InboundOrderService implements IInboundOrderService {
             throw new NotFoundException("Pedido não encontrado");
         }
 
-        return createInboundOrder(inboundOrderDTO);
+        return createInboundOrder(tokenAccess, inboundOrderDTO);
     }
 
     /***
@@ -225,6 +232,19 @@ public class InboundOrderService implements IInboundOrderService {
             .build();
         batchRepo.save(batchBuilder);
         return batchBuilder;
+    }
+    /**
+     * verifica se o tokenAccess é valido
+     * caso seja invalido lançará uma exception
+     * @Throws BadRequestException
+     * @return Boolean
+     * @author Igor S. Fernandes
+     */
+    public Boolean verifytokenAccess(String tokenAccess){
+        if(!jwtUtils.isValidToken(tokenAccess)){
+            throw new BadRequestException("Invalid token");
+        };
+        return true;
     }
 
     /**

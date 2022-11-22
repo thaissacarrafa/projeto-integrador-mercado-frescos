@@ -8,6 +8,7 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,21 +31,25 @@ public class InboundOrderController {
 
     @PostMapping("/inboundorder")
     public ResponseEntity<List<BatchDTO>> createInboundOrder(
-        @RequestBody @Valid InboundOrderDTO orderDTO
+        @RequestBody @Valid InboundOrderDTO orderDTO,
+        @RequestHeader HttpHeaders headers
     ) {
+       String tokenAccess = headers.get("Authorization").toString().replace("[", "").replace("]", "");
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(service.createInboundOrder(orderDTO));
+            .body(service.createInboundOrder(tokenAccess, orderDTO));
     }
 
     @PutMapping("/inboundorder/{id}")
     public ResponseEntity<List<BatchDTO>> updateInboundOrder(
         @PathVariable Long id,
-        @RequestBody @Valid InboundOrderDTO orderDTO
+        @RequestBody @Valid InboundOrderDTO orderDTO,
+        @RequestHeader HttpHeaders headers
     ) {
+        String tokenAccess = headers.get("Authorization").toString().replace("[", "").replace("]", "");
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(service.updateInboundOrder(id, orderDTO));
+            .body(service.updateInboundOrder(id, orderDTO, tokenAccess));
     }
 
     @GetMapping
