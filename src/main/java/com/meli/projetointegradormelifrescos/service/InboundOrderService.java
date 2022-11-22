@@ -283,7 +283,6 @@ public class InboundOrderService implements IInboundOrderService {
     @Override
     public List<Warehouse> warehouseT(Long productId){
         List<Warehouse> warehouses = warehouseRepo.warehouseT(productId);
-        var z =0;
         return warehouses;
     }
 
