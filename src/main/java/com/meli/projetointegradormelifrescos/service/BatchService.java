@@ -9,33 +9,28 @@ import com.meli.projetointegradormelifrescos.exception.ListIsEmptyException;
 import com.meli.projetointegradormelifrescos.model.Batch;
 import com.meli.projetointegradormelifrescos.model.Section;
 import com.meli.projetointegradormelifrescos.repository.BatchRepo;
-
+import com.meli.projetointegradormelifrescos.repository.SectionRepo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.meli.projetointegradormelifrescos.repository.SectionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
-
 @Service
 public class BatchService implements IBatchService {
+
     @Autowired
     BatchRepo batchRepo;
 
     @Autowired
     SectionRepo sectionRepo;
 
-
     public void saveBatch(Batch batch) {
-
         batchRepo.save(batch);
     }
-
 
     @Override
     public BatchStockResDTO getBatchStockBySection(
@@ -88,26 +83,26 @@ public class BatchService implements IBatchService {
         }
 
         List<Batch> batches = batchRepo.findAllByDueDateBetween(
-                LocalDate.now(),
-                LocalDate.now().plusDays(numberOfDays)
+            LocalDate.now(),
+            LocalDate.now().plusDays(numberOfDays)
         );
 
         if (batches.isEmpty()) throw new NotFoundException("No batches found");
 
         List<Batch> filteredBatches = batches
-                .stream()
-                .filter(batch -> batch.getSection().getCategory().equals(category))
-                .collect(Collectors.toList());
+            .stream()
+            .filter(batch -> batch.getSection().getCategory().equals(category))
+            .collect(Collectors.toList());
 
         if (filteredBatches.isEmpty()) throw new NotFoundException(
-                "No batches found2"
+            "No batches found2"
         );
 
         if (sortBy.equalsIgnoreCase("asc")) {
             filteredBatches.sort(Comparator.comparing(Batch::getDueDate));
         } else if (sortBy.equalsIgnoreCase("desc")) {
             filteredBatches.sort(
-                    Comparator.comparing(Batch::getDueDate).reversed()
+                Comparator.comparing(Batch::getDueDate).reversed()
             );
         } else {
             throw new NotFoundException("Sort by not found");
@@ -117,28 +112,36 @@ public class BatchService implements IBatchService {
     }
 
     public WarehouseStockDTO countStocksByProductId(Long productId) {
-
         List<Batch> batches = batchRepo.findBatchByProductId(productId);
 
         if (batches.isEmpty()) {
-            throw new ListIsEmptyException("Este produto não foi encontrado em nenhum armazém.");
+            throw new ListIsEmptyException(
+                "Este produto não foi encontrado em nenhum armazém."
+            );
         }
 
         List<WarehouseCountDTO> warehouseCountDTOList = new ArrayList<WarehouseCountDTO>();
 
-        batches.forEach(batch -> warehouseCountDTOList.add(new WarehouseCountDTO(batch.getWarehouse().getCode(), batch.getProductQuantity())));
+        batches.forEach(batch ->
+            warehouseCountDTOList.add(
+                new WarehouseCountDTO(
+                    batch.getWarehouse().getCode(),
+                    batch.getProductQuantity()
+                )
+            )
+        );
 
         WarehouseStockDTO warehouseStockDTO = new WarehouseStockDTO();
-        warehouseStockDTO.setProductId(batches.stream().findFirst().get().getProductId());
+        warehouseStockDTO.setProductId(
+            batches.stream().findFirst().get().getProductId()
+        );
         warehouseStockDTO.setWarehouses(warehouseCountDTOList);
 
         return warehouseStockDTO;
-
     }
 
     @Override
     public BatchDTO productsBySection(Long productId) {
-
         List<Batch> batches = batchRepo.findSectionByProductId(productId);
 
         List<BatchDTO> batchDTOList = new ArrayList<>();
@@ -146,15 +149,17 @@ public class BatchService implements IBatchService {
         batches.forEach(batch -> batchDTOList.add(new BatchDTO(batch)));
 
         BatchDTO batchDTO = new BatchDTO();
-        batchDTO.setProductId(batches.stream().findFirst().get().getProductId());
+        batchDTO.setProductId(
+            batches.stream().findFirst().get().getProductId()
+        );
         batchDTO.setDueDate(batches.stream().findFirst().get().getDueDate());
-        batchDTO.setBatchNumber(batches.stream().findFirst().get().getBatchNumber());
-        batchDTO.setProductQuantity(batches.stream().findFirst().get().getProductQuantity());
+        batchDTO.setBatchNumber(
+            batches.stream().findFirst().get().getBatchNumber()
+        );
+        batchDTO.setProductQuantity(
+            batches.stream().findFirst().get().getProductQuantity()
+        );
 
         return batchDTO;
-
-
     }
-
 }
-

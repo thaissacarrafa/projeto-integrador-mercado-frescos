@@ -10,21 +10,21 @@ package com.meli.projetointegradormelifrescos.dto;
 
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
 import com.meli.projetointegradormelifrescos.model.PurchaseOrder;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class PurchaseOrderDTO {
+
     private LocalDate date;
     private Long buyerId;
     private String orderStatus;
@@ -34,6 +34,11 @@ public class PurchaseOrderDTO {
         this.date = purchaseOrder.getDate();
         this.buyerId = purchaseOrder.getBuyerId();
         this.orderStatus = purchaseOrder.getOrderStatus();
-        this.products = purchaseOrder.getProducts().stream().map(PurchaseProductDTO::new).collect(Collectors.toList());
+        this.products =
+            purchaseOrder
+                .getProducts()
+                .stream()
+                .map(PurchaseProductDTO::new)
+                .collect(Collectors.toList());
     }
 }

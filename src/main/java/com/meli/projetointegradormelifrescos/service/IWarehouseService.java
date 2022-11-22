@@ -14,5 +14,4 @@ public interface IWarehouseService {
     Warehouse findWarehouseById(Long id);
 
     Warehouse findWarehouseByCode(Long code);
-
 }

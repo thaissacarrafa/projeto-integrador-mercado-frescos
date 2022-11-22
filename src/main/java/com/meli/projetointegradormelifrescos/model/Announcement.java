@@ -1,15 +1,16 @@
 package com.meli.projetointegradormelifrescos.model;
 
+import com.fasterxml.jackson.annotation.*;
 import com.meli.projetointegradormelifrescos.enums.Category;
-import lombok.*;
 import java.math.*;
 import java.util.List;
 import javax.persistence.*;
-import com.fasterxml.jackson.annotation.*;
+import lombok.*;
 
 @Entity
 @Data
 public class Announcement {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

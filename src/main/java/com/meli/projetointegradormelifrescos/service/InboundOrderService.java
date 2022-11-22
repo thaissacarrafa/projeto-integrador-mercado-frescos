@@ -1,17 +1,17 @@
 package com.meli.projetointegradormelifrescos.service;
 
-import java.util.*;
-import java.util.stream.*;
+import com.meli.projetointegradormelifrescos.dto.*;
+import com.meli.projetointegradormelifrescos.exception.*;
+import com.meli.projetointegradormelifrescos.model.*;
 import com.meli.projetointegradormelifrescos.repository.BatchRepo;
 import com.meli.projetointegradormelifrescos.repository.InboundOrderRepo;
 import com.meli.projetointegradormelifrescos.repository.ManagerRepo;
 import com.meli.projetointegradormelifrescos.repository.WarehouseRepo;
-import com.meli.projetointegradormelifrescos.model.*;
+import java.util.*;
+import java.util.stream.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
-import com.meli.projetointegradormelifrescos.dto.*;
-import com.meli.projetointegradormelifrescos.exception.*;
 
 @Service
 public class InboundOrderService implements IInboundOrderService {
@@ -32,48 +32,71 @@ public class InboundOrderService implements IInboundOrderService {
     private ManagerRepo managerRepo;
 
     @Override
-
     // @Transactional
     public List<BatchDTO> createInboundOrder(InboundOrderDTO inboundOrderDTO) {
-
         // se o armazém é válido
-        Warehouse warehouse = validWarehouse(inboundOrderDTO.getWarehouseCode());
+        Warehouse warehouse = validWarehouse(
+            inboundOrderDTO.getWarehouseCode()
+        );
 
         // e que o representante pertence ao armazém
-        Manager manager = findManagerFromWarehouse(warehouse, inboundOrderDTO.getManagerId());
+        Manager manager = findManagerFromWarehouse(
+            warehouse,
+            inboundOrderDTO.getManagerId()
+        );
 
         // e que o setor é valido
-        Section section = findSectionByCode(warehouse, inboundOrderDTO.getSectionCode());
+        Section section = findSectionByCode(
+            warehouse,
+            inboundOrderDTO.getSectionCode()
+        );
 
         // E que o setor corresponde ao tipo de produto
-        inboundOrderDTO.getBatchStock().stream().forEach(batch -> {
-            sectorIsEqualsBatch(batch, section);
-        });
+        inboundOrderDTO
+            .getBatchStock()
+            .stream()
+            .forEach(batch -> {
+                sectorIsEqualsBatch(batch, section);
+            });
 
         // e que a section tem espaco
         ifTheSectionHasCapacity(section, inboundOrderDTO);
 
-        InboundOrder inboundOrderEntity = InboundOrder.builder()
-                .orderDate(inboundOrderDTO.getOrderDate())
-                .batches(inboundOrderDTO.getBatchStock().stream().map(BatchDTO::entityToDTO).collect(Collectors.toList()))
-                .section(section)
-                .manager(manager)
-                .orderNumber(inboundOrderDTO.getOrderNumber())
-                .warehouse(warehouse)
-                .id(inboundOrderDTO.getOrderNumber())
-                .build();
+        InboundOrder inboundOrderEntity = InboundOrder
+            .builder()
+            .orderDate(inboundOrderDTO.getOrderDate())
+            .batches(
+                inboundOrderDTO
+                    .getBatchStock()
+                    .stream()
+                    .map(BatchDTO::entityToDTO)
+                    .collect(Collectors.toList())
+            )
+            .section(section)
+            .manager(manager)
+            .orderNumber(inboundOrderDTO.getOrderNumber())
+            .warehouse(warehouse)
+            .id(inboundOrderDTO.getOrderNumber())
+            .build();
 
         inboundOrderRepo.save(inboundOrderEntity);
-        inboundOrderDTO.getBatchStock().forEach(b -> saveBatchStock(b, inboundOrderEntity));
+        inboundOrderDTO
+            .getBatchStock()
+            .forEach(b -> saveBatchStock(b, inboundOrderEntity));
 
         return inboundOrderDTO.getBatchStock();
     }
 
     @Override
-    public List<BatchDTO> updateInboundOrder(Long orderId, InboundOrderDTO inboundOrderDTO) {
+    public List<BatchDTO> updateInboundOrder(
+        Long orderId,
+        InboundOrderDTO inboundOrderDTO
+    ) {
         var order = inboundOrderRepo.findById(orderId);
 
-        if (order.isEmpty() || !orderId.equals(inboundOrderDTO.getOrderNumber())) {
+        if (
+            order.isEmpty() || !orderId.equals(inboundOrderDTO.getOrderNumber())
+        ) {
             throw new NotFoundException("Pedido não encontrado");
         }
 
@@ -89,7 +112,9 @@ public class InboundOrderService implements IInboundOrderService {
      * @return
      */
     public Warehouse validWarehouse(Long warehouseCode) {
-        Optional<Warehouse> warehouse = warehouseRepo.findWarehouseByCode(warehouseCode);
+        Optional<Warehouse> warehouse = warehouseRepo.findWarehouseByCode(
+            warehouseCode
+        );
         if (warehouse.isEmpty()) {
             throw new NotFoundException("Invalid warehouse Code");
         }
@@ -107,8 +132,10 @@ public class InboundOrderService implements IInboundOrderService {
      * @param warehouse, id
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      ***/
-    public Manager findManagerFromWarehouse(Warehouse warehouse, Long managerid) {
-
+    public Manager findManagerFromWarehouse(
+        Warehouse warehouse,
+        Long managerid
+    ) {
         if (!warehouse.getManagers().getId().equals(managerid)) {
             throw new BadRequestException("Invalid Manager Id");
         }
@@ -123,9 +150,11 @@ public class InboundOrderService implements IInboundOrderService {
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
     public Section findSectionByCode(Warehouse warehouse, Long id) {
-        Optional<Section> section = warehouse.getSections()
-                .stream()
-                .filter(s -> s.getId().equals(id)).findFirst();
+        Optional<Section> section = warehouse
+            .getSections()
+            .stream()
+            .filter(s -> s.getId().equals(id))
+            .findFirst();
         if (section.isEmpty()) {
             throw new BadRequestException("Invalid section");
         }
@@ -140,12 +169,21 @@ public class InboundOrderService implements IInboundOrderService {
      */
 
     public void sectorIsEqualsBatch(BatchDTO batch, Section section) {
-        Float maximumTemperature = section.getCategory().getMaximumTemperature();
-        Float minimumTemperature = section.getCategory().getMinimumTemperature();
+        Float maximumTemperature = section
+            .getCategory()
+            .getMaximumTemperature();
+        Float minimumTemperature = section
+            .getCategory()
+            .getMinimumTemperature();
         Float batchCurrentTemperature = batch.getCurrentTemperature();
 
-        if (batchCurrentTemperature > maximumTemperature || batchCurrentTemperature < minimumTemperature) {
-            throw new BadRequestException("Batch doesn't belong to the section.");
+        if (
+            batchCurrentTemperature > maximumTemperature ||
+            batchCurrentTemperature < minimumTemperature
+        ) {
+            throw new BadRequestException(
+                "Batch doesn't belong to the section."
+            );
         }
     }
 
@@ -155,7 +193,10 @@ public class InboundOrderService implements IInboundOrderService {
      * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
      */
 
-    public void ifTheSectionHasCapacity(Section section, InboundOrderDTO inbound) {
+    public void ifTheSectionHasCapacity(
+        Section section,
+        InboundOrderDTO inbound
+    ) {
         Float maxCapacity = section.getMaxCapacity();
         int currentCapacity = section.getBatches().size(); // ele analisa o tamanho de produtos do json
         Float availableCapacity = maxCapacity - currentCapacity;
@@ -166,21 +207,22 @@ public class InboundOrderService implements IInboundOrderService {
     }
 
     public Batch saveBatchStock(BatchDTO dto, InboundOrder inboundOrder) {
-        Batch batchBuilder = Batch.builder()
-                .batchNumber(dto.getBatchNumber())
-                .productId(dto.getProductId())
-                .currentTemperature(dto.getCurrentTemperature())
-                .manufacturingTime(dto.getManufacturingTime())
-                .manufacturingDate(dto.getManufacturingDate())
-                .volume(dto.getVolume())
-                .dueDate(dto.getDueDate())
-                .price(dto.getPrice())
-                .inboundOrder(inboundOrder)
-                .initialQuantity(dto.getProductQuantity())
-                .productQuantity(dto.getProductQuantity())
-                .section(inboundOrder.getSection())
-                .warehouse(validWarehouse(inboundOrder.getWarehouse().getCode()))
-                .build();
+        Batch batchBuilder = Batch
+            .builder()
+            .batchNumber(dto.getBatchNumber())
+            .productId(dto.getProductId())
+            .currentTemperature(dto.getCurrentTemperature())
+            .manufacturingTime(dto.getManufacturingTime())
+            .manufacturingDate(dto.getManufacturingDate())
+            .volume(dto.getVolume())
+            .dueDate(dto.getDueDate())
+            .price(dto.getPrice())
+            .inboundOrder(inboundOrder)
+            .initialQuantity(dto.getProductQuantity())
+            .productQuantity(dto.getProductQuantity())
+            .section(inboundOrder.getSection())
+            .warehouse(validWarehouse(inboundOrder.getWarehouse().getCode()))
+            .build();
         batchRepo.save(batchBuilder);
         return batchBuilder;
     }
@@ -192,8 +234,10 @@ public class InboundOrderService implements IInboundOrderService {
      * @author Leonardo Santos
      */
     public InboundOrder findById(Long id) {
-        return inboundOrderRepo.findById(id).orElseThrow(
-                () -> new NotFoundException("Order " + id + " not found"));
+        return inboundOrderRepo
+            .findById(id)
+            .orElseThrow(() ->
+                new NotFoundException("Order " + id + " not found")
+            );
     }
-
 }

@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2022. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
  * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
@@ -7,13 +6,9 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-
 package com.meli.projetointegradormelifrescos.repository;
 
 import com.meli.projetointegradormelifrescos.model.Section;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SectionRepo extends JpaRepository<Section, Long> {}
-
-
-

@@ -8,15 +8,12 @@
 
 package com.meli.projetointegradormelifrescos.service;
 
-
 import com.meli.projetointegradormelifrescos.dto.AnnoucementDTO;
 import com.meli.projetointegradormelifrescos.enums.Category;
 import com.meli.projetointegradormelifrescos.model.Announcement;
-
 import java.util.List;
 
 public interface IAnnoucementService {
-
     List<AnnoucementDTO> listAllProducts();
     List<Announcement> findAllByCategory(Category category);
 }

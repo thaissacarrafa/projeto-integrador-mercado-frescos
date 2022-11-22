@@ -1,12 +1,9 @@
-
 package com.meli.projetointegradormelifrescos.repository;
 
 import com.meli.projetointegradormelifrescos.model.Batch;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-
 
 /*
  * Copyright (c) 2022. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -20,15 +17,5 @@ public interface BatchRepo extends JpaRepository<Batch, Long> {
     List<Batch> findBatchByProductId(Long productId);
     List<Batch> findSectionByProductId(Long productId);
 
-    List<Batch> findAllByDueDateBetween(
-        LocalDate today,
-        LocalDate dueDate
-    );
-
-
-
-
-
-
-
+    List<Batch> findAllByDueDateBetween(LocalDate today, LocalDate dueDate);
 }

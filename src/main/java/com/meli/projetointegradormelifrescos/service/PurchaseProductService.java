@@ -2,21 +2,20 @@ package com.meli.projetointegradormelifrescos.service;
 
 import com.meli.projetointegradormelifrescos.dto.PurchaseOrderDTO;
 import com.meli.projetointegradormelifrescos.dto.PurchaseProductDTO;
-
-import com.meli.projetointegradormelifrescos.repository.*;
 import com.meli.projetointegradormelifrescos.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.stereotype.Service;
-
+import com.meli.projetointegradormelifrescos.repository.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.stereotype.Service;
 
 @Service
 public class PurchaseProductService implements IPurchaseProductService {
+
     @AutoConfigureOrder
     private PurchaseOrder purchaseOrder;
 
@@ -29,7 +28,6 @@ public class PurchaseProductService implements IPurchaseProductService {
     @Autowired
     private AnnoucementRepo annoucementRepo;
 
-
     @Override
     public HashMap createPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) {
         List<Long> announcementsNotFound = new ArrayList<>();
@@ -41,15 +39,20 @@ public class PurchaseProductService implements IPurchaseProductService {
         purchaseOrderEntity.setBuyerId(purchaseOrderDTO.getBuyerId());
         purchaseOrderEntity.setOrderStatus(purchaseOrderDTO.getOrderStatus());
 
-        purchaseOrderDTO.getProducts().forEach(b -> {
-            PurchaseProduct purchaseProduct = convertPurchaseProduct(b, purchaseOrderEntity);
+        purchaseOrderDTO
+            .getProducts()
+            .forEach(b -> {
+                PurchaseProduct purchaseProduct = convertPurchaseProduct(
+                    b,
+                    purchaseOrderEntity
+                );
 
-            if (purchaseProduct != null) {
-                products.add(purchaseProduct);
-            } else {
-                announcementsNotFound.add(b.getProductId());
-            }
-        });
+                if (purchaseProduct != null) {
+                    products.add(purchaseProduct);
+                } else {
+                    announcementsNotFound.add(b.getProductId());
+                }
+            });
 
         if (announcementsNotFound.size() > 0) {
             HashMap<String, List> response = new HashMap<>();
@@ -58,7 +61,13 @@ public class PurchaseProductService implements IPurchaseProductService {
         } else {
             purchaseOrderRepo.save(purchaseOrderEntity);
             for (PurchaseProduct b : products) {
-                totalPrice += (b.getAnnouncement().getPrice().multiply(BigDecimal.valueOf(b.getQuantity()))).doubleValue();
+                totalPrice +=
+                    (
+                        b
+                            .getAnnouncement()
+                            .getPrice()
+                            .multiply(BigDecimal.valueOf(b.getQuantity()))
+                    ).doubleValue();
                 purchaseProductRepo.save(b);
             }
 
@@ -67,12 +76,17 @@ public class PurchaseProductService implements IPurchaseProductService {
 
             return response;
         }
-    };
+    }
 
-    private PurchaseProduct convertPurchaseProduct(PurchaseProductDTO dto, PurchaseOrder purchaseOrder) {
+    private PurchaseProduct convertPurchaseProduct(
+        PurchaseProductDTO dto,
+        PurchaseOrder purchaseOrder
+    ) {
         PurchaseProduct purchaseProduct = new PurchaseProduct();
 
-        Optional<Announcement> announcement = annoucementRepo.findById(dto.getProductId());
+        Optional<Announcement> announcement = annoucementRepo.findById(
+            dto.getProductId()
+        );
         if (announcement.isEmpty()) {
             return null;
         }

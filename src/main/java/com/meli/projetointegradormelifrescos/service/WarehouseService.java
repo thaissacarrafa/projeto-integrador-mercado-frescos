@@ -11,11 +11,9 @@ package com.meli.projetointegradormelifrescos.service;
 import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 import com.meli.projetointegradormelifrescos.model.Warehouse;
 import com.meli.projetointegradormelifrescos.repository.WarehouseRepo;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
-import java.util.Optional;
 
 @Service
 public class WarehouseService implements IWarehouseService {
@@ -43,5 +41,4 @@ public class WarehouseService implements IWarehouseService {
         }
         return warehouse.get();
     }
-
 }

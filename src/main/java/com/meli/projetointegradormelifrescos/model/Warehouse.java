@@ -1,10 +1,9 @@
 package com.meli.projetointegradormelifrescos.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.*;
 import java.util.*;
 import javax.persistence.*;
-import com.fasterxml.jackson.annotation.*;
-
+import lombok.*;
 
 @Data
 @Entity
@@ -24,7 +23,6 @@ public class Warehouse {
 
     @OneToMany(mappedBy = "warehouse")
     @JsonIgnoreProperties("warehouse")
-
     private List<Section> sections;
 
     @OneToOne
@@ -35,5 +33,4 @@ public class Warehouse {
     @OneToMany(mappedBy = "warehouse")
     @JsonIgnoreProperties("warehouse")
     private List<InboundOrder> inboundOrders;
-    
 }
