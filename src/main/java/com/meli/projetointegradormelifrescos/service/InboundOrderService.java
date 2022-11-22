@@ -9,6 +9,8 @@ import com.meli.projetointegradormelifrescos.repository.ManagerRepo;
 import com.meli.projetointegradormelifrescos.repository.WarehouseRepo;
 import java.util.*;
 import java.util.stream.*;
+
+import com.meli.projetointegradormelifrescos.untils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
@@ -31,9 +33,21 @@ public class InboundOrderService implements IInboundOrderService {
     @Autowired
     private ManagerRepo managerRepo;
 
+    @Autowired
+    private JWTUtils jwtUtils;
+
     @Override
     // @Transactional
-    public List<BatchDTO> createInboundOrder(InboundOrderDTO inboundOrderDTO) {
+    public List<BatchDTO> createInboundOrder(String tokenAccess, InboundOrderDTO inboundOrderDTO) {
+
+        /*JWTUtils Implements DecodedJWT
+        *
+        *
+        */
+        if(!jwtUtils.isValidToken(tokenAccess)){
+            throw new BadRequestException("Invalid token");
+        };
+
         // se o armazém é válido
         Warehouse warehouse = validWarehouse(
             inboundOrderDTO.getWarehouseCode()
@@ -100,7 +114,7 @@ public class InboundOrderService implements IInboundOrderService {
             throw new NotFoundException("Pedido não encontrado");
         }
 
-        return createInboundOrder(inboundOrderDTO);
+        return createInboundOrder("token", inboundOrderDTO);
     }
 
     /***
