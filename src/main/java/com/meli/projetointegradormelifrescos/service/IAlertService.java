@@ -6,20 +6,14 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.meli.projetointegradormelifrescos.dto;
+package com.meli.projetointegradormelifrescos.service;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.meli.projetointegradormelifrescos.dto.BatchDTO;
+import com.meli.projetointegradormelifrescos.enums.Category;
+import com.meli.projetointegradormelifrescos.model.Batch;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class WarehouseCountDTO {
+public interface IAlertService {
 
-    private Long warehouseCode;
-    private Integer totalQuantity;
-    private Boolean alert;
+    Boolean startAlertForProduct(Batch batch, Category category);
+
 }
