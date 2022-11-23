@@ -8,9 +8,8 @@
 
 package com.meli.projetointegradormelifrescos.dto;
 
-import com.meli.projetointegradormelifrescos.dto.BatchDTO;
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
-import com.meli.projetointegradormelifrescos.model.Section;
+import com.meli.projetointegradormelifrescos.model.PurchaseOrder;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,33 +23,22 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class InboundOrderDTO {
+public class PurchaseOrderDTO {
 
-    private Long orderNumber;
+    private LocalDate date;
+    private Long buyerId;
+    private String orderStatus;
+    private List<PurchaseProductDTO> products;
 
-    @NotNull
-    private LocalDate orderDate;
-
-    private Long sectionCode;
-
-    private Long warehouseCode;
-
-    private List<BatchDTO> batchStock;
-
-    @NotNull
-    private Long managerId;
-
-    public InboundOrderDTO(InboundOrder inboundOrder) {
-        this.orderNumber = inboundOrder.getId();
-        this.orderDate = inboundOrder.getOrderDate();
-        this.sectionCode = inboundOrder.getSection().getId();
-        this.warehouseCode = inboundOrder.getWarehouse().getId();
-        this.managerId = inboundOrder.getManager().getId();
-        this.batchStock =
-            inboundOrder
-                .getBatches()
+    public PurchaseOrderDTO(PurchaseOrder purchaseOrder) {
+        this.date = purchaseOrder.getDate();
+        this.buyerId = purchaseOrder.getBuyerId();
+        this.orderStatus = purchaseOrder.getOrderStatus();
+        this.products =
+            purchaseOrder
+                .getProducts()
                 .stream()
-                .map(BatchDTO::new)
+                .map(PurchaseProductDTO::new)
                 .collect(Collectors.toList());
     }
 }

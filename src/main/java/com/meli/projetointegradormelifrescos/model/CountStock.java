@@ -6,11 +6,9 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.meli.projetointegradormelifrescos.exception;
+package com.meli.projetointegradormelifrescos.model;
 
-public class ListIsEmptyException extends RuntimeException {
-
-    public ListIsEmptyException(String message) {
-        super(message);
-    }
+public interface CountStock {
+    Long getWarehouseId();
+    Integer getQuantity();
 }

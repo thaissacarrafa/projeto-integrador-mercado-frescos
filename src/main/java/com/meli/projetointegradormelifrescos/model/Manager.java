@@ -1,13 +1,13 @@
 package com.meli.projetointegradormelifrescos.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-
 import javax.persistence.*;
+import lombok.Data;
 
 @Entity
 @Data
 public class Manager {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,5 +29,4 @@ public class Manager {
     @JoinColumn(name = "inbound_order_id")
     @JsonIgnoreProperties("manager")
     private InboundOrder inboundOrder;
-
 }

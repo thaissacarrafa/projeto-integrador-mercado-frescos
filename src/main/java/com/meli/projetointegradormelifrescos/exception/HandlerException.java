@@ -11,15 +11,15 @@ public class HandlerException {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ExceptionDetails> handlerNotFoundException(
-            NotFoundException e
+        NotFoundException e
     ) {
         ExceptionDetails exceptionDetails = ExceptionDetails
-                .builder()
-                .title("Not Found")
-                .message(e.getMessage())
-                .status(HttpStatus.NOT_FOUND.value())
-                .timeStamp(LocalDateTime.now())
-                .build();
+            .builder()
+            .title("Not Found")
+            .message(e.getMessage())
+            .status(HttpStatus.NOT_FOUND.value())
+            .timeStamp(LocalDateTime.now())
+            .build();
 
         return new ResponseEntity<>(exceptionDetails, HttpStatus.NOT_FOUND);
     }

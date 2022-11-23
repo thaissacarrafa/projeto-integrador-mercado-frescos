@@ -1,14 +1,13 @@
 package com.meli.projetointegradormelifrescos.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
-
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import javax.persistence.*;
+import lombok.*;
 
-@Data
 @Entity
 @Builder
 @Getter
@@ -16,9 +15,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Batch {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "batch_number")
     private Long batchNumber;
 
     @Column(name = "product_id", nullable = false)
@@ -40,7 +43,7 @@ public class Batch {
     private LocalDateTime manufacturingTime;
 
     @Column(name = "due_date", nullable = false)
-    private LocalDate dueDate;
+    private Long dueDate;
 
     @Column(name = "volume", nullable = false)
     private Float volume;
@@ -61,6 +64,8 @@ public class Batch {
     @JsonIgnoreProperties("batchStocks")
     private Section section;
 
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id")
+    @JsonIgnoreProperties("warehouse")
+    private Warehouse warehouse;
 }
-
-

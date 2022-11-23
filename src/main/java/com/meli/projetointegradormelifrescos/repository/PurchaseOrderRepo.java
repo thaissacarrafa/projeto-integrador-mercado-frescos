@@ -6,11 +6,13 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.meli.projetointegradormelifrescos.exception;
+package com.meli.projetointegradormelifrescos.repository;
 
-public class ListIsEmptyException extends RuntimeException {
+import com.meli.projetointegradormelifrescos.model.PurchaseOrder;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-    public ListIsEmptyException(String message) {
-        super(message);
-    }
+@Repository
+public interface PurchaseOrderRepo extends JpaRepository<PurchaseOrder, Long> {
+    PurchaseOrder save(PurchaseOrder purchaseOrder);
 }

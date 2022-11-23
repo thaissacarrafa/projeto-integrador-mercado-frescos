@@ -6,11 +6,20 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.meli.projetointegradormelifrescos.exception;
+package com.meli.projetointegradormelifrescos.dto;
 
-public class ListIsEmptyException extends RuntimeException {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    public ListIsEmptyException(String message) {
-        super(message);
-    }
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class WarehouseCountDTO {
+
+    private Long warehouseCode;
+    private Integer totalQuantity;
+    private Boolean alert;
 }
