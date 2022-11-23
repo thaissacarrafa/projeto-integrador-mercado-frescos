@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.*;
 import lombok.*;
+import net.bytebuddy.asm.Advice;
 
 @Entity
 @Builder
@@ -43,7 +44,7 @@ public class Batch {
     private LocalDateTime manufacturingTime;
 
     @Column(name = "due_date", nullable = false)
-    private Long dueDate;
+    private LocalDate dueDate;
 
     @Column(name = "volume", nullable = false)
     private Float volume;

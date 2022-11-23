@@ -125,8 +125,6 @@ public class BatchService implements IBatchService {
 
         List<WarehouseCountDTO> warehouseCountDTOList = new ArrayList<WarehouseCountDTO>();
 
-
-
         batches.forEach(batch ->
             warehouseCountDTOList.add(
                 new WarehouseCountDTO(
@@ -164,9 +162,6 @@ public class BatchService implements IBatchService {
         );
         batchDTO.setProductQuantity(
             batches.stream().findFirst().get().getProductQuantity()
-        );
-        batchDTO.setAlert(
-                batches.stream().findFirst().get().getAlert()
         );
         return batchDTO;
     }
