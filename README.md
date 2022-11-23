@@ -6,7 +6,7 @@
 > e refrigerados, que se encontram em armazéns e setores diferentes, e que podem ser adquiridos
 > por consumidores através de um carrinho de compras.
 
-### 📈 Principais funcionalidades
+## 📈 Principais funcionalidades
 
 O projeto trata-se de uma atividade avaliativa da Digital House em parceria com o Mercado Livre e possui alguns
 requisitos, sendo:
@@ -29,7 +29,7 @@ requisitos, sendo:
 sofrerá alterações.
 
 
-### 💻 Informações relevantes
+## 💻 Informações relevantes
 
 Este projeto utilizará as seguintes tecnologias:
 
@@ -86,7 +86,7 @@ Este projeto utilizará as seguintes tecnologias:
   </tr>
 </table>
 
-### 💻 Executar o projeto
+## 💻 Executar o projeto
 
 
 Para executar o projeto no terminal, digite o seguinte comando:
@@ -110,7 +110,7 @@ http://localhost:8080
 - Alteração de todos os dados- PUT
 - Alteração de parte dos dados - PATCH
 
-### Documentação   📩
+## Documentação   📩
 
 ### 1- Javadoc
 
@@ -124,13 +124,23 @@ Este projeto possui documentação via Swagger para facilitar a visualização e
 
 Para facilitar os testes de funcionalidades desta API, anexamos um exemplo de coleção do Postman em uma das pastas do projeto, sendo necessário apenas importá-la no seu Postman.
 
+## Requisito 06
+
+Implementamos melhorias no projeto de forma individual, que não foram mergeadas na main e constam nas seguintes branchs:
+
+- Requisito 6 - Thaíssa (https://github.com/thaissacarrafa/projeto-integrador-mercado-frescos/pull/25)
+- Requisito 6 - Fernanda (https://github.com/thaissacarrafa/projeto-integrador-mercado-frescos/pull/24)
+- Requisito 6 - Amanda (https://github.com/thaissacarrafa/projeto-integrador-mercado-frescos/pull/23)
+- Requisito 6 - Igor (https://github.com/thaissacarrafa/projeto-integrador-mercado-frescos/pull/22)
+- Requisito 6 - Leonardo (https://github.com/thaissacarrafa/projeto-integrador-mercado-frescos/pull/20)
+- Requisito 6 - Gustavo (https://github.com/thaissacarrafa/projeto-integrador-mercado-frescos/pull/26)
 
 
 ## Projeto desenvolvido por:
 
-- Amanda Gomes Lobo 🍅
-- Fernanda Alcionê de Souza 🍉
-- Gustavo Walter Bartel Dolzan 🍒
-- Igor Silva Fernandes 🍇
-- Leonardo Henrique Correia dos Santos 🥝
-- Thaíssa Carrafa do Nascimento 🍓
+- Amanda Gomes Lobo - (https://github.com/amanda-lobo1) 🍅
+- Fernanda Alcionê de Souza  - (https://github.com/fernandaadesouza) 🍉
+- Gustavo Walter Bartel Dolzan  - (https://github.com/gugadolzan) 🍒
+- Igor Silva Fernandes - (https://github.com/IgorFernandesMeli) 🍇
+- Leonardo Henrique Correia dos Santos - (https://github.com/eliHC) 🥝
+- Thaíssa Carrafa do Nascimento  - (https://github.com/thaissacarrafa) 🍓
