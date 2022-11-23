@@ -143,6 +143,7 @@ public class PurchaseProductService implements IPurchaseProductService {
             return response;
         } else {
             PurchaseOrder purchase = purchaseOrder.get();
+            JavaMailApp.compraFinalizada();
             purchase.setOrderStatus("FINALIZADO");
             purchaseOrderRepo.save(purchase);
 
