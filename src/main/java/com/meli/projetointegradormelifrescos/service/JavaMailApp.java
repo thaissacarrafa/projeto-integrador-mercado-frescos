@@ -15,14 +15,14 @@ public class JavaMailApp {
     private static final boolean SSL_FLAG = true;
 
     public static void welcome() {
-        String message = "Bem vindo ao mercado livre, parabéns pela sua conta";
-        String titulo = "Boas Vindas ao Mercado Livre!!";
+        String message = "Parabéns pela sua conta. Seja muito bem-vindo ao Mercado Livre,";
+        String titulo = " Bem-vindo ao Mercado Livre!!\n";
         sendEmail(USERNAME, titulo, message);
     }
 
     public static void compraFinalizada() {
-        String message = "Parabens pela sua compra no Mercado Livre!!";
-        String titulo = "Compra Mercado Livre!!";
+        String message = "Nos do Mercado Livre,gostariamos de agradecer imensamente pela confiança em nossos produtos! Esperamos que você esteja super feliz com a sua compra!";
+        String titulo = "Mercado Livre!!";
         sendEmail(USERNAME, titulo, message);
     }
 
