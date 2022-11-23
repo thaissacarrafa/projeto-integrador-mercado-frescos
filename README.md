@@ -125,6 +125,49 @@ http://localhost:8080
 }
 ```
 
+## Sugestão de melhoria 
+ JWT (Json Web Token)
+ 
+Visando seguraça e autenticidade do nosso sistema, é indispensavel o uso de um metodo de autenticação
+para gerirmos quem terá acesso a determinadas partes da nossa API.<br/>
+Com o JWT conseguimos gerar um token a partir de um objeto passado para ele,
+esse objeto pode ser construído com os dados dos nosso indivíduos no registrado no banco. <br/>
+sendo assim cada token gerado pode ter encriptado em si, qual o nível  de permissão de acesso 
+do indivíduo no nosso sistema
+ 
+ 
+### ao acessar o endpoint 
+```
+ POST http://localhost:8080/api/v1/auth
+```
+
+Passando o body login e senha no body da requisição
+```
+
+{
+     "username": "eusoumanager@gmail.com",
+     "password" :"123456"
+}
+```
+
+Teremos  um token gerado devolvido no corpo da requisição 
+```
+
+{
+    "access_token": "Bearer sdfghoiqy342o5iuherf8___example "
+}
+```
+
+esse token deverá ser passado nos das proximas requisiçoes atravez da chave contina no
+headers.Autorization
+
+caso esse toke não seja passado teremos o seguinte retorno
+
+```
+   "message": "Invalid token",
+   
+```
+
 
 ## Projeto desenvolvido por:
 
