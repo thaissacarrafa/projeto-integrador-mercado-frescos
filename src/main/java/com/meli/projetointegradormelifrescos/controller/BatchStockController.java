@@ -13,6 +13,13 @@ public class BatchStockController {
     @Autowired
     private IBatchService service;
 
+    /***
+     *
+     * Obtenha todos os lotes armazenados em um setor de um armazém ordenados por sua data de vencimento.
+     * @author Gustavo Dolzan
+     * @return
+     */
+
     @GetMapping("/{numberOfDays}/{section}")
     @ResponseBody
     public ResponseEntity<BatchStockResDTO> getByBatchStockBySection(
@@ -23,6 +30,14 @@ public class BatchStockController {
             service.getBatchStockBySection(numberOfDays, section)
         );
     }
+
+    /***
+     *
+     * Obtenha uma lista de lotes dentro do prazo de validade solicitado, que pertencem a uma determinada
+     * categoria de produto: FRESCO, REFRIGERADO, CONGELADO
+     * @author Igor Fernandes
+     * @return
+     */
 
     @GetMapping("/list/{numberOfDays}/{category}/{sortBy}")
     @ResponseBody

@@ -28,6 +28,11 @@ public class PurchaseProductService implements IPurchaseProductService {
     @Autowired
     private AnnoucementRepo annoucementRepo;
 
+    /***
+     *   message Registre um pedido com a lista de produtos
+     *   @author Fernanda Alcione
+     *   @return HashMap
+     */
     @Override
     public HashMap createPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) {
         List<Long> announcementsNotFound = new ArrayList<>();
@@ -77,7 +82,10 @@ public class PurchaseProductService implements IPurchaseProductService {
             return response;
         }
     }
-
+    /***
+     *   @author Fernanda Alcione
+     *   @return PurchaseProduct
+     */
     private PurchaseProduct convertPurchaseProduct(
         PurchaseProductDTO dto,
         PurchaseOrder purchaseOrder
@@ -96,7 +104,11 @@ public class PurchaseProductService implements IPurchaseProductService {
 
         return purchaseProduct;
     }
-
+    /***
+     *   message Mostrar produtos no pedido.
+     *   @author Fernanda Alcione
+     *   @return HashMap
+     */
     public HashMap getPurchaseOrder(Long id) {
         Optional<PurchaseOrder> purchaseOrder = purchaseOrderRepo.findById(id);
 
@@ -115,6 +127,12 @@ public class PurchaseProductService implements IPurchaseProductService {
             return response;
         }
     }
+
+    /***
+     *   message Modifique o pedido existente para torná-lo do tipo de carrinho ABERTO/FINALIZADO
+     *   @author Fernanda Alcione
+     *   @return HashMap
+     */
 
     public HashMap putPurchaseOrder(Long id) {
         Optional<PurchaseOrder> purchaseOrder = purchaseOrderRepo.findById(id);

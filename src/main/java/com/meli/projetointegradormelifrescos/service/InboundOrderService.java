@@ -31,6 +31,14 @@ public class InboundOrderService implements IInboundOrderService {
     @Autowired
     private ManagerRepo managerRepo;
 
+
+    /***
+     *
+     * Cria uma inbound order fazendo suas devidas validações
+     *
+     * @author List<BatchDTO>
+     * @return Warehouse
+     */
     @Override
     // @Transactional
     public List<BatchDTO> createInboundOrder(InboundOrderDTO inboundOrderDTO) {
@@ -108,8 +116,8 @@ public class InboundOrderService implements IInboundOrderService {
      * método responsável por validar se a warehouse é válida, identificando
      * se ele é ou nao vazio
      *
-     * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
-     * @return
+     * @author Thaíssa Carrafa
+     * @return Warehouse
      */
     public Warehouse validWarehouse(Long warehouseCode) {
         Optional<Warehouse> warehouse = warehouseRepo.findWarehouseByCode(
@@ -165,7 +173,7 @@ public class InboundOrderService implements IInboundOrderService {
      * que o setor corresponde aos tipos de produto - presumindo que todo o lote vem
      * com o mesmo tipo de categoria
      *
-     * @author Thaíssa Carrafa, Leonardo Santos e Igor Fernandes
+     * @author Thaíssa Carrafa
      */
 
     public void sectorIsEqualsBatch(BatchDTO batch, Section section) {
