@@ -2,7 +2,9 @@ package com.meli.projetointegradormelifrescos.controller;
 
 import com.meli.projetointegradormelifrescos.dto.BatchStockResDTO;
 import com.meli.projetointegradormelifrescos.service.IBatchService;
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +15,7 @@ public class BatchStockController {
     @Autowired
     private IBatchService service;
 
-    /***
+    /**
      *
      * Obtenha todos os lotes armazenados em um setor de um armazém ordenados por sua data de vencimento.
      * @author Gustavo Dolzan
@@ -31,7 +33,7 @@ public class BatchStockController {
         );
     }
 
-    /***
+    /**
      *
      * Obtenha uma lista de lotes dentro do prazo de validade solicitado, que pertencem a uma determinada
      * categoria de produto: FRESCO, REFRIGERADO, CONGELADO
@@ -48,6 +50,24 @@ public class BatchStockController {
     ) {
         return ResponseEntity.ok(
             service.getBatchStockByCategory(numberOfDays, category, sortBy)
+        );
+    }
+
+    @GetMapping("/expired")
+    @ResponseBody
+    public ResponseEntity<BatchStockResDTO> getExpiredBatches(
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(
+            required = false
+        ) LocalDate dueDate,
+        @RequestParam(required = false) String category,
+        @RequestParam(required = false) String sortBy
+    ) {
+        return ResponseEntity.ok(
+            service.getExpiredBatches(
+                dueDate != null ? dueDate : LocalDate.now(),
+                category != null ? category : "all",
+                sortBy != null ? sortBy : "asc"
+            )
         );
     }
 }
