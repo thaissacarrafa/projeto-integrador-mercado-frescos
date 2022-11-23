@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,11 +29,62 @@ public class BatchService implements IBatchService {
     @Autowired
     SectionRepo sectionRepo;
 
+    /**
+     * Filter batches by category/section when needed and sort them
+     * @param batches List of batches
+     * @param categoryCode Category code
+     * @param sortBy Can be "asc" or "desc"
+     * @return BatchStockResDTO
+     */
+    private BatchStockResDTO filterBatches(
+        List<Batch> batches,
+        String categoryCode,
+        String sortBy
+    ) {
+        if (batches.isEmpty()) throw new NotFoundException("No batches found");
+
+        List<Batch> filteredBatches = new ArrayList<>(batches);
+
+        if (!categoryCode.equalsIgnoreCase("all")) {
+            Category category;
+
+            try {
+                category = Category.getCategoryByValue(categoryCode);
+            } catch (Exception e) {
+                throw new NotFoundException("Category not found");
+            }
+
+            filteredBatches =
+                batches
+                    .stream()
+                    .filter(batch ->
+                        batch.getSection().getCategory().equals(category)
+                    )
+                    .collect(Collectors.toList());
+        }
+
+        if (filteredBatches.isEmpty()) throw new NotFoundException(
+            "No batches found"
+        );
+
+        if (sortBy.equalsIgnoreCase("asc")) {
+            filteredBatches.sort(Comparator.comparing(Batch::getDueDate));
+        } else if (sortBy.equalsIgnoreCase("desc")) {
+            filteredBatches.sort(
+                Comparator.comparing(Batch::getDueDate).reversed()
+            );
+        } else {
+            throw new NotFoundException("Sort by not found");
+        }
+
+        return new BatchStockResDTO(filteredBatches);
+    }
+
     public void saveBatch(Batch batch) {
         batchRepo.save(batch);
     }
 
-    /***
+    /**
      *   @author Igor Fernandes, Gustavo Dolzan e Leonardo Correia
      *   @return BatchStockResDTO
      */
@@ -71,7 +123,8 @@ public class BatchService implements IBatchService {
 
         return new BatchStockResDTO(filteredBatches);
     }
-    /***
+
+    /**
      *   @author Igor Fernandes, Gustavo Dolzan e Leonardo Correia
      *   @return BatchStockResDTO
      */
@@ -81,43 +134,37 @@ public class BatchService implements IBatchService {
         String categoryCode,
         String sortBy
     ) {
-        Category category;
-
-        try {
-            category = Category.getCategoryByValue(categoryCode);
-        } catch (Exception e) {
-            throw new NotFoundException("Category not found");
-        }
-
-        List<Batch> batches = batchRepo.findAllByDueDateBetween(
-            LocalDate.now(),
-            LocalDate.now().plusDays(numberOfDays)
+        return filterBatches(
+            batchRepo.findAllByDueDateBetween(
+                LocalDate.now(),
+                LocalDate.now().plusDays(numberOfDays)
+            ),
+            categoryCode,
+            sortBy
         );
-
-        if (batches.isEmpty()) throw new NotFoundException("No batches found");
-
-        List<Batch> filteredBatches = batches
-            .stream()
-            .filter(batch -> batch.getSection().getCategory().equals(category))
-            .collect(Collectors.toList());
-
-        if (filteredBatches.isEmpty()) throw new NotFoundException(
-            "No batches found2"
-        );
-
-        if (sortBy.equalsIgnoreCase("asc")) {
-            filteredBatches.sort(Comparator.comparing(Batch::getDueDate));
-        } else if (sortBy.equalsIgnoreCase("desc")) {
-            filteredBatches.sort(
-                Comparator.comparing(Batch::getDueDate).reversed()
-            );
-        } else {
-            throw new NotFoundException("Sort by not found");
-        }
-
-        return new BatchStockResDTO(filteredBatches);
     }
-    /***
+
+    /**
+     * Get expired batches filtered or not by category
+     * @param dueDate Due date of the batch
+     * @param category Category code, default is "all"
+     * @param sortBy Can be "asc" or "desc", default is "asc"
+     * @return BatchStockResDTO
+     */
+    @Override
+    public BatchStockResDTO getExpiredBatches(
+        LocalDate dueDate,
+        String category,
+        String sortBy
+    ) {
+        return filterBatches(
+            batchRepo.findAllByDueDateBefore(dueDate),
+            category,
+            sortBy
+        );
+    }
+
+    /**
      *   message Verifica os produtos por section
      *   @author Thaíssa Carrafa
      *   @return WarehouseStockDTO
@@ -150,7 +197,8 @@ public class BatchService implements IBatchService {
 
         return warehouseStockDTO;
     }
-    /***
+
+    /**
      *   message Verifica os produtos por section
      *   @author Thaissa Carrafa
      *   @return BatchDTO
