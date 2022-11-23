@@ -1,15 +1,16 @@
 package com.meli.projetointegradormelifrescos.model;
 
+import com.fasterxml.jackson.annotation.*;
 import com.meli.projetointegradormelifrescos.enums.Category;
-import lombok.*;
 import java.math.*;
 import java.util.List;
 import javax.persistence.*;
-import com.fasterxml.jackson.annotation.*;
+import lombok.*;
 
 @Entity
 @Data
 public class Announcement {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,6 +27,9 @@ public class Announcement {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Category category;
+
+    @Column(nullable = false)
+    private Boolean Alert;
 
     @ManyToOne
     @JoinColumn(name = "seller")

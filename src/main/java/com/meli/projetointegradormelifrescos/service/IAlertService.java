@@ -6,11 +6,14 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.meli.projetointegradormelifrescos.exception;
+package com.meli.projetointegradormelifrescos.service;
 
-public class ListIsEmptyException extends RuntimeException {
+import com.meli.projetointegradormelifrescos.dto.BatchDTO;
+import com.meli.projetointegradormelifrescos.enums.Category;
+import com.meli.projetointegradormelifrescos.model.Batch;
 
-    public ListIsEmptyException(String message) {
-        super(message);
-    }
+public interface IAlertService {
+
+    Boolean startAlertForProduct(Batch batch, Category category);
+
 }

@@ -8,12 +8,15 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class ProjetoIntegradorMeliFrescosApplication {
 
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
-	public static void main(String[] args) {
-		SpringApplication.run(ProjetoIntegradorMeliFrescosApplication.class, args);
-	}
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
+    public static void main(String[] args) {
+        SpringApplication.run(
+            ProjetoIntegradorMeliFrescosApplication.class,
+            args
+        );
+    }
 }

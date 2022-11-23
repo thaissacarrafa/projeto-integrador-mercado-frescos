@@ -13,11 +13,17 @@ requisitos, sendo:
 
 - [x] Cadastro de Lotes de Produtos
 - [x] Consulta e atualização do lote de produtos
-- [ ] Consulta da lista de Produtos disponível
-- [ ] Consulta da lista de Produtos por categoria (Congelados, Frescos e Resfriados)
-- [ ] Registro de um pedido de um determinado consumidor
-- [ ] Consulta do pedido de compra
-- [ ] Alteração do pedido de compra
+- [x] Consulta da lista de Produtos disponível
+- [x] Consulta da lista de Produtos por categoria (Congelados, Frescos e Resfriados)
+- [x] Registro de um pedido de um determinado consumidor
+- [x] Consulta do pedido de compra
+- [x] Alteração do pedido de compra
+- [ ] Consultar uma lista de produtos com todos os lotes onde aparece.
+- [ ] Veja uma lista de produtos com todos os lotes onde aparece. Ordenados por: L = ordenado por lote / Q = ordenado por quantidade atual
+ V = ordenado por data de vencimento.
+- [x] Obtenha a quantidade total de produtos por armazém.
+- [x] Obtenha todos os lotes armazenados em um setor de um armazém ordenados por sua data de vencimento.
+- [x] Obtenha uma lista de lotes dentro do prazo de validade solicitado, que pertencem a uma determinada categoria de produto.
 
 ⏳ Novos requisitos são disponibilizados diariamente, por isso esta lista 
 sofrerá alterações.
@@ -104,26 +110,20 @@ http://localhost:8080
 - Alteração de todos os dados- PUT
 - Alteração de parte dos dados - PATCH
 
-### Modelo com campos obrigatórios para teste  📩
+### Documentação   📩
 
-```
-{
-	"purchaseOrder": {
-		"date": "LocalDate",
-		"buyerId": "Long",
-		"orderStatus": "String",
-		"products": [{
-				"productId": "Long",
-				"quantity": "int"
-			},
-			{
-				"productId": "Long",
-				"quantity": "int"
-			}
-		]
-	}
-}
-```
+### 1- Javadoc
+
+Este projeto possui comentários com o intuito de auxiliar na compreensão das funcionalidades dos métodos;
+
+### 2- Swagger
+
+Este projeto possui documentação via Swagger para facilitar a visualização e testes dos endpoints disponíveis que você encontra [aqui.](http://localhost:8080/swagger-ui/index.html#/fresh-products-controller/getAllProductsAnnoucement)
+
+### 3- Postman
+
+Para facilitar os testes de funcionalidades desta API, anexamos um exemplo de coleção do Postman em uma das pastas do projeto, sendo necessário apenas importá-la no seu Postman.
+
 
 
 ## Projeto desenvolvido por:

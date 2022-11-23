@@ -10,24 +10,24 @@ package com.meli.projetointegradormelifrescos.dto;
 
 import com.meli.projetointegradormelifrescos.dto.BatchDTO;
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
-
+import com.meli.projetointegradormelifrescos.model.Section;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class InboundOrderDTO {
+
     private Long orderNumber;
+
     @NotNull
     private LocalDate orderDate;
 
@@ -46,7 +46,11 @@ public class InboundOrderDTO {
         this.sectionCode = inboundOrder.getSection().getId();
         this.warehouseCode = inboundOrder.getWarehouse().getId();
         this.managerId = inboundOrder.getManager().getId();
-        this.batchStock = inboundOrder.getBatches().stream().map(BatchDTO::new).collect(Collectors.toList());
+        this.batchStock =
+            inboundOrder
+                .getBatches()
+                .stream()
+                .map(BatchDTO::new)
+                .collect(Collectors.toList());
     }
-
 }

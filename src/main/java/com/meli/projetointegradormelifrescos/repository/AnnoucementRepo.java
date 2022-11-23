@@ -6,11 +6,14 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.meli.projetointegradormelifrescos.exception;
+package com.meli.projetointegradormelifrescos.repository;
 
-public class ListIsEmptyException extends RuntimeException {
+import com.meli.projetointegradormelifrescos.model.Announcement;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-    public ListIsEmptyException(String message) {
-        super(message);
-    }
+public interface AnnoucementRepo extends JpaRepository<Announcement, Long> {
+    List<Announcement> findAll();
+
+    List<Announcement> findAllByCategory(String category);
 }

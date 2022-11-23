@@ -1,21 +1,22 @@
 package com.meli.projetointegradormelifrescos.dto;
 
 import com.meli.projetointegradormelifrescos.model.Batch;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import com.meli.projetointegradormelifrescos.model.Warehouse;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 import javax.validation.constraints.NotNull;
+
+import com.meli.projetointegradormelifrescos.service.AlertService;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class BatchDTO {
+
     private Long batchNumber;
 
     private Long productId;
@@ -39,6 +40,10 @@ public class BatchDTO {
 
     private BigDecimal price;
 
+    private Warehouse warehouse;
+
+    private Boolean alert;
+
     public BatchDTO(Batch batch) {
         this.batchNumber = batch.getBatchNumber();
         this.productId = batch.getProductId();
@@ -49,6 +54,16 @@ public class BatchDTO {
         this.volume = batch.getVolume();
         this.dueDate = batch.getDueDate();
         this.price = batch.getPrice();
+        this.warehouse = batch.getWarehouse();
+        this.alert = batch.getAlert();
+    }
+
+    public BatchDTO(Long batchNumber, int productQuantity, LocalDate dueDate) {
+        Batch batch = new Batch();
+
+        this.batchNumber = batch.getBatchNumber();
+        this.productQuantity = batch.getProductQuantity();
+        this.dueDate = batch.getDueDate();
     }
 
     public static Batch entityToDTO(BatchDTO batchDTO) {
@@ -63,8 +78,9 @@ public class BatchDTO {
         batch.setVolume(batchDTO.getVolume());
         batch.setDueDate(batchDTO.getDueDate());
         batch.setPrice(batchDTO.getPrice());
+        batch.setWarehouse(batchDTO.getWarehouse());
+        batch.setAlert(batchDTO.getAlert());
 
         return batch;
-
     }
 }

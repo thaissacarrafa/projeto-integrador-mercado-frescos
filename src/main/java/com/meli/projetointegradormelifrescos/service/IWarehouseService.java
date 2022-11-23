@@ -6,11 +6,12 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.meli.projetointegradormelifrescos.exception;
+package com.meli.projetointegradormelifrescos.service;
 
-public class ListIsEmptyException extends RuntimeException {
+import com.meli.projetointegradormelifrescos.model.Warehouse;
 
-    public ListIsEmptyException(String message) {
-        super(message);
-    }
+public interface IWarehouseService {
+    Warehouse findWarehouseById(Long id);
+
+    Warehouse findWarehouseByCode(Long code);
 }

@@ -2,12 +2,10 @@ package com.meli.projetointegradormelifrescos.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
-
+import javax.persistence.*;
+import lombok.Data;
 
 @Entity
 @Data

@@ -1,11 +1,10 @@
 package com.meli.projetointegradormelifrescos.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.*;
 import java.time.*;
 import java.util.*;
 import javax.persistence.*;
-import com.fasterxml.jackson.annotation.*;
-
+import lombok.*;
 
 @Entity
 @Data
@@ -26,7 +25,6 @@ public class InboundOrder {
 
     @OneToMany(mappedBy = "inboundOrder")
     @JsonIgnoreProperties("inboundOrder")
-    @JsonManagedReference
     private List<Batch> batches;
 
     @ManyToOne

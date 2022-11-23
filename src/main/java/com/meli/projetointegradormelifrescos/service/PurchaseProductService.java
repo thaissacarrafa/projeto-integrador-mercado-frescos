@@ -1,27 +1,21 @@
 package com.meli.projetointegradormelifrescos.service;
 
-import com.meli.projetointegradormelifrescos.dto.AnnoucementDTO;
 import com.meli.projetointegradormelifrescos.dto.PurchaseOrderDTO;
 import com.meli.projetointegradormelifrescos.dto.PurchaseProductDTO;
-import com.meli.projetointegradormelifrescos.enums.Category;
-
-import com.meli.projetointegradormelifrescos.enums.repository.AnnoucementRepo;
 import com.meli.projetointegradormelifrescos.model.*;
 import com.meli.projetointegradormelifrescos.repository.*;
-import com.meli.projetointegradormelifrescos.repository.PurchaseOrderRepo;
-import com.meli.projetointegradormelifrescos.repository.PurchaseProductRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.stereotype.Service;
 
 @Service
 public class PurchaseProductService implements IPurchaseProductService {
+
     @AutoConfigureOrder
     private PurchaseOrder purchaseOrder;
 
@@ -34,7 +28,11 @@ public class PurchaseProductService implements IPurchaseProductService {
     @Autowired
     private AnnoucementRepo annoucementRepo;
 
-
+    /***
+     *   message Registre um pedido com a lista de produtos
+     *   @author Fernanda Alcione
+     *   @return HashMap
+     */
     @Override
     public HashMap createPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) {
         List<Long> announcementsNotFound = new ArrayList<>();
@@ -46,15 +44,20 @@ public class PurchaseProductService implements IPurchaseProductService {
         purchaseOrderEntity.setBuyerId(purchaseOrderDTO.getBuyerId());
         purchaseOrderEntity.setOrderStatus(purchaseOrderDTO.getOrderStatus());
 
-        purchaseOrderDTO.getProducts().forEach(b -> {
-            PurchaseProduct purchaseProduct = convertPurchaseProduct(b, purchaseOrderEntity);
+        purchaseOrderDTO
+            .getProducts()
+            .forEach(b -> {
+                PurchaseProduct purchaseProduct = convertPurchaseProduct(
+                    b,
+                    purchaseOrderEntity
+                );
 
-            if (purchaseProduct != null) {
-                products.add(purchaseProduct);
-            } else {
-                announcementsNotFound.add(b.getProductId());
-            }
-        });
+                if (purchaseProduct != null) {
+                    products.add(purchaseProduct);
+                } else {
+                    announcementsNotFound.add(b.getProductId());
+                }
+            });
 
         if (announcementsNotFound.size() > 0) {
             HashMap<String, List> response = new HashMap<>();
@@ -63,7 +66,13 @@ public class PurchaseProductService implements IPurchaseProductService {
         } else {
             purchaseOrderRepo.save(purchaseOrderEntity);
             for (PurchaseProduct b : products) {
-                totalPrice += (b.getAnnouncement().getPrice().multiply(BigDecimal.valueOf(b.getQuantity()))).doubleValue();
+                totalPrice +=
+                    (
+                        b
+                            .getAnnouncement()
+                            .getPrice()
+                            .multiply(BigDecimal.valueOf(b.getQuantity()))
+                    ).doubleValue();
                 purchaseProductRepo.save(b);
             }
 
@@ -72,12 +81,20 @@ public class PurchaseProductService implements IPurchaseProductService {
 
             return response;
         }
-    };
-
-    private PurchaseProduct convertPurchaseProduct(PurchaseProductDTO dto, PurchaseOrder purchaseOrder) {
+    }
+    /***
+     *   @author Fernanda Alcione
+     *   @return PurchaseProduct
+     */
+    private PurchaseProduct convertPurchaseProduct(
+        PurchaseProductDTO dto,
+        PurchaseOrder purchaseOrder
+    ) {
         PurchaseProduct purchaseProduct = new PurchaseProduct();
 
-        Optional<Announcement> announcement = annoucementRepo.findById(dto.getProductId());
+        Optional<Announcement> announcement = annoucementRepo.findById(
+            dto.getProductId()
+        );
         if (announcement.isEmpty()) {
             return null;
         }
@@ -87,7 +104,11 @@ public class PurchaseProductService implements IPurchaseProductService {
 
         return purchaseProduct;
     }
-
+    /***
+     *   message Mostrar produtos no pedido.
+     *   @author Fernanda Alcione
+     *   @return HashMap
+     */
     public HashMap getPurchaseOrder(Long id) {
         Optional<PurchaseOrder> purchaseOrder = purchaseOrderRepo.findById(id);
 
@@ -106,6 +127,12 @@ public class PurchaseProductService implements IPurchaseProductService {
             return response;
         }
     }
+
+    /***
+     *   message Modifique o pedido existente para torná-lo do tipo de carrinho ABERTO/FINALIZADO
+     *   @author Fernanda Alcione
+     *   @return HashMap
+     */
 
     public HashMap putPurchaseOrder(Long id) {
         Optional<PurchaseOrder> purchaseOrder = purchaseOrderRepo.findById(id);

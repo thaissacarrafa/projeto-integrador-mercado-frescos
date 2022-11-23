@@ -1,7 +1,9 @@
 package com.meli.projetointegradormelifrescos.enums;
 
 import com.meli.projetointegradormelifrescos.exception.BadRequestException;
+import lombok.Getter;
 
+@Getter
 public enum OrderStatus {
     OPENED,
     FINISHED;
@@ -13,5 +15,4 @@ public enum OrderStatus {
             throw new BadRequestException("Invalid status");
         }
     }
-
 }
