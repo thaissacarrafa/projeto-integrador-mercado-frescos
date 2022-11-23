@@ -20,7 +20,5 @@ public class WarehouseStockDTO {
 
     private Long productId;
     private List<WarehouseCountDTO> warehouses;
-    private Boolean alert;
-
     public WarehouseStockDTO() {}
 }
