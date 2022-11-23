@@ -28,9 +28,6 @@ public class Announcement {
     @Column(nullable = false)
     private Category category;
 
-    @Column(nullable = false)
-    private Boolean Alert;
-
     @ManyToOne
     @JoinColumn(name = "seller")
     @JsonIgnoreProperties("announcement")

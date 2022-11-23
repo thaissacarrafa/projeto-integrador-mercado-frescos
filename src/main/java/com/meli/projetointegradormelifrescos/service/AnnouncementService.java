@@ -18,9 +18,6 @@ public class AnnouncementService implements IAnnoucementService {
     @Autowired
     private AnnoucementRepo annoucementRepo;
 
-    @Autowired
-    private IAlertService iAlertService;
-
     /***
      *   message  método responsável por consultar todos os produtos
      *   @author Thaíssa Carrafa
@@ -72,4 +69,3 @@ public class AnnouncementService implements IAnnoucementService {
         return products;
     }
 }
-

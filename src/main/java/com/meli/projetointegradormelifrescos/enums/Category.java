@@ -10,29 +10,25 @@ import lombok.Getter;
  */
 @Getter
 public enum Category {
-    FRESCO("FS", "Fresco", 15F, 25F, 7),
-    RESFRIADO("RF", "Resfriado", 8F, 15F, 60),
-    CONGELADO("FF", "Congelado", 0F, 7F, 90);
+    FRESCO("FS", "Fresco", 15F, 25F),
+    RESFRIADO("RF", "Resfriada", 8F, 15F),
+    CONGELADO("FF", "Congelado", 0F, 7F);
 
     private final String value;
     private final String name;
     private final Float minimumTemperature;
     private final Float maximumTemperature;
-    private final int startAlert;
-
 
     Category(
         String value,
         String name,
         Float minimumTemperature,
-        Float maximumTemperature,
-        int startAlert
+        Float maximumTemperature
     ) {
         this.value = value;
         this.name = name;
         this.minimumTemperature = minimumTemperature;
         this.maximumTemperature = maximumTemperature;
-        this.startAlert = startAlert;
     }
 
     public static Category valueOf(int categoryId) {
@@ -48,7 +44,6 @@ public enum Category {
         } catch (Exception e) {
             throw new BadRequestException("Invalid category");
         }
-
     }
 
     public static Category getCategoryByValue(String value) {
@@ -58,5 +53,3 @@ public enum Category {
         throw new BadRequestException("Invalid category");
     }
 }
-
-

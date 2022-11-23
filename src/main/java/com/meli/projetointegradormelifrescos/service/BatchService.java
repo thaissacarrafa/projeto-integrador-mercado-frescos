@@ -28,9 +28,6 @@ public class BatchService implements IBatchService {
     @Autowired
     SectionRepo sectionRepo;
 
-    @Autowired
-    AlertService alertService;
-
     public void saveBatch(Batch batch) {
         batchRepo.save(batch);
     }
@@ -140,8 +137,7 @@ public class BatchService implements IBatchService {
             warehouseCountDTOList.add(
                 new WarehouseCountDTO(
                     batch.getWarehouse().getCode(),
-                    batch.getProductQuantity(),
-                    this.alertService.startAlertForProduct(batch, batch.getSection().getCategory())
+                    batch.getProductQuantity()
                 )
             )
         );
@@ -178,6 +174,7 @@ public class BatchService implements IBatchService {
         batchDTO.setProductQuantity(
             batches.stream().findFirst().get().getProductQuantity()
         );
+
         return batchDTO;
     }
 }

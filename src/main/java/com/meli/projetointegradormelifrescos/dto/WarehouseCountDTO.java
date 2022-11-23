@@ -21,5 +21,4 @@ public class WarehouseCountDTO {
 
     private Long warehouseCode;
     private Integer totalQuantity;
-    private Boolean alert;
 }
