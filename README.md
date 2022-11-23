@@ -13,11 +13,17 @@ requisitos, sendo:
 
 - [x] Cadastro de Lotes de Produtos
 - [x] Consulta e atualização do lote de produtos
-- [ ] Consulta da lista de Produtos disponível
-- [ ] Consulta da lista de Produtos por categoria (Congelados, Frescos e Resfriados)
-- [ ] Registro de um pedido de um determinado consumidor
-- [ ] Consulta do pedido de compra
-- [ ] Alteração do pedido de compra
+- [x] Consulta da lista de Produtos disponível
+- [x] Consulta da lista de Produtos por categoria (Congelados, Frescos e Resfriados)
+- [x] Registro de um pedido de um determinado consumidor
+- [x] Consulta do pedido de compra
+- [x] Alteração do pedido de compra
+- [ ] Consultar uma lista de produtos com todos os lotes onde aparece.
+- [ ] Veja uma lista de produtos com todos os lotes onde aparece. Ordenados por: L = ordenado por lote / Q = ordenado por quantidade atual
+ V = ordenado por data de vencimento.
+- [x] Obtenha a quantidade total de produtos por armazém.
+- [x] Obtenha todos os lotes armazenados em um setor de um armazém ordenados por sua data de vencimento.
+- [x] Obtenha uma lista de lotes dentro do prazo de validade solicitado, que pertencem a uma determinada categoria de produto.
 
 ⏳ Novos requisitos são disponibilizados diariamente, por isso esta lista 
 sofrerá alterações.
