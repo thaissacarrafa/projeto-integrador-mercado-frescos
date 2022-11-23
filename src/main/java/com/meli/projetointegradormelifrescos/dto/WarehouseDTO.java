@@ -1,6 +1,7 @@
 package com.meli.projetointegradormelifrescos.dto;
 
 import com.meli.projetointegradormelifrescos.model.Manager;
+import com.meli.projetointegradormelifrescos.model.Section;
 import lombok.*;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
@@ -19,6 +20,8 @@ public class WarehouseDTO {
     SectionDTO sectionDTO;
     List<BatchDTO> batchDTOList;
 
-
-
+    public WarehouseDTO(Long productId, List<Section> sections) {
+        this.productId = productId;
+        this.sectionDTO = getSectionDTO();
+    }
 }

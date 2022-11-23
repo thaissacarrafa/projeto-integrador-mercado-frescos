@@ -4,7 +4,6 @@ import com.meli.projetointegradormelifrescos.dto.BatchDTO;
 import com.meli.projetointegradormelifrescos.dto.InboundOrderDTO;
 import com.meli.projetointegradormelifrescos.dto.WarehouseDTO;
 import com.meli.projetointegradormelifrescos.model.InboundOrder;
-import com.meli.projetointegradormelifrescos.model.Warehouse;
 
 import java.util.List;
 
@@ -45,6 +44,6 @@ public interface IInboundOrderService {
      */
     void findSectionByProductId(Long productId);
 
-    public List<Warehouse> warehouseT(Long productId);
+    public List<WarehouseDTO> warehouseT(Long productId);
 
 }

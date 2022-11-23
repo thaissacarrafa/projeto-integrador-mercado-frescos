@@ -16,6 +16,6 @@ public interface WarehouseRepo extends JpaRepository<Warehouse,Long> {
     @Query(value = "select w from Warehouse w where w.productId = :productId")
     List<WarehouseDTO> findWarehouseByProductId(Long productId);
 
-    @Query(value = "select * from Warehouse w where w.product_id = :productId", nativeQuery = true)
+    @Query(value = "select w from Warehouse w where w.productId = :productId")
     List<Warehouse> warehouseT(Long productId);
 }

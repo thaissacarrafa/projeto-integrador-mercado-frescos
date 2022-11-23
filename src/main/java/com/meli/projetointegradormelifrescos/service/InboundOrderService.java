@@ -33,7 +33,7 @@ public class InboundOrderService implements IInboundOrderService {
     private ManagerRepo managerRepo;
 
     @Autowired
-    IBatchRepo iBatchRepo;
+    private AnnoucementRepo annoucementRepo;
 
     @Override
 
@@ -281,9 +281,12 @@ public class InboundOrderService implements IInboundOrderService {
         return null;
     }
     @Override
-    public List<Warehouse> warehouseT(Long productId){
+    public List<WarehouseDTO> warehouseT(Long productId){
         List<Warehouse> warehouses = warehouseRepo.warehouseT(productId);
-        return warehouses;
+
+        return warehouses.stream().map(
+                warehouse -> new WarehouseDTO(warehouse.getProductId(), warehouse.getSections()))
+                .collect(Collectors.toList());
     }
 
     //        List<WarehouseDTO> warehouseDTOList = warehouseRepo.findWarehouseByProductId(productId);
