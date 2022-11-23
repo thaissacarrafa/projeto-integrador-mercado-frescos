@@ -35,6 +35,10 @@ public class BatchService implements IBatchService {
         batchRepo.save(batch);
     }
 
+    /***
+     *   @author Igor Fernandes, Gustavo Dolzan e Leonardo Correia
+     *   @return BatchStockResDTO
+     */
     @Override
     public BatchStockResDTO getBatchStockBySection(
         Integer numberOfDays,
@@ -70,7 +74,10 @@ public class BatchService implements IBatchService {
 
         return new BatchStockResDTO(filteredBatches);
     }
-
+    /***
+     *   @author Igor Fernandes, Gustavo Dolzan e Leonardo Correia
+     *   @return BatchStockResDTO
+     */
     @Override
     public BatchStockResDTO getBatchStockByCategory(
         Integer numberOfDays,
@@ -113,7 +120,11 @@ public class BatchService implements IBatchService {
 
         return new BatchStockResDTO(filteredBatches);
     }
-
+    /***
+     *   message Verifica os produtos por section
+     *   @author Thaíssa Carrafa
+     *   @return WarehouseStockDTO
+     */
     public WarehouseStockDTO countStocksByProductId(Long productId) {
         List<Batch> batches = batchRepo.findBatchByProductId(productId);
 
@@ -143,7 +154,11 @@ public class BatchService implements IBatchService {
 
         return warehouseStockDTO;
     }
-
+    /***
+     *   message Verifica os produtos por section
+     *   @author Thaissa Carrafa
+     *   @return BatchDTO
+     */
     @Override
     public BatchDTO productsBySection(Long productId) {
         List<Batch> batches = batchRepo.findSectionByProductId(productId);

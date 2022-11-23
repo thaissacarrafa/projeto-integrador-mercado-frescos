@@ -24,6 +24,11 @@ public class WarehouseService implements IWarehouseService {
     @Autowired
     private IBatchService batchStockService;
 
+    /***
+     *   message Pesquisa uma Warehouse pelo seu id
+     *   @author Thaíssa Carrafa
+     *   @return Warehouse
+     */
     @Override
     public Warehouse findWarehouseById(Long id) {
         Optional<Warehouse> warehouse = repo.findById(id);
@@ -33,6 +38,11 @@ public class WarehouseService implements IWarehouseService {
         return warehouse.get();
     }
 
+    /***
+     *   message Pesquisa uma Warehouse pelo seu code
+     *   @author Thaíssa Carrafa
+     *   @return Warehouse
+     */
     @Override
     public Warehouse findWarehouseByCode(Long code) {
         Optional<Warehouse> warehouse = repo.findWarehouseByCode(code);

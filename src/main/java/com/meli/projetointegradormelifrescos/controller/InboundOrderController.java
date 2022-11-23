@@ -28,6 +28,14 @@ public class InboundOrderController {
     @Autowired
     BatchService batchService;
 
+
+    /***
+     *
+     * Requisito 01
+     * @author Thaissa Carrafa, Igor Fernandes, Leonardo Correia
+     * @return List<BatchDTO
+     */
+
     @PostMapping("/inboundorder")
     public ResponseEntity<List<BatchDTO>> createInboundOrder(
         @RequestBody @Valid InboundOrderDTO orderDTO
@@ -36,6 +44,13 @@ public class InboundOrderController {
             .status(HttpStatus.CREATED)
             .body(service.createInboundOrder(orderDTO));
     }
+
+    /***
+     *
+     * Requisito 01
+     * @author Thaissa Carrafa
+     * @return List<BatchDTO
+     */
 
     @PutMapping("/inboundorder/{id}")
     public ResponseEntity<List<BatchDTO>> updateInboundOrder(
@@ -46,12 +61,24 @@ public class InboundOrderController {
             .status(HttpStatus.CREATED)
             .body(service.updateInboundOrder(id, orderDTO));
     }
-
+    /***
+     *
+     * Requisito 02
+     * @author Thaissa Carrafa
+     * @return <List<AnnoucementDTO>
+     */
     @GetMapping
     public ResponseEntity<List<AnnoucementDTO>> listAllProduct() {
         List<AnnoucementDTO> allProducts = annoucementService.listAllProducts();
         return ResponseEntity.ok().body(allProducts);
     }
+
+    /***
+     *
+     * Requisito 02
+     * @author Thaissa Carrafa
+     * @return <List<AnnoucementDTO
+     */
 
     @GetMapping("/list")
     public ResponseEntity<List<AnnoucementDTO>> listByCategory(
@@ -67,6 +94,12 @@ public class InboundOrderController {
         );
     }
 
+    /***
+     *
+     * Requisito 02
+     * @author Fernanda Alcione
+     * @return ResponseEntity<HashMap>
+     */
     @PostMapping("/orders")
     public ResponseEntity<HashMap> createPurchaseOrder(
         @RequestBody @Valid PurchaseOrderDTO purchaseOrderDTO
@@ -75,6 +108,12 @@ public class InboundOrderController {
             .status(HttpStatus.CREATED)
             .body(purchaseProductService.createPurchaseOrder(purchaseOrderDTO));
     }
+    /***
+     *
+     * Requisito 02
+     * @author Fernanda Alcione
+     * @return ResponseEntity<HashMap>
+     */
 
     @GetMapping("/orders/{purchaseOrderId}")
     public ResponseEntity<HashMap> getPurchaseOrder(
@@ -85,6 +124,12 @@ public class InboundOrderController {
         );
     }
 
+    /***
+     *
+     * Requisito 02
+     * @author Fernanda Alcione
+     * @return ResponseEntity<HashMap>
+     */
     @PutMapping("/orders/{purchaseOrderId}")
     public ResponseEntity<HashMap> putPurchaseOrder(
         @PathVariable Long purchaseOrderId
@@ -94,6 +139,12 @@ public class InboundOrderController {
         );
     }
 
+    /***
+     *
+     * Requisito 03
+     * @author Thaissa Carrafa, Amanda Lobo e Leonardo Correia
+     * @return ResponseEntity<WarehouseStockDTO>
+     */
     @GetMapping("/warehouse/{productId}")
     public ResponseEntity<WarehouseStockDTO> listProductsByWarehouse(
         @PathVariable @Valid @NotEmpty Long productId
@@ -102,7 +153,12 @@ public class InboundOrderController {
             batchService.countStocksByProductId(productId)
         );
     }
-
+    /***
+     *
+     * Requisito 04
+     * @author Thaissa Carrafa
+     * @return ResponseEntity<BatchDTO>
+     */
     @GetMapping("/list/{productId}")
     public ResponseEntity<BatchDTO> listProductsBySection(
         @PathVariable @Valid @NotEmpty Long productId

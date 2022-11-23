@@ -52,7 +52,7 @@ public class AnnouncementService implements IAnnoucementService {
      *
      * @param category método responsável por consultar todos os produtos de determinada categoria
      * @author Thaíssa Carrafa
-     * @return
+     * @return List<Announcement>
      */
     public List<Announcement> findAllByCategory(Category category) {
         List<Announcement> products = annoucementRepo

@@ -1,0 +1,287 @@
+{
+	"info": {
+		"_postman_id": "cdb51c01-7811-4d8e-8fa2-31815115a4f6",
+		"name": "projetoIntegrador-MeliFrescos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12703901"
+	},
+	"item": [
+		{
+			"name": "Req2 -Lista do Estoque",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/fresh-products",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"fresh-products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Lista de Estoque",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"purchaseOrder\": {\n\t\t\"date\": \"LocalDate\",\n\t\t\"buyerId\": \"Long\",\n\t\t\"orderStatus\": \"String\",\n\t\t\"products\": [{\n\t\t\t\t\"productId\": \"Long\",\n\t\t\t\t\"quantity\": \"int\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\": \"Long\",\n\t\t\t\t\"quantity\": \"int\"\n\t\t\t}\n\t\t]\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/fresh-products/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"fresh-products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Req1 - Altera uma lista de produtos",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"orderNumber\": 53,\n  \"orderDate\": \"2022-11-11\",\n  \"sectionCode\": 3,\n  \"warehouseCode\": 12,\n  \"batchStock\": [\n    {\n      \"batchNumber\": 4,\n      \"productId\": 1,\n      \"currentTemperature\": 20,\n      \"productQuantity\": 15,\n      \"manufacturingDate\": \"2022-11-11T16:31:02.518Z\",\n      \"manufacturingTime\": \"2022-11-11T16:31:02.518Z\",\n      \"volume\": 15,\n      \"dueDate\": \"2022-11-11\",\n      \"price\": 999,\n      \"initialQuantity\": 10\n\n    }\n  ],\n  \"managerId\": 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/fresh-products/inboundorder/53",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"fresh-products",
+						"inboundorder",
+						"53"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Req2 - Lista de Produtos por Categoria",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/fresh-products/list?querytype=CONGELADO",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"fresh-products",
+						"list"
+					],
+					"query": [
+						{
+							"key": "querytype",
+							"value": "CONGELADO"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Req2 -Criar um pedido",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"date\": \"2017-01-13T01:50:09\",\n    \"buyerId\": 1,\n    \"orderStatus\": \"OPENED\",\n    \"products\": [\n        {\n            \"productId\": 1,\n            \"quantity\": 2\n        },\n        {\n            \"productId\": 1,\n            \"quantity\": 1\n        }\n    ]\n}'",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/fresh-products/orders/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"fresh-products",
+						"orders",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Req2 -Lista o pedido",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/fresh-products/orders/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"fresh-products",
+						"orders",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Req2 -Altera um pedido",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"date\": \"2017-01-13T01:50:09\",\n    \"buyerId\": 1,\n    \"orderStatus\": \"OPENED\",\n    \"products\": [\n        {\n            \"productId\": 1,\n            \"quantity\": 3\n        },\n        {\n            \"productId\": 1,\n            \"quantity\": 1\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "localhost:8080//api/v1/fresh-products/orders/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"",
+						"api",
+						"v1",
+						"fresh-products",
+						"orders",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Req4 - Lista produtos por Warehouse",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/fresh-products/warehouse/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"fresh-products",
+						"warehouse",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Req3 - Lista de Produtos nos lotes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/fresh-products/list/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"fresh-products",
+						"list",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Req5 - Lista produtos por data de vencimento e section",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/fresh-products/list/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"fresh-products",
+						"list",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Req5 - Lista produtos por data de vencimento e section ASC/DESC",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/fresh-products/list/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"fresh-products",
+						"list",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

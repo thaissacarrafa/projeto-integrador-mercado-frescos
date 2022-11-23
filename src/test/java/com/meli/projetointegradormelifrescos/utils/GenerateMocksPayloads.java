@@ -14,6 +14,11 @@ import java.util.stream.Collectors;
 
 public class GenerateMocksPayloads {
 
+    /***
+     *   @message Implementacao de testes
+     *   @author Igor Fernandes
+     */
+
     public static BatchDTO CreateBatchStockDTOMock() {
         BatchDTO requestExampleBaches = new BatchDTO();
         requestExampleBaches.setBatchNumber(1L);

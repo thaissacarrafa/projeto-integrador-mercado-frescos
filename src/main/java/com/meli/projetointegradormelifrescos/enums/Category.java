@@ -3,6 +3,11 @@ package com.meli.projetointegradormelifrescos.enums;
 import com.meli.projetointegradormelifrescos.exception.BadRequestException;
 import lombok.Getter;
 
+/***
+ *
+ * Manter as categorias em formato de ENUM ficará melhor já que as categorias são fixas
+ * @author Thaissa Carrafa
+ */
 @Getter
 public enum Category {
     FRESCO("FS", "Fresco", 15F, 25F, 7),
