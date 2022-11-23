@@ -118,9 +118,7 @@ Este projeto possui comentários com o intuito de auxiliar na compreensão das f
 
 ### 2- Swagger
 
-Este projeto possui documentação via Swagger para facilitar a visualização e testes dos endpoints disponíveis
-
-### Link -> http://localhost:8080/swagger-ui/index.html#/fresh-products-controller/getAllProductsAnnoucement
+Este projeto possui documentação via Swagger para facilitar a visualização e testes dos endpoints disponíveis que você encontra [aqui.](http://localhost:8080/swagger-ui/index.html#/fresh-products-controller/getAllProductsAnnoucement)
 
 ### 3- Postman
 
