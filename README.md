@@ -110,26 +110,22 @@ http://localhost:8080
 - Alteração de todos os dados- PUT
 - Alteração de parte dos dados - PATCH
 
-### Modelo com campos obrigatórios para teste  📩
+### Documentação   📩
 
-```
-{
-	"purchaseOrder": {
-		"date": "LocalDate",
-		"buyerId": "Long",
-		"orderStatus": "String",
-		"products": [{
-				"productId": "Long",
-				"quantity": "int"
-			},
-			{
-				"productId": "Long",
-				"quantity": "int"
-			}
-		]
-	}
-}
-```
+### 1- Javadoc
+
+Este projeto possui comentários com o intuito de auxiliar na compreensão das funcionalidades dos métodos;
+
+### 2- Swagger
+
+Este projeto possui documentação via Swagger para facilitar a visualização e testes dos endpoints disponíveis
+
+### Link -> http://localhost:8080/swagger-ui/index.html#/fresh-products-controller/getAllProductsAnnoucement
+
+### 3- Postman
+
+Para facilitar os testes de funcionalidades desta API, anexamos um exemplo de coleção do Postman em uma das pastas do projeto, sendo necessário apenas importá-la no seu Postman.
+
 
 
 ## Projeto desenvolvido por:
