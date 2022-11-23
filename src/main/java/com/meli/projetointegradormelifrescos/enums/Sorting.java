@@ -4,7 +4,6 @@ import com.meli.projetointegradormelifrescos.exception.NotFoundException;
 
 public enum Sorting {
     L, Q, V;
-
     public static Sorting sortingEnum(String s){
         Sorting sorting;
 
