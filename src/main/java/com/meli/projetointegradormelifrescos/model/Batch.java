@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.*;
 import lombok.*;
-import net.bytebuddy.asm.Advice;
 
 @Entity
 @Builder
@@ -51,9 +50,6 @@ public class Batch {
 
     @Column(name = "price", nullable = false)
     private BigDecimal price;
-
-    @Column(name = "alert", nullable = false)
-    private Boolean alert;
 
     @ManyToOne
     @JoinColumn(name = "inbound_order_id", nullable = false)

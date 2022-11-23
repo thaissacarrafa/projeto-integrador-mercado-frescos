@@ -29,7 +29,6 @@ public class AnnoucementDTO {
     @NotBlank(message = "A categoria não pode estar vazia!")
     private Category category;
 
-
     public AnnoucementDTO(Announcement annoucement) {
         this.id = annoucement.getId();
         this.name = annoucement.getName();

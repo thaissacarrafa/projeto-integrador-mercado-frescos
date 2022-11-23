@@ -6,8 +6,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.validation.constraints.NotNull;
-
-import com.meli.projetointegradormelifrescos.service.AlertService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -42,8 +40,6 @@ public class BatchDTO {
 
     private Warehouse warehouse;
 
-    private Boolean alert;
-
     public BatchDTO(Batch batch) {
         this.batchNumber = batch.getBatchNumber();
         this.productId = batch.getProductId();
@@ -55,7 +51,6 @@ public class BatchDTO {
         this.dueDate = batch.getDueDate();
         this.price = batch.getPrice();
         this.warehouse = batch.getWarehouse();
-        this.alert = batch.getAlert();
     }
 
     public BatchDTO(Long batchNumber, int productQuantity, LocalDate dueDate) {
@@ -79,8 +74,6 @@ public class BatchDTO {
         batch.setDueDate(batchDTO.getDueDate());
         batch.setPrice(batchDTO.getPrice());
         batch.setWarehouse(batchDTO.getWarehouse());
-        batch.setAlert(batchDTO.getAlert());
-
         return batch;
     }
 }
